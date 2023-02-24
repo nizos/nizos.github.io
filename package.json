@@ -1,0 +1,22 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "11ty blog",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nizos/blog.git"
+  },
+  "author": "nizos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nizos/blog/issues"
+  },
+  "homepage": "https://github.com/nizos/blog#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.0"
+  }
+}
