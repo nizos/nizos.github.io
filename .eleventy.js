@@ -40,4 +40,14 @@ module.exports = function(eleventyConfig) {
             return !excludeList.includes(tag);
         });
     });
+
+    return {
+        dir: {
+            input: 'src',
+            output: 'public',
+            includes: 'includes',
+            data: 'data',
+            layouts: 'layouts'
+        }
+    }
 }
