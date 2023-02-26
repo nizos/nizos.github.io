@@ -8,17 +8,17 @@
         <ul>
             {%- for post in collections.posts reversed -%}
             <li>
-                <a href="{{ post.url }}">{{ post.data.title }}</a>
-                <p>{{ post.data.date | readableDate }}</p>
-                <p>{{ post.content | timeToRead }}</p>
                 <div>
+                    <p>{{ post.data.date | readableDate }} | {{ post.content | timeToRead }}</p>
                     {% assign filteredTags = post.data.tags | postTags %}
-                    {% for tag in filteredTags %}
+                    <p>{% for tag in filteredTags %}
                         {% capture tagUrl %}/tags/{{ tag }}/{% endcapture %}
                         <a href="{{ tagUrl | url }}">#{{ tag }}</a>
-                    {% endfor %}
+                    {% endfor %}</p>
                 </div>
-                <p>{{ post.data.excerpt }}</p>
+                <a href="{{ post.url }}"><h2>{{ post.data.title }}</h2></a>
+                <p>{{ post.data.excerpt }}...</p>
+                <a href="{{ post.url }}"><p>Read more</p></a>
             </li>
             {%- endfor -%}
         </ul>
