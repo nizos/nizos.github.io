@@ -1,5 +1,6 @@
-const Image = require("@11ty/eleventy-img");
+const Image = require('@11ty/eleventy-img');
 const timeToRead = require('eleventy-plugin-time-to-read');
+const { DateTime } = require('luxon');
 const path = require("node:path");
 
 async function imageShortcode(src, alt, sizes) {
@@ -22,6 +23,14 @@ async function imageShortcode(src, alt, sizes) {
 }
 
 module.exports = function(eleventyConfig) {
+    // Plugins
     eleventyConfig.addPlugin(timeToRead);
+
+    // Shortcodes
     eleventyConfig.addAsyncShortcode("image", imageShortcode);
+
+    // Filters
+    eleventyConfig.addFilter('readableDate', (dateObj) => {
+        return DateTime.fromJSDate(dateObj, { zone: 'utc'}).toFormat('yyyy-LL-dd');
+    });
 }

@@ -6,7 +6,7 @@
     <body>
         <div>
             <h1>{{ title }}</h1>
-            <p>{{ date }}</p>
+            <p>{{ date | readableDate }}</p>
             <p>{{ content | timeToRead }}</p>
         </div>
         <div>{{ content }}</div>
