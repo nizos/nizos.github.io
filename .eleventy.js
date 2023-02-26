@@ -1,4 +1,5 @@
 const Image = require("@11ty/eleventy-img");
+const timeToRead = require('eleventy-plugin-time-to-read');
 const path = require("node:path");
 
 async function imageShortcode(src, alt, sizes) {
@@ -21,5 +22,6 @@ async function imageShortcode(src, alt, sizes) {
 }
 
 module.exports = function(eleventyConfig) {
+    eleventyConfig.addPlugin(timeToRead);
     eleventyConfig.addAsyncShortcode("image", imageShortcode);
 }
