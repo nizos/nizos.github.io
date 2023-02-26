@@ -1,9 +1,10 @@
 ---
-tags: posts
 title: 'Look Smarter With Git: Rewriting Your History'
 subtitle: This blog post is co-authored by Raniz.
 date: 2022-08-08
+author: Nizar
 cover: git-flow-cover.jpg
+tags: [git, vcs]
 ---
 
 # Intro

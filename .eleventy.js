@@ -33,4 +33,11 @@ module.exports = function(eleventyConfig) {
     eleventyConfig.addFilter('readableDate', (dateObj) => {
         return DateTime.fromJSDate(dateObj, { zone: 'utc'}).toFormat('dd LLL yyyy');
     });
+
+    eleventyConfig.addFilter('postTags', (tags) => {
+        const excludeList = ['post', 'posts'];
+        return tags.toString().split(',').filter((tag) => {
+            return !excludeList.includes(tag);
+        });
+    });
 }

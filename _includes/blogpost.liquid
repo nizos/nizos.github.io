@@ -8,6 +8,13 @@
             <h1>{{ title }}</h1>
             <p>{{ date | readableDate }}</p>
             <p>{{ content | timeToRead }}</p>
+            <div>
+                {% assign filteredTags = tags | postTags %}
+                {% for tag in filteredTags %}
+                    {% capture tagUrl %}/tags/{{ tag }}/{% endcapture %}
+                    <a href="{{ tagUrl | url }}">#{{ tag }}</a>
+                {% endfor %}
+            </div>
         </div>
         <div>{{ content }}</div>
     </body>
