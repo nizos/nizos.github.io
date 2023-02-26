@@ -4,7 +4,10 @@
   "description": "11ty blog",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "eleventy --serve",
+    "build": "eleventy",
+    "dev": "env ELEVENTY_ENV=development eleventy --serve",
+    "clean": "rm -rf ./public"
   },
   "repository": {
     "type": "git",

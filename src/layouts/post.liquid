@@ -2,18 +2,20 @@
 <html lang="en">
     <head>
         <title>{{ title }}</title>
+        <link href="/css/main.css" rel="stylesheet" />
     </head>
     <body>
         {% include 'header' %}
+        {% include 'jumbotron' %}
         <div>
             <h1>{{ title }}</h1>
             <div>
-                <p>{{ date | readableDate }} | {{ content | timeToRead }}</p>
+                <div class="post-meta">{{ date | readableDate }} | {{ content | timeToRead }}</div>
                 {% assign filteredTags = tags | postTags %}
-                <p>{% for tag in filteredTags %}
+                <div class="post-tags">{% for tag in filteredTags %}
                     {% capture tagUrl %}/tags/{{ tag }}/{% endcapture %}
                     <a href="{{ tagUrl | url }}">#{{ tag }}</a>
-                {% endfor %}</p>
+                {% endfor %}</div>
             </div>
         </div>
         <div>{{ content }}</div>

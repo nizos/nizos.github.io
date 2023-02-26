@@ -41,6 +41,8 @@ module.exports = function(eleventyConfig) {
         });
     });
 
+    eleventyConfig.addPassthroughCopy("src/css");
+
     return {
         dir: {
             input: 'src',
@@ -48,6 +50,6 @@ module.exports = function(eleventyConfig) {
             includes: 'includes',
             data: 'data',
             layouts: 'layouts'
-        }
+        },
     }
 }
