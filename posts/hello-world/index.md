@@ -1,5 +1,6 @@
 ---
 title: Hello World!
+excerpt: 'Hello world!'
 date: 2022-01-01
 author: Nizar
 permalink: /{{ title | slug }}/index.html

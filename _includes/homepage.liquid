@@ -18,6 +18,7 @@
                         <a href="{{ tagUrl | url }}">#{{ tag }}</a>
                     {% endfor %}
                 </div>
+                <p>{{ post.data.excerpt }}</p>
             </li>
             {%- endfor -%}
         </ul>
