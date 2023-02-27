@@ -3,11 +3,13 @@
     <head>
         <title>{{ title }}</title>
         <link href="/css/main.css" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
     </head>
     <body>
         {% include 'header' %}
         {% include 'jumbotron' %}
-        <h1>Blog posts</h1>
+        <h1>Recent posts</h1>
         <ul class="post-list">
             {%- for post in collections.posts reversed -%}
             <li class="post-item">
