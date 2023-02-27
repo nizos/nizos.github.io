@@ -1,26 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>{{ title }}</title>
-        <link href="/css/main.css" rel="stylesheet" />
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
-    </head>
-    <body>
-        {% include 'header' %}
-        {% include 'jumbotron' %}
-        <div>
-            <h1>{{ title }}</h1>
-            <div>
-                <div class="post-meta">{{ date | readableDate }} | {{ content | timeToRead }}</div>
-                {% assign filteredTags = tags | postTags %}
-                <div class="post-tags">{% for tag in filteredTags %}
-                    {% capture tagUrl %}/tags/{{ tag }}/{% endcapture %}
-                    <a href="{{ tagUrl | url }}">#{{ tag }}</a>
-                {% endfor %}</div>
-            </div>
+---
+layout: base
+---
+<article class="post">
+    <header class="post__header">
+        <h1>{{ title }}</h1>
+        <div class="post__details">
+            <time>{{ page.date | readableDate }}</time>
+            <span> | </span>
+            <span>{{ content | timeToRead }}</span>
         </div>
-        <div>{{ content }}</div>
-        {% include 'footer' %}
-    </body>
-</html>
+    </header>
+
+    <main class="post__content">
+        {{ content }}
+    </main>
+
+    <aside class="post__aside">
+        <div class="post__tags">
+            {% assign filteredTags = tags | postTags %}
+            {% for tag in filteredTags %}
+                {% capture tagUrl %}/tags/{{ tag }}/{% endcapture %}
+                <a href="{{ tagUrl | url }}">#{{ tag }}</a>
+            {% endfor %}
+        </div>
+    </aside>
+</article>

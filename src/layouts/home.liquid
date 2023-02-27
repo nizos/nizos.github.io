@@ -1,31 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>{{ title }}</title>
-        <link href="/css/main.css" rel="stylesheet" />
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
-    </head>
-    <body>
-        {% include 'header' %}
-        {% include 'jumbotron' %}
-        <h1>Recent posts</h1>
-        <ul class="post-list">
-            {%- for post in collections.posts reversed -%}
-            <li class="post-item">
-                <div>
-                    <div class="post-meta">{{ post.data.date | readableDate }} | {{ post.content | timeToRead }}</div>
-                    {% assign filteredTags = post.data.tags | postTags %}
-                    <div class="post-tags">{% for tag in filteredTags %}
-                        {% capture tagUrl %}/tags/{{ tag }}/{% endcapture %}
-                        <a href="{{ tagUrl | url }}">#{{ tag }}</a>
-                    {% endfor %}</div>
-                </div>
-                <h2 class="post-title"><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
-                <div class="post-excerpt">{{ post.data.excerpt }}...<a href="{{ post.url }}"><p>Read more</p></a></div>
-            </li>
-            {%- endfor -%}
-        </ul>
-        {% include 'footer' %}
-    </body>
-</html>
+---
+layout: base.liquid
+---
+<section class="post-list__wrapper">
+    <h2 class="post-list__heading">Recent Posts</h2>
+    {% include 'posts-list' %}
+</section>

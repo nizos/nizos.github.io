@@ -1,18 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>{{ title }}</title>
-        <link href="/css/main.css" rel="stylesheet" />
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
-    </head>
-    <body>
-        {% include 'header' %}
-        {% include 'jumbotron' %}
-        <h1>About</h1>
-        <main class="main">
-            {{ content }}
-        </main>
-        {% include 'footer' %}
-    </body>
-</html>
+---
+layout: base
+---
+
+<div class="about">
+    <h1>About</h1>
+    {{ content }}
+</div>

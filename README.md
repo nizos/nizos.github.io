@@ -1,6 +1,6 @@
 # Blog
 
-11ty blog
+11ty blog based on [Eleventy Duo](https://github.com/yinkakun/eleventy-duo).
 
 ## Development
 

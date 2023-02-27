@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/css/main.css" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+        <title>
+            {{ title | escape }}
+            {% if title %}
+                | {{ site.name }}
+            {% else %}
+                {{ site.name }}
+            {% endif %}
+        </title>
+
+        <meta property="og:site_name" content="{{ site.name }}">
+        <meta property="og:type" content="website">
+    </head>
+    <body>
+        <div class="layout-wrapper">
+            {% include 'header' %}
+
+            <main class="main">
+                {{ content }}
+            </main>
+
+            {% include 'footer' %}
+        </div>
+    </body>
+</html>

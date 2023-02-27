@@ -1,0 +1,28 @@
+<ul class="post-list">
+    {%- for post in collections.posts reversed -%}
+        <li class="post-list__item">
+            <div>
+                <div class="post-list__meta">
+                    <time>
+                        {{ post.date | readableDate }}
+                    </time>
+                    <span> | </span>
+                    <span>{{ post.content | timeToRead }}</span>
+                </div>
+
+                <div class="post-list__tags">
+                    {% assign filteredTags = post.data.tags | postTags %}
+                    {% for tag in filteredTags %}
+                        {% capture tagUrl %}/tags/{{ tag }}/{% endcapture %}
+                        <a href="{{ tagUrl | url }}">#{{ tag }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            <h3 class="post-list__title">
+                <a href="{{ post.url }}">{{ post.data.title }}</a>
+            </h3>
+            <p class="post-list__excerpt">{{ post.data.excerpt }}</p>
+            <a class="post-list__read-more" href="{{ post.url }}">read more</a>
+        </li>
+    {%- endfor -%}
+</ul>
