@@ -308,4 +308,5 @@ Head over to [https://www.http3check.net/](https://www.http3check.net/) to verif
 
 ## Concluding Remarks
 
-With this _quic_ demonstration completed, there are a number of things to consider before using it. Given that internet service has gotten more reliable over the years, the likelihood of issues caused by dropped packages has become increasingly unlikely. At the same time, the amount of bandwidth saved makes it an attractive tradeoff especially on the server side.
+With this _quic_ demonstration completed, there are some things to consider before using it. Given that internet service has gotten more reliable over the years, the likelihood of issues caused by dropped packages has become increasingly unlikely. At the same time, the amount of bandwidth saved makes it an attractive tradeoff especially on the server side.
+This is also a preview release. That said, there are several production deployments according to [NGINX](https://quic.nginx.org/).

@@ -159,9 +159,9 @@ pre {
 
 code,
 kbd {
-    color: skyblue;
+    color: #060606;
     font-feature-settings: normal;
-    background: lightgray;
+    background: #e5e5e5;
     padding: 1px 6px;
     margin: 0 2px;
     font-size: 0.95rem;
