@@ -1,5 +1,7 @@
 const Image = require('@11ty/eleventy-img');
 const timeToRead = require('eleventy-plugin-time-to-read');
+const pluginRss = require('@11ty/eleventy-plugin-rss');
+const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 const { DateTime } = require('luxon');
 const path = require("node:path");
 
@@ -25,6 +27,8 @@ async function imageShortcode(src, alt, sizes) {
 module.exports = function(eleventyConfig) {
     // Plugins
     eleventyConfig.addPlugin(timeToRead);
+    eleventyConfig.addPlugin(pluginRss);
+    eleventyConfig.addPlugin(syntaxHighlight);
 
     // Shortcodes
     eleventyConfig.addAsyncShortcode("image", imageShortcode);
@@ -39,6 +43,11 @@ module.exports = function(eleventyConfig) {
         return tags.toString().split(',').filter((tag) => {
             return !excludeList.includes(tag);
         });
+    });
+
+    eleventyConfig.addFilter('excerpt', (post) => {
+        const content = post.replace(/(<([^>]+)>)/gi, '');
+        return content.substr(0, content.lastIndexOf(' ', 200)) + '...';
     });
 
     eleventyConfig.addPassthroughCopy("src/css");
