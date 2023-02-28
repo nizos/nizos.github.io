@@ -260,7 +260,7 @@ server {
     root /var/www/WEBSITE/html;
     
     # Certificates
-     ssl_certificate /etc/letsencrypt/live/WEBSITE/fullchain.pem; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/WEBSITE/fullchain.pem; # managed by Certbot
     ssl_certificate_key /etc/letsencrypt/live/WEBSITE/privkey.pem; # managed by Certbot
     include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
