@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/css/main.css" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+        <title>
+            Serving Sites with NGINX QUIC
+            
+                | Nizar's Blog
+            
+        </title>
+
+        <meta property="og:site_name" content="Nizar's Blog">
+        <meta property="og:type" content="website">
+    </head>
+    <body>
+        <div class="layout-wrapper">
+            <header class="header">
+    <div class="header__content">
+        <h1 class="site-title">
+            <a href="/">Nizar's Blog</a>
+        </h1>
+        <nav class="nav">
+            <ul class="nav__list">
+                <li class="nav-item">
+                    <a href="/about">About</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+            <main class="main">
+                <article class="post">
+    <header class="post__header">
+        <h1>Serving Sites with NGINX QUIC</h1>
+        <div class="post__details">
+            <time>28 Feb 2023</time>
+            <span> | </span>
+            <span>5 minutes</span>
+        </div>
+    </header>
+
+    <main class="post__content">
+        <h1>Serving Sites with NGINX QUIC</h1>
+<p>NGINX has <a href="https://www.nginx.com/blog/binary-packages-for-preview-nginx-quic-http3-implementation/">recently released</a> prebuilt <a href="https://quic.nginx.org/packages.html">binary packages</a> for the preview NGINX QUIC+HTTP/3 implementation for Red Hat Enterprise Linux 9 and Ubuntu 22.04.</p>
+<p>The prebuilt binary packages eliminate the need to compile from source and automatically install a <a href="https://github.com/quictls">quicktls</a> library package as a dependency as OpenSSL does not yet support QUIC.</p>
+<h2>QUIC</h2>
+<p>QUIC is a general-purpose transport layer network protocol that provides built-in security and improved performance compared to TCP + TLS. It's built-in security features, such as encryption and authentication, allow for the exchange of setup keys and protocols to take place in the initial handshake. Thus reducing the connection setup overhead and latency as shown by the diagram below.</p>
+<p><picture><source type="image/avif" srcset="/serving-sites-with-nginx-quic/p7hrgJtA_V-300.avif 300w, /serving-sites-with-nginx-quic/p7hrgJtA_V-600.avif 600w, /serving-sites-with-nginx-quic/p7hrgJtA_V-900.avif 900w" sizes="QUIC diagram"><source type="image/jpeg" srcset="/serving-sites-with-nginx-quic/p7hrgJtA_V-300.jpeg 300w, /serving-sites-with-nginx-quic/p7hrgJtA_V-600.jpeg 600w, /serving-sites-with-nginx-quic/p7hrgJtA_V-900.jpeg 900w" sizes="QUIC diagram"><img alt="QUIC diagram" loading="lazy" decoding="async" src="/serving-sites-with-nginx-quic/p7hrgJtA_V-300.jpeg" width="900" height="591"></picture></p>
+<p>For a more detailed breakdown of QUIC and how it works, checkout Cloudflare's blog article The Road to QUIC.</p>
+<h2>Using NGINX QUIC</h2>
+<p>What follows is a step-by-step guide on how to serve a website using NGINX QUIC. For this setup, we will use a newly created Ubuntu 22.04 server.</p>
+<h3>Update the system</h3>
+<pre class="language-shell"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt</span> update <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">apt</span> upgrade <span class="token parameter variable">-y</span><br><br><span class="token comment"># Reboot if necessary</span><br><span class="token function">sudo</span> <span class="token function">reboot</span> <span class="token parameter variable">-h</span> now</code></pre>
+<h3>Install NGINX-QUIC</h3>
+<pre class="language-shell"><code class="language-shell"><span class="token comment"># Install the prerequisites</span><br><span class="token function">sudo</span> <span class="token function">apt</span> update <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> <span class="token function">curl</span> gnupg2 ca-certificates lsb-release ubuntu-keyring<br><br><span class="token comment"># Import an official nginx signing key to verify packages authenticity</span><br><span class="token function">curl</span> https://nginx.org/keys/nginx_signing.key <span class="token operator">|</span> gpg <span class="token parameter variable">--dearmor</span> <span class="token punctuation">\</span><br><span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">tee</span> /usr/share/keyrings/nginx-archive-keyring.gpg <span class="token operator">></span>/dev/null<br><br><span class="token comment"># Set up the apt repository for nginx-quic packages</span><br><span class="token builtin class-name">echo</span> <span class="token string">"deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] \<br>https://packages.nginx.org/nginx-quic/ubuntu <span class="token variable"><span class="token variable">`</span>lsb_release <span class="token parameter variable">-cs</span><span class="token variable">`</span></span> nginx-quic"</span> <span class="token punctuation">\</span><br><span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">tee</span> /etc/apt/sources.list.d/nginx-quic.list<br><br><span class="token comment"># Install nginx-quic</span><br><span class="token function">sudo</span> <span class="token function">apt</span> update<br><span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> nginx-quic</code></pre>
+<h3>Firewall</h3>
+<pre class="language-shell"><code class="language-shell"><span class="token comment"># Adjust firewall</span><br><span class="token function">sudo</span> ufw default allow outgoing<br><span class="token function">sudo</span> ufw default deny incoming<br><span class="token function">sudo</span> ufw allow <span class="token function">ssh</span><br><span class="token function">sudo</span> ufw allow <span class="token number">80</span>/tcp<br><span class="token function">sudo</span> ufw allow <span class="token number">443</span>/tcp<br><span class="token function">sudo</span> ufw allow <span class="token number">443</span>/udp<br><br><span class="token comment"># Enable firewall</span><br><span class="token function">sudo</span> ufw <span class="token builtin class-name">enable</span></code></pre>
+<h3>Certbot</h3>
+<pre class="language-shell"><code class="language-shell"><span class="token comment"># Make sure snapd core is up to date</span><br><span class="token function">sudo</span> snap <span class="token function">install</span> core<span class="token punctuation">;</span> <span class="token function">sudo</span> snap refresh core<br><br><span class="token comment"># Ensure that no older version is already installed</span><br><span class="token function">sudo</span> <span class="token function">apt</span> remove certbot<br><br><span class="token comment"># Install the certbot package</span><br><span class="token function">sudo</span> snap <span class="token function">install</span> <span class="token parameter variable">--classic</span> certbot<br><br><span class="token comment"># Link the certbot command from the snap install directory</span><br><span class="token function">sudo</span> <span class="token function">ln</span> <span class="token parameter variable">-s</span> /snap/bin/certbot /usr/bin/certbot</code></pre>
+<h3>Site directory</h3>
+<pre class="language-shell"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /var/www/WEBSITE/html<br><span class="token function">sudo</span> <span class="token function">chown</span> <span class="token parameter variable">-R</span> www-data:www-data /var/www/WEBSITE/html<br><span class="token function">sudo</span> <span class="token function">chmod</span> <span class="token parameter variable">-R</span> <span class="token number">755</span> /var/www/WEBSITE</code></pre>
+<h3>Webpage</h3>
+<pre class="language-shell"><code class="language-shell"><span class="token comment"># Create a sample index.html</span><br><span class="token function">nano</span> /var/www/WEBSITE/html/index.html</code></pre>
+<p>Paste in the following contents and save</p>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">></span></span><br>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span><br>        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Welcome to WEBSITE!<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span><br>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span><br>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span><br>        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">></span></span>Success!  The WEBSITE server block is working!<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">></span></span><br>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span><br><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span></code></pre>
+<h3>Configure Website</h3>
+<pre class="language-shell"><code class="language-shell"><span class="token comment"># Create and link the server block directory</span><br><span class="token function">sudo</span> <span class="token function">mkdir</span> /etc/nginx/sites-available<br><span class="token function">sudo</span> <span class="token function">ln</span> <span class="token parameter variable">-s</span> /etc/nginx/sites-available /etc/nginx/sites-enabled</code></pre>
+<h3>Create the website configuration</h3>
+<pre class="language-shell"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">nano</span> /etc/nginx/sites-available/WEBSITE</code></pre>
+<p>Paste in the following content and save the file</p>
+<pre class="language-txt"><code class="language-txt">server {<br>    listen 80;<br><br>    index index.html index.nginx-debian.html;<br>    server_name WEBSITE www.WEBSITE;<br><br>    root /var/www/WEBSITE/html;<br>}</code></pre>
+<h3>Configure NGINX</h3>
+<p>Edit the NGINX conf file</p>
+<pre class="language-shell"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">nano</span> /etc/nginx/nginx.conf</code></pre>
+<p>Adjust the config file to match the following block</p>
+<pre class="language-txt"><code class="language-txt">user  www-data;<br>worker_processes  auto;<br><br>error_log  /var/log/nginx/error.log notice;<br>pid        /var/run/nginx.pid;<br><br><br>events {<br>    worker_connections  1024;<br>}<br><br><br>http {<br>    include       /etc/nginx/mime.types;<br>    default_type  application/octet-stream;<br><br>    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '<br>                      '$status $body_bytes_sent "$http_referer" '<br>                      '"$http_user_agent" "$http_x_forwarded_for"';<br><br>    access_log  /var/log/nginx/access.log  main;<br><br>    sendfile        on;<br>    #tcp_nopush     on;<br><br>    keepalive_timeout  65;<br><br>    #gzip  on;<br><br>    include /etc/nginx/conf.d/*.conf;<br>    include /etc/nginx/sites-enabled/*;<br>}</code></pre>
+<h3>Start NGINX</h3>
+<pre class="language-shell"><code class="language-shell"><span class="token comment"># Enable nginx on system startup if not already enabled</span><br><span class="token function">sudo</span> systemctl <span class="token builtin class-name">enable</span> nginx<br><br><span class="token comment"># Check the status of nginx</span><br><span class="token function">sudo</span> systemctl status nginx<br><br><span class="token comment"># Make sure no errors were encountered</span><br><span class="token function">sudo</span> nginx <span class="token parameter variable">-t</span></code></pre>
+<h3>Generate certificates</h3>
+<pre class="language-shell"><code class="language-shell"><span class="token function">sudo</span> certbot certonly <span class="token parameter variable">--nginx</span></code></pre>
+<p>Fill in your email address, agree to the terms and hit enter when prompted to pick the domains to create certificates for.</p>
+<h3>Enable HTTP/3</h3>
+<p>Update the website configuration file to enable HTTP/3</p>
+<pre class="language-shell"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">nano</span> /etc/nginx/sites-available/WEBSITE</code></pre>
+<p>Adjust the file's contents to match the following block</p>
+<pre class="language-txt"><code class="language-txt">server {<br>    # for better compatibility we recommend<br>    # using the same port number for QUIC and TCP<br>    listen 443 http3 reuseport; # QUIC<br>    listen 443 ssl;             # TCP<br>    <br>    listen [::]:443 http3 reuseport;<br>    listen [::]:443 ssl;<br><br>    ssl_certificate     /etc/letsencrypt/live/WEBSITE/fullchain.pem;<br>    ssl_certificate_key /etc/letsencrypt/live/WEBSITE/privkey.pem;<br>    ssl_trusted_certificate /etc/letsencrypt/live/myconf.se/chain.pem;<br>    ssl_protocols       TLSv1.3;<br><br>    location / {<br>        # advertise that QUIC is available on the configured port<br>        add_header Alt-Svc 'h3=":$server_port"; ma=86400';<br><br>        # signal whether we are using QUIC+HTTP/3<br>        add_header X-protocol $server_protocol always;<br><br>        #proxy_pass &lt;upstream_group>;<br>        root       /var/www/WEBSITE/html/;<br>    }<br>}</code></pre>
+<h3>Apply changes</h3>
+<pre class="language-shell"><code class="language-shell"><span class="token comment"># Restart NGINX</span><br><span class="token function">sudo</span> systemctl reload nginx<br><br><span class="token comment"># Make sure no errors were encountered</span><br><span class="token function">sudo</span> nginx <span class="token parameter variable">-t</span></code></pre>
+<h3>Live!</h3>
+<p>The website should now be live with QUIC+HTTP/3 enabled.</p>
+<p><picture><source type="image/avif" srcset="/serving-sites-with-nginx-quic/n-wNVNDEyq-300.avif 300w, /serving-sites-with-nginx-quic/n-wNVNDEyq-600.avif 600w, /serving-sites-with-nginx-quic/n-wNVNDEyq-900.avif 900w" sizes="View of website in browser"><source type="image/jpeg" srcset="/serving-sites-with-nginx-quic/n-wNVNDEyq-300.jpeg 300w, /serving-sites-with-nginx-quic/n-wNVNDEyq-600.jpeg 600w, /serving-sites-with-nginx-quic/n-wNVNDEyq-900.jpeg 900w" sizes="View of website in browser"><img alt="View of website in browser" loading="lazy" decoding="async" src="/serving-sites-with-nginx-quic/n-wNVNDEyq-300.jpeg" width="900" height="184"></picture></p>
+<h3>Verify</h3>
+<p>Head over to <a href="https://www.http3check.net/">https://www.http3check.net/</a> to verify that QUIC and HTTP/3 are supported on your site.</p>
+<p><picture><source type="image/avif" srcset="/serving-sites-with-nginx-quic/WEQf3z5mc0-300.avif 300w, /serving-sites-with-nginx-quic/WEQf3z5mc0-600.avif 600w, /serving-sites-with-nginx-quic/WEQf3z5mc0-900.avif 900w" sizes="QUIC verification"><source type="image/jpeg" srcset="/serving-sites-with-nginx-quic/WEQf3z5mc0-300.jpeg 300w, /serving-sites-with-nginx-quic/WEQf3z5mc0-600.jpeg 600w, /serving-sites-with-nginx-quic/WEQf3z5mc0-900.jpeg 900w" sizes="QUIC verification"><img alt="QUIC verification" loading="lazy" decoding="async" src="/serving-sites-with-nginx-quic/WEQf3z5mc0-300.jpeg" width="900" height="671"></picture></p>
+
+    </main>
+
+    <aside class="post__aside">
+        <div class="post__tags">
+            
+            
+                
+                <a href="/tags/http/">#http</a>
+            
+                
+                <a href="/tags/nginx/">#nginx</a>
+            
+                
+                <a href="/tags/quic/">#quic</a>
+            
+        </div>
+    </aside>
+</article>
+
+            </main>
+
+            <footer class="footer">
+    <div class="footer__content">
+        <p class="footer__attribution">Powered by <a href="https://www.11ty.dev">11ty</a>, based on <a href="https://github.com/yinkakun/eleventy-duo">Eleventy Duo</a></p>
+    </div>
+</footer>
+        </div>
+    </body>
+</html>
