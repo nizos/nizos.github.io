@@ -6,8 +6,6 @@ permalink: /{{ title | slugify }}/index.html
 tags: [http, nginx, quic]
 ---
 
-# Serving Sites with NGINX QUIC
-
 NGINX has [recently released](https://www.nginx.com/blog/binary-packages-for-preview-nginx-quic-http3-implementation/) prebuilt [binary packages](https://quic.nginx.org/packages.html) for the preview NGINX QUIC+HTTP/3 implementation for Red Hat Enterprise Linux 9 and Ubuntu 22.04.
 
 The prebuilt binary packages eliminate the need to compile from source and automatically install a [quicktls](https://github.com/quictls) library package as a dependency as OpenSSL does not yet support QUIC.
