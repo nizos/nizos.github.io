@@ -1,10 +1,8 @@
 ---
 title: 'Serving Sites with NGINX QUIC'
-excerpt: ''
 date: 2023-02-28
 author: Nizar
 permalink: /{{ title | slugify }}/index.html
-cover: git-flow-cover.jpg
 tags: [http, nginx, quic]
 ---
 
@@ -16,7 +14,7 @@ The prebuilt binary packages eliminate the need to compile from source and autom
 
 ## QUIC
 
-QUIC is a general-purpose transport layer network protocol that provides built-in security and improved performance compared to TCP + TLS. It's built-in security features, such as encryption and authentication, allow for the exchange of setup keys and protocols to take place in the initial handshake. Thus reducing the connection setup overhead and latency as shown by the diagram below.
+QUIC is a general-purpose transport layer network protocol that provides built-in security and improved performance compared to TCP + TLS. Its built-in security features, such as encryption and authentication, allow for the exchange of setup keys and protocols to take place in the initial handshake. Thus reducing the connection setup overhead and latency as shown by the diagram below.
 
 {% image "./assets/QUIC.png", "QUIC diagram", "QUIC diagram" %}
 
@@ -29,6 +27,7 @@ What follows is a step-by-step guide on how to serve a website using NGINX QUIC.
 ### Update the system
 
 ```shell
+# Install the latest updates
 sudo apt update && sudo apt upgrade -y
 
 # Reboot if necessary
@@ -57,6 +56,8 @@ sudo apt install nginx-quic
 
 ### Firewall
 
+Enable the firewall if it is not already enabled and make sure to allow UDP traffic through port 443. UDP uses a connectionless communication model, it is a fire and forget protocol. It is what makes the reduction of overhead possible.
+
 ```shell
 # Adjust firewall
 sudo ufw default allow outgoing
@@ -71,6 +72,8 @@ sudo ufw enable
 ```
 
 ### Certbot
+
+Install certbot, or your favorite tool to issue and renew certificates. A lit of alternative clients can be found [here](https://letsencrypt.org/docs/client-options/). We will use snap to since it is the method recommended by Certbot. You can find alternative installation methods [here](https://eff-certbot.readthedocs.io/en/stable/install.html).
 
 ```shell
 # Make sure snapd core is up to date
@@ -88,13 +91,17 @@ sudo ln -s /snap/bin/certbot /usr/bin/certbot
 
 ### Site directory
 
+We will now create a directory to store our site and its data. This is where the server will look for the site's contents when serving out visitors. You can choose a different location that the one I chose, just make sure to make the adjustment in other places this path appears as you follow along.
+
 ```shell
-sudo mkdir -p /var/www/WEBSITE/html
-sudo chown -R www-data:www-data /var/www/WEBSITE/html
+sudo mkdir -p /var/www/WEBSITE/html/
+sudo chown -R www-data:www-data /var/www/WEBSITE/html/
 sudo chmod -R 755 /var/www/WEBSITE
 ```
 
 ### Webpage
+
+With our directory created, we will create a simple html page for the purpose of demonstrating the functionality. This will be later on replaced with your actual site files.
 
 ```shell
 # Create a sample index.html
@@ -109,49 +116,23 @@ Paste in the following contents and save
         <title>Welcome to WEBSITE!</title>
     </head>
     <body>
-        <h1>Success!  The WEBSITE server block is working!</h1>
+        <h1>Success! The WEBSITE server block is working!</h1>
     </body>
 </html>
 ```
 
-### Configure Website
-
-```shell
-# Create and link the server block directory
-sudo mkdir /etc/nginx/sites-available
-sudo ln -s /etc/nginx/sites-available /etc/nginx/sites-enabled
-```
-
-### Create the website configuration
-
-```shell
-sudo nano /etc/nginx/sites-available/WEBSITE
-```
-
-Paste in the following content and save the file
-
-```txt
-server {
-    listen 80;
-
-    index index.html index.nginx-debian.html;
-    server_name WEBSITE www.WEBSITE;
-
-    root /var/www/WEBSITE/html;
-}
-```
-
 ### Configure NGINX
 
-Edit the NGINX conf file
+It is time to make some adjustments to our NGINX configuration.
 
 ```shell
 sudo nano /etc/nginx/nginx.conf
 ```
 
-Adjust the config file to match the following block
+Adjust the config file to match the following block which is enough to get us started for now.
 
 ```txt
+
 user  www-data;
 worker_processes  auto;
 
@@ -174,22 +155,61 @@ http {
 
     access_log  /var/log/nginx/access.log  main;
 
-    sendfile        on;
-    #tcp_nopush     on;
-
+    sendfile  on;
     keepalive_timeout  65;
-
-    #gzip  on;
+    gzip  on;
 
     include /etc/nginx/conf.d/*.conf;
-    include /etc/nginx/sites-enabled/*;
 }
 ```
+What follows is a brief explanation of what the different directives and values do.
+- `user` defines the user used by the worker processes.
+- `worker-processes` the number of worker processes. Setting it to the number of CPU cores is a good start, `auto` automatically detects it for us.
+- `error_log` defines a log file to store logs and the level of logging.
+- `pid` defines a file that will store the process ID of the main process.
+- `events` configuration of connection processing.
+    - `worker_connections` sets the maximum number of simultaneous connections that can be opened by a worker process.
+- the top-level `http` block.
+    - `include /etc/nginx/mime.types` tells browsers how to handle different file formats.
+    - `default_type application/octet-stream;` tells browsers to treat files not identified in `/etc/nginx/mime.types` as downloadable binaries.
+    - `log_format` specifies the log format.
+    - `access_log` sets the path and format for logging.
+    - `send_file` ensures that nginx operations will not block disk I/O.
+    - `keepalive_timeout` the duration to keep worker_connections open for each client.
+    - `gzip` compress data to browsers to enhance performance.
+    - `include /etc/nginx/conf.d/*.conf;` include all configuration files in provided directory.
+
+### Create the website configuration
+
+We will now create a configuration file for the website in the /etc/nginx/conf.d/ directory inline with the new conventions which you can read more about [here](https://www.oreilly.com/library/view/nginx-cookbook/9781492049098/ch01.html). All .conf files placed in this directory are included in the top-level http block.
+
+```shell
+sudo nano /etc/nginx/conf.d/WEBSITE.conf
+```
+
+Paste in the following content and save the file.
+
+```txt
+server {
+    listen 80;
+    server_name WEBSITE www.WEBSITE;
+
+    root /var/www/WEBSITE/html;
+}
+```
+What follows is a brief explanation of what the different directives and values do.
+- `server` defines a new server block for nginx to listen to.
+- `listen 80` the port nginx will listen on.
+- `server_name` the hostnames of the requests which should be directed to this server.
+- `root` tells nginx where to look for content.
 
 ### Start NGINX
 
+It's time to apply the changes and start NGINX.
+
 ```shell
-# Enable nginx on system startup if not already enabled
+# Start and enable nginx on system startup if not already enabled
+sudo systemctl start nginx
 sudo systemctl enable nginx
 
 # Check the status of nginx
@@ -199,53 +219,68 @@ sudo systemctl status nginx
 sudo nginx -t
 ```
 
+Makes sure that no errors were encountered. The last command should display helpful information to help you troubleshoot any failed validations.
+
 ### Generate certificates
 
-```shell
-sudo certbot certonly --nginx
-```
-
-Fill in your email address, agree to the terms and hit enter when prompted to pick the domains to create certificates for.
-
-### Enable HTTP/3
-
-Update the website configuration file to enable HTTP/3
+With NGINX up and running, it is time to generate our certificates. We do this with the help of certbot.
 
 ```shell
-sudo nano /etc/nginx/sites-available/WEBSITE
+sudo certbot --nginx -d WEBSITE -d www.WEBSITE
 ```
 
-Adjust the file's contents to match the following block
+When prompted, fill in your email address and agree to the terms.
+
+### Enable QUIC
+
+Certbot should now have generated the certificates for us and updated our site's configuration file accordingly. We need to make some final adjustments to enable QUIC.
+
+```shell
+sudo nano /etc/nginx/conf.d/WEBSITE.conf
+```
+
+Adjust the file's contents to match the following block.
 
 ```txt
 server {
-    # for better compatibility we recommend
-    # using the same port number for QUIC and TCP
-    listen 443 http3 reuseport; # QUIC
-    listen 443 ssl;             # TCP
+    # Using the same port number for QUIC and TCP
+    listen 443 http3 reuseport;       # IPv4 QUIC
+    listen 443 ssl http2;             # IPv4 TCP
+    listen [::]:443 http3 reuseport;  # IPv6 QUIC
+    listen [::]:443 ssl http2;        # IPv6 TCP
+
+    # Server name
+    server_name WEBSITE www.WEBSITE;
     
-    listen [::]:443 http3 reuseport;
-    listen [::]:443 ssl;
+    # Site root
+    root /var/www/WEBSITE/html;
+    
+    # Certificates
+     ssl_certificate /etc/letsencrypt/live/WEBSITE/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/WEBSITE/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+}
+server {
+    if ($host = www.WEBSITE) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
 
-    ssl_certificate     /etc/letsencrypt/live/WEBSITE/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/WEBSITE/privkey.pem;
-    ssl_trusted_certificate /etc/letsencrypt/live/myconf.se/chain.pem;
-    ssl_protocols       TLSv1.3;
+    if ($host = WEBSITE) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
 
-    location / {
-        # advertise that QUIC is available on the configured port
-        add_header Alt-Svc 'h3=":$server_port"; ma=86400';
-
-        # signal whether we are using QUIC+HTTP/3
-        add_header X-protocol $server_protocol always;
-
-        #proxy_pass <upstream_group>;
-        root       /var/www/WEBSITE/html/;
-    }
+    listen 80;
+    server_name WEBSITE www.WEBSITE;
+    return 404; # managed by Certbot
 }
 ```
 
+Here, we added `listen [::]` so that nginx listens to IPv6 connections. You can remove this directive if you have not enabled IPv6 for your domain. We have also configured `HTTP/2` to be the starting http version for new connections instead of `HTTP/1.1` for better performance. Connections will switch to QUIC after it is discovered. The second server block is used to redirect unencrypted traffic to encrypted traffic.
+
 ### Apply changes
+
+It is time to apply the new changes.
 
 ```shell
 # Restart NGINX
@@ -266,3 +301,7 @@ The website should now be live with QUIC+HTTP/3 enabled.
 Head over to [https://www.http3check.net/](https://www.http3check.net/) to verify that QUIC and HTTP/3 are supported on your site.
 
 {% image "./assets/verification.png", "QUIC verification", "QUIC verification" %}
+
+## Concluding Remarks
+
+With this _quic_ demonstration completed, there are a number of things to consider before using it. Given that internet service has gotten more reliable over the years, the likelihood of issues caused by dropped packages has become increasingly unlikely. At the same time, the amount of bandwidth saved makes it an attractive tradeoff especially on the server side.
