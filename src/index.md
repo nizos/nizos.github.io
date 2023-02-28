@@ -3,5 +3,6 @@ layout: home.liquid
 title: Nizar's Blog
 ---
 
-# Welcome to the blog!
+# Nizar's Blog
 
+Thoughts and ideas
