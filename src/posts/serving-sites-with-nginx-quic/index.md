@@ -18,13 +18,15 @@ QUIC is a general-purpose transport layer network protocol that provides built-i
 
 {% image "./assets/QUIC.png", "QUIC diagram", "QUIC diagram" %}
 
-For a more detailed breakdown of QUIC and how it works, checkout Cloudflare's blog article The Road to QUIC.
+For a more detailed breakdown of QUIC and how it works, checkout Cloudflare's blog article [The Road to QUIC](https://blog.cloudflare.com/the-road-to-quic/).
 
 ## Using NGINX QUIC
 
 What follows is a step-by-step guide on how to serve a website using NGINX QUIC. For this setup, we will use a newly created Ubuntu 22.04 server.
 
 ### Update the system
+
+We start by ensuring that the system is up-to-date as usual.
 
 ```shell
 # Install the latest updates
@@ -35,6 +37,8 @@ sudo reboot -h now
 ```
 
 ### Install NGINX-QUIC
+
+We then set up the repository and install the pre-built packages.
 
 ```shell
 # Install the prerequisites
@@ -91,7 +95,7 @@ sudo ln -s /snap/bin/certbot /usr/bin/certbot
 
 ### Site directory
 
-We will now create a directory to store our site and its data. This is where the server will look for the site's contents when serving out visitors. You can choose a different location that the one I chose, just make sure to make the adjustment in other places this path appears as you follow along.
+We will now create a directory to store our site and its data. This is where the server will look for the site's contents when serving out visitors. You can choose a different location that the one I chose, just make sure to make the same adjustment in the other places that this path appears in as you follow along.
 
 ```shell
 sudo mkdir -p /var/www/WEBSITE/html/
@@ -101,14 +105,14 @@ sudo chmod -R 755 /var/www/WEBSITE
 
 ### Webpage
 
-With our directory created, we will create a simple html page for the purpose of demonstrating the functionality. This will be later on replaced with your actual site files.
+With our directory created, we will now create a simple html page for the purpose of demonstrating the functionality. This can be replaced with your actual site contents when we are done.
 
 ```shell
 # Create a sample index.html
 nano /var/www/WEBSITE/html/index.html
 ```
 
-Paste in the following contents and save
+Paste in the following snippet and save.
 
 ```html
 <html>
@@ -123,13 +127,13 @@ Paste in the following contents and save
 
 ### Configure NGINX
 
-It is time to make some adjustments to our NGINX configuration.
+It is now time to make some adjustments to our NGINX configuration.
 
 ```shell
 sudo nano /etc/nginx/nginx.conf
 ```
 
-Adjust the config file to match the following block which is enough to get us started for now.
+Adjust the config file to match the following block, which is enough to get us started for now.
 
 ```txt
 
