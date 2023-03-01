@@ -110,18 +110,18 @@ td:only-child {
 
 * + h1,
 * + h2 {
-    margin-top: 5rem;
+    margin-top: 3rem;
 }
 
 * + h3,
 * + h4,
 * + h5,
 * + h6 {
-    margin-top: 3rem;
+    margin-top: 2rem;
 }
 
 * + p {
-    margin-top: 2rem;
+    margin-top: 1.5rem;
 }
 
 h2 + p,
@@ -423,7 +423,7 @@ p {
 }
 
 .post-list__wrapper {
-    margin-top: 6rem;
+    margin-top: 4rem;
 }
 
 .post-list__heading {
@@ -491,6 +491,12 @@ p {
     margin-left: 1rem;
 }
 
+.post-list__caption {
+    margin-top: 0.5rem;
+    color: #262626;
+    font-size: 0.875rem;
+}
+
 .post-list__excerpt {
     margin-top: 1rem;
     color: #060606;
@@ -525,7 +531,7 @@ p {
 }
 
 .post > * + * {
-    margin-top: 4rem;
+    margin-top: 2rem;
 }
 
 .post li {
@@ -539,6 +545,12 @@ p {
 
 .post__details > * + * {
     margin-left: 0.5rem;
+}
+
+.post__cover-caption {
+    margin-top: 0.5rem;
+    color: #262626;
+    font-size: 0.875rem;
 }
 
 .post__content {

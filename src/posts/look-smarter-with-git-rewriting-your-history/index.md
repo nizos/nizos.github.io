@@ -4,10 +4,10 @@ excerpt: 'As developers, we are encouraged to commit code changes early and freq
 date: 2022-08-08
 author: Nizar
 permalink: /{{ title | slugify }}/index.html
-cover: git-flow-cover.jpg
+cover: 'assets/code.jpg'
+caption: 'Photo by <a href="https://unsplash.com/@sapegin">Artem Sapegin</a> on <a href="https://unsplash.com/photos/b18TRXc8UPQ">Unsplash</a>'
 tags: [git, vcs]
 ---
-
 This blog post is co-authored by [Raniz](https://raniz.blog/).
 
 # Intro

@@ -3,6 +3,8 @@ title: 'Serving Sites with NGINX QUIC'
 date: 2023-02-28
 author: Nizar
 permalink: /{{ title | slugify }}/index.html
+cover: 'assets/cable.jpg'
+caption: 'Photo by <a href="https://unsplash.com/@markusspiske">Markus Spiske</a> on <a href="https://unsplash.com/photos/MDHLwA3Awb8">Unsplash</a>'
 tags: [http, nginx, quic]
 ---
 

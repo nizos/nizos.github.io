@@ -11,6 +11,11 @@ layout: base
         </div>
     </header>
 
+    <div class="post__cover">
+        {% image cover, "Cover image", "Cover image" %}
+        <p class="post__cover-caption">{{ caption }}</p>
+    </div>
+
     <main class="post__content">
         {{ content }}
     </main>
