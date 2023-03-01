@@ -50,8 +50,7 @@ module.exports = function(eleventyConfig) {
         return content.substr(0, content.lastIndexOf(' ', 200)) + '...';
     });
 
-    eleventyConfig.addPassthroughCopy("src/css");
-
+    eleventyConfig.addPassthroughCopy("src/assets");
     eleventyConfig.addPassthroughCopy("src/CNAME");
 
     return {
