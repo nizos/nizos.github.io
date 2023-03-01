@@ -227,13 +227,27 @@ Makes sure that no errors were encountered. The last command should display help
 
 ### Generate certificates
 
-With NGINX up and running, it is time to generate our certificates. We do this with the help of certbot.
+With NGINX up and running, it is time to generate our certificates. We do this with the help of certbot. When prompted, fill in your email address and agree to the terms.
 
 ```shell
 sudo certbot --nginx -d WEBSITE -d www.WEBSITE
 ```
 
-When prompted, fill in your email address and agree to the terms.
+Those certificates are valid for 90 days. Certbot adds a systemd timer that checks our certs for us twice a day and renews any certs that will expire within 30 days.
+
+We can verify the status of the timer by running the following command.
+
+```shell
+sudo systemctl status snap.certbot.renew.service
+```
+
+We can also test the renewal process by running the following command.
+
+```shell
+sudo certbot renew --dry-run
+```
+
+Let's Encrypt will also send you a warning email to the email account you provided when creating the certificates if the renewal process fails.
 
 ### Enable QUIC
 
@@ -310,3 +324,5 @@ Head over to [https://www.http3check.net/](https://www.http3check.net/) to verif
 
 With this _quic_ demonstration completed, there are some things to consider before using it. Given that internet service has gotten more reliable over the years, the likelihood of issues caused by dropped packages has become increasingly unlikely. At the same time, the amount of bandwidth saved makes it an attractive tradeoff especially on the server side.
 This is also a preview release. That said, there are several production deployments according to [NGINX](https://quic.nginx.org/).
+
+I will also cover topics such as optimising NGINX for performance and strengthening security through the use of headers in future posts.

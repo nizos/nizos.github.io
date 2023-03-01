@@ -123,9 +123,14 @@
 <pre class="language-shell"><code class="language-shell"><span class="token comment"># Start and enable nginx on system startup if not already enabled</span><br><span class="token function">sudo</span> systemctl start nginx<br><span class="token function">sudo</span> systemctl <span class="token builtin class-name">enable</span> nginx<br><br><span class="token comment"># Check the status of nginx</span><br><span class="token function">sudo</span> systemctl status nginx<br><br><span class="token comment"># Make sure no errors were encountered</span><br><span class="token function">sudo</span> nginx <span class="token parameter variable">-t</span></code></pre>
 <p>Makes sure that no errors were encountered. The last command should display helpful information to help you troubleshoot any failed validations.</p>
 <h3>Generate certificates</h3>
-<p>With NGINX up and running, it is time to generate our certificates. We do this with the help of certbot.</p>
+<p>With NGINX up and running, it is time to generate our certificates. We do this with the help of certbot. When prompted, fill in your email address and agree to the terms.</p>
 <pre class="language-shell"><code class="language-shell"><span class="token function">sudo</span> certbot <span class="token parameter variable">--nginx</span> <span class="token parameter variable">-d</span> WEBSITE <span class="token parameter variable">-d</span> www.WEBSITE</code></pre>
-<p>When prompted, fill in your email address and agree to the terms.</p>
+<p>Those certificates are valid for 90 days. Certbot adds a systemd timer that checks our certs for us twice a day and renews any certs that will expire within 30 days.</p>
+<p>We can verify the status of the timer by running the following command.</p>
+<pre class="language-shell"><code class="language-shell"><span class="token function">sudo</span> systemctl status snap.certbot.renew.service</code></pre>
+<p>We can also test the renewal process by running the following command.</p>
+<pre class="language-shell"><code class="language-shell"><span class="token function">sudo</span> certbot renew --dry-run</code></pre>
+<p>Let's Encrypt will also send you a warning email to the email account you provided when creating the certificates if the renewal process fails.</p>
 <h3>Enable QUIC</h3>
 <p>Certbot should now have generated the certificates for us and updated our site's configuration file accordingly. We need to make some final adjustments to enable QUIC.</p>
 <pre class="language-shell"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">nano</span> /etc/nginx/conf.d/WEBSITE.conf</code></pre>
@@ -144,6 +149,7 @@
 <h2>Concluding Remarks</h2>
 <p>With this <em>quic</em> demonstration completed, there are some things to consider before using it. Given that internet service has gotten more reliable over the years, the likelihood of issues caused by dropped packages has become increasingly unlikely. At the same time, the amount of bandwidth saved makes it an attractive tradeoff especially on the server side.
 This is also a preview release. That said, there are several production deployments according to <a href="https://quic.nginx.org/">NGINX</a>.</p>
+<p>I will also cover topics such as optimising NGINX for performance and strengthening security through the use of headers in future posts.</p>
 
     </main>
 
