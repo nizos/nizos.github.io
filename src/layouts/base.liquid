@@ -27,11 +27,10 @@
         {% endif %}
 
         <title>
-            {{ title | escape }}
-            {% if title %}
-                | {{ site.name }}
+            {% if title == site.name %}
+                {{ site.title | escape }}
             {% else %}
-                {{ site.name }}
+                {{ title | escape }} | {{ site.name | escape}}
             {% endif %}
         </title>
 
