@@ -1,10 +1,11 @@
 ---
 title: 'Look Smarter With Git: Rewriting Your History'
-excerpt: 'As developers, we are encouraged to commit code changes early and frequently. A benefit of which is being able to revert to previous states when needed. This luxury, however, can come at the expense of a rather messy Git history; one that communicates how the intended changes were reached rather than what they are.'
+description: 'As developers, we are encouraged to commit code changes early and frequently. A benefit of which is being able to revert to previous states when needed. This luxury, however, can come at the expense of a rather messy Git history; one that communicates how the intended changes were reached rather than what they are.'
 date: 2022-08-08
 author: Nizar
 permalink: /{{ title | slugify }}/index.html
 cover: 'assets/code.jpg'
+socialImage: 'assets/socialImage.jpg'
 caption: 'Photo by <a href="https://unsplash.com/@sapegin">Artem Sapegin</a> on <a href="https://unsplash.com/photos/b18TRXc8UPQ">Unsplash</a>'
 tags: [git, vcs]
 ---

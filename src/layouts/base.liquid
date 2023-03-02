@@ -5,10 +5,27 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="/assets/css/main.css" rel="stylesheet" />
 
-        <meta name="description" content="{{ site.description }}">
-        <meta property="og:description" content="{{ site.description }}">
+        {% assign desc = description %}
+        {% if desc == blank %}
+            {% assign desc = site.description %}
+        {% endif %}
+        {% if desc %}
+            <meta name="description" content="{{ desc | escape  }}">
+            <meta property="og:description" content="{{ desc | escape }}">
+            <meta name="description" content="{{ desc | escape }}"/>
+        {% endif %}
 
-        <meta property="og:image" content="/assets/images/socialImage.jpg">
+        {% if socialImage == blank %}
+            {% assign socialImage = site.defaultSocialImage %}
+        {% else %}
+            {% assign slug = title | slugify %}
+            {% assign socialImage = "/posts/" | append: slug | append: "/" | append: socialImage %}
+        {% endif %}
+        {% if socialImage %}
+            <meta property="og:image" content="{{ socialImage }}"/>
+            <meta name="twitter:image" content="{{ socialImage }}"/>
+        {% endif %}
+
         <title>
             {{ title | escape }}
             {% if title %}
