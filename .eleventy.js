@@ -26,7 +26,7 @@ async function imageShortcode(src, alt, sizes) {
 
 module.exports = function(eleventyConfig) {
     // Plugins
-    eleventyConfig.addPlugin(timeToRead);
+    eleventyConfig.addPlugin(timeToRead, {speed: '250 words per minute',output: function(data) {return data.timing}});
     eleventyConfig.addPlugin(pluginRss);
     eleventyConfig.addPlugin(syntaxHighlight);
 
