@@ -5,7 +5,7 @@ date: 2022-08-08
 author: Nizar
 permalink: /{{ title | slugify }}/index.html
 cover: 'assets/code.jpg'
-socialImage: 'assets/socialImage.jpg'
+socialImage: '/assets/images/look-smarter-with-git-socialImage.jpg'
 caption: 'Photo by <a href="https://unsplash.com/@sapegin">Artem Sapegin</a> on <a href="https://unsplash.com/photos/b18TRXc8UPQ">Unsplash</a>'
 tags: [git, vcs]
 ---
