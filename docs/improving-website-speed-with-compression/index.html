@@ -67,21 +67,9 @@
 <p>At the risk of preaching to the choir, the minute performance improvements we make to the websites we create accumulate to astounding and far-reaching impacts. Their importance and significance can not be understated, especially considering how simple some of them are. In this post, we'll explore how to improve website speed by leveraging HTTP compression and pre-compressing files.</p>
 <h2>HTTP Compression</h2>
 <p>One technique that has significantly contributed to website speed improvement is HTTP compression. This seamless capability in our web servers and browsers, which can easily go unnoticed, improves transfer speed and bandwidth utilization by compressing HTTP data before sending it. The scheme used for the compression is negotiated through the client advertising methods it supports.</p>
-<pre><code>GET /encrypted-area HTTP/1.1
-Host: www.example.com
-Accept-Encoding: gzip, deflate
-</code></pre>
+<pre class="language-text"><code class="language-text">GET /encrypted-area HTTP/1.1<br>Host: www.example.com<br>Accept-Encoding: gzip, deflate</code></pre>
 <p>The server can also support multiple compression schemes. In such a case, the server lists them in the <code>Content-Encoding</code> or <code>Transfer-Encoding</code> field in the HTTP response.</p>
-<pre><code>HTTP/1.1 200 OK
-Date: mon, 26 June 2016 22:38:34 GMT
-Server: Apache/1.3.3.7 (Unix)  (Red-Hat/Linux)
-Last-Modified: Wed, 08 Jan 2003 23:11:55 GMT
-Accept-Ranges: bytes
-Content-Length: 438
-Connection: close
-Content-Type: text/html; charset=UTF-8
-Content-Encoding: gzip
-</code></pre>
+<pre class="language-text"><code class="language-text">HTTP/1.1 200 OK<br>Date: mon, 26 June 2016 22:38:34 GMT<br>Server: Apache/1.3.3.7 (Unix)  (Red-Hat/Linux)<br>Last-Modified: Wed, 08 Jan 2003 23:11:55 GMT<br>Accept-Ranges: bytes<br>Content-Length: 438<br>Connection: close<br>Content-Type: text/html; charset=UTF-8<br>Content-Encoding: gzip</code></pre>
 <h2>Compression Schemes</h2>
 <p>The two most common compression schemes used today are Gzip (<code>gzip</code>) and Brotli (<code>br</code>).</p>
 <p>Gzip, the older of the two, was released in 1993 during the formative years of the internet. It was originally intended to compress files and has been adapted to compress streams. Brotli on the other hand, which was released in 2013 by Google, was designed from the ground up to compress streams making it a preferred scheme for web.</p>
@@ -93,54 +81,21 @@ Content-Encoding: gzip
 <h2>Pre-Compressing Files</h2>
 <p>While compression significantly reduces the size of transmitted data, it also happens at run time and as such impedes performance due to the required processing overhead. Luckily, we can utilize modules that allow us to serve pre-compressed files, effectively eliminating all the processing overhead at runtime. This is ideal for serving static content and static files.</p>
 <p>We will have to first compress our files. The <code>node:zlib</code> module provides all the compression functionality needed to do so using Gzip and Brotli. The documentation provides an example of how to accomplish this by piping the source stream (file) through a <code>zlib</code> Transform into a destination stream.</p>
-<pre><code>const { createGzip } = require('node:zlib');
-const { pipeline } = require('node:stream');
-const {
-  createReadStream,
-  createWriteStream,
-} = require('node:fs');
-
-const gzip = createGzip();
-const source = createReadStream('input.txt');
-const destination = createWriteStream('input.txt.gz');
-
-pipeline(source, gzip, destination, (err) =&gt; {
-  if (err) {
-    console.error('An error occurred:', err);
-    process.exitCode = 1;
-  }
-});
-</code></pre>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">const</span> <span class="token punctuation">{</span> createGzip <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'node:zlib'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token keyword">const</span> <span class="token punctuation">{</span> pipeline <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'node:stream'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token keyword">const</span> <span class="token punctuation">{</span><br>  createReadStream<span class="token punctuation">,</span><br>  createWriteStream<span class="token punctuation">,</span><br><span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'node:fs'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><br><span class="token keyword">const</span> gzip <span class="token operator">=</span> <span class="token function">createGzip</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token keyword">const</span> source <span class="token operator">=</span> <span class="token function">createReadStream</span><span class="token punctuation">(</span><span class="token string">'input.txt'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token keyword">const</span> destination <span class="token operator">=</span> <span class="token function">createWriteStream</span><span class="token punctuation">(</span><span class="token string">'input.txt.gz'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><br><span class="token function">pipeline</span><span class="token punctuation">(</span>source<span class="token punctuation">,</span> gzip<span class="token punctuation">,</span> destination<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">err</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span><br>  <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">'An error occurred:'</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span><span class="token punctuation">;</span><br>    process<span class="token punctuation">.</span>exitCode <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span><br>  <span class="token punctuation">}</span><br><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <p>For Brotli, we simply replace the Gzip object with a <code>BrotliCompress</code> object. We can call <code>createBrotliCompress()</code> instead of <code>createGzip()</code> to create our transform stream. Additionally, we can pass an <code>options</code> object to specify the compression level and fine-tune other parameters to our liking.</p>
 <p>We then simply create the necessary functionality to recursively iterate through the files in our build directory and create <code>.gz</code> and <code>.br</code> compressed files next to the uncompressed files. Finally, we add the command to our build script and have it automatically execute as a final build step.</p>
 <h2>Serving Pre-Compressed Files</h2>
 <p>For NGINX, we can use <a href="https://nginx.org/en/docs/http/ngx_http_gzip_static_module.html#gzip_static">ngx_http_gzip_static_module</a> for Gzip and <a href="https://github.com/google/ngx_brotli#brotli_static">ngx_brotli</a> for Brotli precompressed files. These allow us to precompress our files and have them served as such.</p>
 <p>Nginx uses a nifty tool called <a href="https://hg.nginx.org/pkg-oss/">pkg-oss</a> to create the dynamic module packages for their official repositories. It contains a script that automates the process, which we can use to create installable packages with the correct dependencies for our modules.</p>
 <p>This method ensures that the dependency between our modules and NGINX is honored, facilitating seamless upgrades and avoiding upgrade failures. The code block below shows how we can use it to create <code>deb</code> packages for our <code>ngx_brotli</code> module. You can use <code>curl</code> or any other similar tool instead of <code>wget</code>.</p>
-<pre><code>wget https://hg.nginx.org/pkg-oss/raw-file/default/build_module.sh
-chmod a+x build_module.sh
-./build_module.sh -v 1.23.3 --force-dynamic https://github.com/google/ngx_brotli.git
-</code></pre>
+<pre class="language-text"><code class="language-text">wget https://hg.nginx.org/pkg-oss/raw-file/default/build_module.sh<br>chmod a+x build_module.sh<br>./build_module.sh -v 1.23.3 --force-dynamic https://github.com/google/ngx_brotli.git</code></pre>
 <p>Do note however that this should be done in a separate build environment to ensure that only operation-necessary software is installed on the production server. Further, this script might not work for every module and the installable packages created by it are not intended for distribution. Finally, seamless upgrades require a <code>yum</code> or <code>apt</code> repository. For instructions and more information, check out Liam Crillys article <a href="https://www.nginx.com/blog/creating-installable-packages-dynamic-modules/">Creating Installable Packages for Dynamic Modules</a>.</p>
 <p>Upon completion, the script outputs the path of the created <code>deb</code> packages which we can install with the help of <code>dpkg</code>.</p>
-<pre><code>dpkg -i nginx-module-brotli_1.23.3+1.0-1~jammy_amd64.deb
-</code></pre>
+<pre class="language-shell"><code class="language-shell">dpkg <span class="token parameter variable">-i</span> nginx-module-brotli_1.23.3+1.0-1~jammy_amd64.deb</code></pre>
 <p>We then need to configure NGINX to use the newly installed module. We do this by editing the main configuration file.</p>
-<pre><code>nano /etc/nginx/nginx.conf
-</code></pre>
+<pre class="language-shell"><code class="language-shell"><span class="token function">nano</span> /etc/nginx/nginx.conf</code></pre>
 <p>We simply add the directive we are interested in to the http block. For example:</p>
-<pre><code>brotli on;
-brotli_comp_level 6;
-brotli_static on;
-brotli_types application/atom+xml application/javascript
-  application/json application/rss+xml application/vnd.ms-fontobject
-  application/x-font-opentype application/x-font-truetype
-  application/x-font-ttf application/x-javascript
-  application/xhtml+xml application/xml font/eot font/opentype
-  font/otf font/truetype image/svg+xml image/vnd.microsoft.icon
-  image/x-icon image/x-win-bitmap text/css text/javascript
-  text/plain text/xml;
-</code></pre>
+<pre class="language-text"><code class="language-text">brotli on;<br>brotli_comp_level 6;<br>brotli_static on;<br>brotli_types application/atom+xml application/javascript<br>  application/json application/rss+xml application/vnd.ms-fontobject<br>  application/x-font-opentype application/x-font-truetype<br>  application/x-font-ttf application/x-javascript<br>  application/xhtml+xml application/xml font/eot font/opentype<br>  font/otf font/truetype image/svg+xml image/vnd.microsoft.icon<br>  image/x-icon image/x-win-bitmap text/css text/javascript<br>  text/plain text/xml;</code></pre>
 <ul>
 <li><code>brotli</code>: Enables on-the-fly compression of responses.</li>
 <li><code>brotli_comp_level</code>: Sets the on-the-fly compression levels. Range is 0 - 11, default is 6.</li>
@@ -149,21 +104,15 @@ brotli_types application/atom+xml application/javascript
 </ul>
 <p>Check the official <a href="https://github.com/google/ngx_brotli">ngx_brotli</a> repo for additional information and configuration.</p>
 <p>Check for any syntax errors after saving with the following command:</p>
-<pre><code>nginx -t
-</code></pre>
+<pre class="language-shell"><code class="language-shell">nginx <span class="token parameter variable">-t</span></code></pre>
 <p>The output should look something like this:</p>
-<pre><code>nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
-nginx: configuration file /etc/nginx/nginx.conf test is successful
-</code></pre>
+<pre class="language-text"><code class="language-text">nginx: the configuration file /etc/nginx/nginx.conf syntax is ok<br>nginx: configuration file /etc/nginx/nginx.conf test is successful</code></pre>
 <p>Finally, restart NGINX to apply the changes.</p>
-<pre><code>systemctl restart nginx
-</code></pre>
+<pre class="language-shell"><code class="language-shell">systemctl restart nginx</code></pre>
 <p>NGINX is now configured with Brotli support. You can verify this by running the following command:</p>
-<pre><code>curl -H ‘Accept-Encoding: br’ -I https://your-website.com
-</code></pre>
+<pre class="language-text"><code class="language-text">curl -H ‘Accept-Encoding: br’ -I https://your-website.com</code></pre>
 <p>The result should contain the following line:</p>
-<pre><code>content-encoding: br
-</code></pre>
+<pre class="language-text"><code class="language-text">content-encoding: br</code></pre>
 <p>Be also sure to test your improved website speed by using PageSpeed Insights, Lighthouse or any other tool you prefer. Your numbers may vary depending on several factors such as existing bottlenecks, but you should see an improvement.</p>
 <h2>Results</h2>
 <p>After compressing and serving static files, the loading speed of my website improved significantly. However, don't just take my word for it. Let's examine some real-world examples that illustrate the effectiveness of compression.</p>
