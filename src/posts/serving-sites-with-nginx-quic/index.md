@@ -300,14 +300,14 @@ Here, we added `listen [::]` so that nginx listens to IPv6 connections. You can 
 
 ### Apply changes
 
-It is time to apply the new changes.
+It is time to apply the new changes after checking that everything is fine.
 
 ```shell
-# Restart NGINX
-sudo systemctl reload nginx
-
 # Make sure no errors were encountered
 sudo nginx -t
+
+# Restart NGINX
+sudo systemctl reload nginx
 ```
 
 ### Live!
