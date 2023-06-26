@@ -46,7 +46,7 @@ Content-Encoding: gzip
 
 The two most common compression schemes used today are Gzip (`gzip`) and Brotli (`br`).
 
-Gzip, the older of the two, was released in 1993 during the formative years of the internet. It was originally intended to compress files and has been adapted to compress streams. Brotli on the other hand, which was released in 2013 by Google, was designed from the ground up to compress streams making it a preferred scheme for web.
+Gzip, the older of the two, was released in 1993 during the formative years of the internet. It was created to compress files and has since been adapted to compress streams. Brotli on the other hand, which was released in 2013 by Google, was designed from the ground up to compress streams making it a preferred scheme for web.
 
 Both Gzip and Brotli combine variations of the [LZ77](https://en.wikipedia.org/wiki/LZ77_and_LZ78) algorithm and [Huffman coding](https://en.wikipedia.org/wiki/Huffman_coding), among others, to provide lossless general-purpose compression.
 
@@ -56,7 +56,7 @@ The Huffman coding algorithm further compresses the data by using a dictionary o
 
 Brotli is further able to reach higher compression density by utilizing context models and other improvements. It also uses a pre-defined dictionary along its dynamic memory, roughly 120 KiB containing 13,000 common words, phrases and substrings derived from internet documents.
 
-This allows Brotli to reach compression densities that are roughly 15% denser for JavaScript and CSS files, and 20% denser for HTML files compared to Gzip. That said, Brotli can also take longer to compress data compared to Gzip. The higher the compression level is, the longer it takes to perform it.
+This allows Brotli to reach compression densities that are roughly 15% denser for JavaScript and CSS files, and 20% denser for HTML files compared to Gzip. That said, Brotli can also take longer to compress data compared to Gzip. The higher the level of compression, the longer it takes.
 
 ## Pre-Compressing Files
 
