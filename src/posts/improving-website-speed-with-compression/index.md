@@ -10,11 +10,11 @@ caption: 'Photo by <a href="https://unsplash.com/@mbaumi">Mika Baumeister</a> on
 tags: [gzip, br, nginx, web]
 ---
 
-Google engineers, Arvind Jain and Jason Glasgow, stated that more than 99 human years are wasted every day because of uncompressed content[1]. That was in 2009. Advancements in technology have since then brought improvements to internet speed, connectivity, and coverage. However, a lot has also changed on the web and how we use it.
+Google engineers, Arvind Jain and Jason Glasgow, stated that more than 99 human years are wasted every day because of uncompressed content [[1]]. That was in 2009. Advancements in technology have since then brought improvements to internet speed, connectivity, and coverage. However, a lot has also changed on the web and how we use it.
 
-Between 2012 and 2022, the average desktop page size increased from 803 KB to 2,284 KB. For mobile, it increased from 386 KB to 2,010 KB. A staggering increase of 184% and 420% respectively in a single decade[2].
+Between 2012 and 2022, the average desktop page size increased from 803 KB to 2,284 KB. For mobile, it increased from 386 KB to 2,010 KB. A staggering increase of 184% and 420% respectively in a single decade [[2]].
 
-During the same period, the number of internet users has also more than doubled, increasing from roughly 2.2 to 5.3 billion internet users, an increase from roughly 35% to 66% of the world population that use the internet[3].
+During the same period, the number of internet users has also more than doubled, increasing from roughly 2.2 to 5.3 billion internet users, an increase from roughly 35% to 66% of the world population that use the internet [[3]].
 
 At the risk of preaching to the choir, the minute performance improvements we make to the websites we create accumulate to astounding and far-reaching impacts. Their importance and significance can not be understated, especially considering how simple some of them are. In this post, we'll explore how to improve website speed by leveraging HTTP compression and pre-compressing files.
 
@@ -131,10 +131,10 @@ brotli_types application/atom+xml application/javascript
   text/plain text/xml;
 ```
 
-- `brotli` - Enables on-the-fly compression of responses.
-- `brotli_comp_level` - Sets the on-the-fly compression levels. Acceptable values range from 0 to 11. Default is 6.
-- `brotli_static` - Enables checking for pre-compressed files with .br extension.
-- `brotli_types` - Enables on-the-fly compression of responses for the specified MIME types in addition to text/html.
+- `brotli`: Enables on-the-fly compression of responses.
+- `brotli_comp_level`: Sets the on-the-fly compression levels. Range is 0 - 11, default is 6.
+- `brotli_static`: Enables checking for pre-compressed files with .br extension.
+- `brotli_types`: MIME types to enable on-the-fly compression for.
 
 Check the official [ngx_brotli](https://github.com/google/ngx_brotli) repo for additional information and configuration.
 
@@ -173,8 +173,10 @@ Be also sure to test your improved website speed by using PageSpeed Insights, Li
 
 After compressing and serving static files, the loading speed of my website improved significantly. However, don't just take my word for it. Let's examine some real-world examples that illustrate the effectiveness of compression.
 
-- Organization website: Time-to interactive was reduced from 1.5 seconds to 0.9 seconds on mobile.
-- Conference website: Time-to-interactive was reduced from 1.4 seconds to 1.0 seconds on mobile.
+Here is how the time-to-interactive changed on mobile for the following sites:
+
+- Organization website: Reduced from 1.5 to 0.9 seconds.
+- Conference website: Reduced from 1.4 to 1.0 seconds.
 
 These are just a few examples of how powerful compression can be in improving website speed. With the easy implementation and significant benefits, it is clear why HTTP compression and pre-compressing files have become standard practice in web development.
 
@@ -183,8 +185,10 @@ Compression plays a vital role in the modern web. It helps us deliver content fa
 
 ## References
 
-[1] - https://developers.googleblog.com/2009/11/use-compression-to-make-web-faster.html
+[1]: <https://developers.googleblog.com/2009/11/use-compression-to-make-web-faster.html> "Use compression to make the web faster"
+[2]: <https://www.keycdn.com/support/the-growth-of-web-page-size> "The Growth of Web Page Size"
+[3]: <https://www.itu.int/hub/publication/d-ind-ict_mdd-2022> "Measuring digital development: Facts and Figures 2022"
 
-[2] - https://www.keycdn.com/support/the-growth-of-web-page-size
-
-[3] - https://www.itu.int/hub/publication/d-ind-ict_mdd-2022
+1. [https://developers.googleblog.com/2009/11/use-compression-to-make-web-faster.html](https://developers.googleblog.com/2009/11/use-compression-to-make-web-faster.html)
+2. [https://www.keycdn.com/support/the-growth-of-web-page-size](https://www.keycdn.com/support/the-growth-of-web-page-size)
+3. [https://www.itu.int/hub/publication/d-ind-ict_mdd-2022](https://www.itu.int/hub/publication/d-ind-ict_mdd-2022)
