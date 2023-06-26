@@ -1,11 +1,11 @@
 ---
 title: 'Improving Website Speed with Compression'
-description: 'Compression plays a vital role in the modern web. It helps us deliver content faster to users while preserving network resources. With technologies like Gzip and Brotli, we can make websites more efficient without compromising the quality of the data. In this post, we'll explore how to improve website speed by leveraging HTTP compression and pre-compressing files.'
+description: 'Compression plays a vital role in the modern web. It helps us deliver content faster to users while preserving network resources. With technologies like Gzip and Brotli, we can make websites more efficient without compromising the quality of the data. In this post, we will explore how to improve website speed by leveraging HTTP compression and pre-compressing files.'
 date: 2023-06-26
 author: Nizar
 permalink: /{{ title | slugify }}/index.html
-cover: 'assets/improving-website-speed-with-compression-social-image.jpg'
-socialImage: '/assets/images/data.jpg'
+cover: 'assets/data.jpg'
+socialImage: '/assets/images/improving-website-speed-with-compression-social-image.jpg'
 caption: 'Photo by <a href="https://unsplash.com/@mbaumi">Mika Baumeister</a> on <a href="https://unsplash.com/photos/Wpnoqo2plFA">Unsplash</a>'
 tags: [gzip, br, nginx, web]
 ---
