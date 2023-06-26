@@ -3,3 +3,4 @@ img
 public
 .idea
 .cache
+.DS_Store
