@@ -22,7 +22,7 @@ At the risk of preaching to the choir, the minute performance improvements we ma
 
 One technique that has significantly contributed to website speed improvement is HTTP compression. This seamless capability in our web servers and browsers, which can easily go unnoticed, improves transfer speed and bandwidth utilization by compressing HTTP data before sending it. The scheme used for the compression is negotiated through the client advertising methods it supports.
 
-```
+```text
 GET /encrypted-area HTTP/1.1
 Host: www.example.com
 Accept-Encoding: gzip, deflate
@@ -30,7 +30,7 @@ Accept-Encoding: gzip, deflate
 
 The server can also support multiple compression schemes. In such a case, the server lists them in the `Content-Encoding` or `Transfer-Encoding` field in the HTTP response.
 
-```
+```text
 HTTP/1.1 200 OK
 Date: mon, 26 June 2016 22:38:34 GMT
 Server: Apache/1.3.3.7 (Unix)  (Red-Hat/Linux)
@@ -64,7 +64,7 @@ While compression significantly reduces the size of transmitted data, it also ha
 
 We will have to first compress our files. The `node:zlib` module provides all the compression functionality needed to do so using Gzip and Brotli. The documentation provides an example of how to accomplish this by piping the source stream (file) through a `zlib` Transform into a destination stream.
 
-```
+```javascript
 const { createGzip } = require('node:zlib');
 const { pipeline } = require('node:stream');
 const {
@@ -96,7 +96,7 @@ Nginx uses a nifty tool called [pkg-oss](https://hg.nginx.org/pkg-oss/) to creat
 
 This method ensures that the dependency between our modules and NGINX is honored, facilitating seamless upgrades and avoiding upgrade failures. The code block below shows how we can use it to create `deb` packages for our `ngx_brotli` module. You can use `curl` or any other similar tool instead of `wget`.
 
-```
+```text
 wget https://hg.nginx.org/pkg-oss/raw-file/default/build_module.sh
 chmod a+x build_module.sh
 ./build_module.sh -v 1.23.3 --force-dynamic https://github.com/google/ngx_brotli.git
@@ -106,18 +106,18 @@ Do note however that this should be done in a separate build environment to ensu
 
 Upon completion, the script outputs the path of the created `deb` packages which we can install with the help of `dpkg`.
 
-```
+```shell
 dpkg -i nginx-module-brotli_1.23.3+1.0-1~jammy_amd64.deb
 ```
 
 We then need to configure NGINX to use the newly installed module. We do this by editing the main configuration file.
 
-```
+```shell
 nano /etc/nginx/nginx.conf
 ```
 We simply add the directive we are interested in to the http block. For example:
 
-```
+```text
 brotli on;
 brotli_comp_level 6;
 brotli_static on;
@@ -139,31 +139,31 @@ brotli_types application/atom+xml application/javascript
 Check the official [ngx_brotli](https://github.com/google/ngx_brotli) repo for additional information and configuration.
 
 Check for any syntax errors after saving with the following command:
-```
+```shell
 nginx -t
 ```
 
 The output should look something like this:
-```
+```text
 nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
 nginx: configuration file /etc/nginx/nginx.conf test is successful
 ```
 
 Finally, restart NGINX to apply the changes.
 
-```
+```shell
 systemctl restart nginx
 ```
 
 NGINX is now configured with Brotli support. You can verify this by running the following command:
 
-```
+```text
 curl -H ‘Accept-Encoding: br’ -I https://your-website.com
 ```
 
 The result should contain the following line:
 
-```
+```text
 content-encoding: br
 ```
 
