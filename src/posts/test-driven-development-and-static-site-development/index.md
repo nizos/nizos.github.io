@@ -18,7 +18,7 @@ I use Eleventy, a simpler static site generator, combined with Jest for testing 
 
 To enable testing in a manner identical to the production environment, we create Eleventy configurations dynamically. This way, configuration parameters such as paths can be adjusted when rendering layouts for tests.
 
-The following code block shows how we achieve this. The solution is quite simple and allows us to do everything a straight-forward configuration file allows us and more. We can easily add any plugins or functionality we want and can also extend with any parameters that we want to dynamically control. Do note that we need to take care of any relative paths so that they can continue to resolve correctly.
+The following code block shows how we achieve this. The solution is quite simple and allows us to do everything a straight-forward configuration file allows us and more. We can easily add any plugins or functionality we want and can also extend it with additional parameters for anything that we would like to dynamically control. Do note that we need to take care of any relative paths so that they can continue to resolve correctly.
 
 ```js
 const pluginBookshop = require('@bookshop/eleventy-bookshop')
