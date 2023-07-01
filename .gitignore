@@ -4,3 +4,6 @@ public
 .idea
 .cache
 .DS_Store
+
+# Build directory
+/docs
