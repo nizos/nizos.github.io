@@ -50,6 +50,13 @@ module.exports = function(eleventyConfig) {
         return content.substr(0, content.lastIndexOf(' ', 200)) + '...';
     });
 
+    eleventyConfig.addCollection("posts", function(collection) {
+        return collection.getFilteredByGlob("src/posts/**/*.md").filter(function(item) {
+            // Exclude items with 'draft: true' in their front matter.
+            return !item.data.draft;
+        });
+    });
+
     eleventyConfig.addPassthroughCopy("src/assets");
     eleventyConfig.addPassthroughCopy("src/CNAME");
 
