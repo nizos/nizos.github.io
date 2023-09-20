@@ -57,7 +57,9 @@ module.exports = function(eleventyConfig) {
         });
     });
 
-    eleventyConfig.addPassthroughCopy("src/assets");
+    eleventyConfig.addPassthroughCopy("src/assets/images");
+    eleventyConfig.addPassthroughCopy("src/assets/css");
+    eleventyConfig.addPassthroughCopy({"src/assets/static": "."});
     eleventyConfig.addPassthroughCopy("src/CNAME");
 
     return {
