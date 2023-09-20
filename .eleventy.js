@@ -5,10 +5,10 @@ const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 const { DateTime } = require('luxon');
 const path = require("node:path");
 
-async function imageShortcode(src, alt, sizes) {
+async function imageShortcode(src, alt, sizes = "100vw") {
     let imageSrc = `${path.dirname(this.page.inputPath)}/${src}`;
     let metadata = await Image(imageSrc, {
-        widths: [300, 600, 900],
+        widths: [300, 600, 750, 900, 1200, 1400],
         formats: ["avif", "jpeg"],
         outputDir: path.dirname(this.page.outputPath),
         urlPath: this.page.url,
