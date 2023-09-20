@@ -79,7 +79,7 @@ Here, we create an in-memory virtual SCSS file that imports every SCSS file dete
 
 Compilation, while crucial, is just one part of the equation. We must enhance and optimize the compiled styles. This is where powerful tools like [PostCSS](https://www.npmjs.com/package/postcss) and [cssnano](https://www.npmjs.com/package/cssnano) come into play.
 
-PostCSS doesn't merely refine styles; it transforms them. The [Autoprefixer](https://www.npmjs.com/package/autoprefixer) plugin is a prime example, appending vendor prefixes based [Can I use](https://caniuse.com/) data, ensuring consistent, cross-browser compatibility.
+PostCSS doesn't merely refine styles; it transforms them. The [Autoprefixer](https://www.npmjs.com/package/autoprefixer) plugin is a prime example, appending vendor prefixes based on [Can I use](https://caniuse.com/) data, ensuring consistent, cross-browser compatibility.
 While PostCSS refines, cssnano tightens. It compresses, strips, and trims the CSS into its leanest form. 
 
 ```js
@@ -116,13 +116,13 @@ By integrating font swapping in our CSS, the browser is directed to utilize a sy
 font-display: swap
 ```
 
-Enhancing font loading further, preloading the font primes the browser early about its significance, allowing for efficient downloading. The following method achieves this without introducing any JavaScript to our site.
+Enhancing font loading further, preloading the font primes the browser early about its significance, allowing for efficient downloading.
 
 ```html
 <link rel="preload" href="/fonts/font.woff2" as="font" type="font/woff2" crossorigin>
 ```
 
-This strategy prompts early font loading without hindering the rendering process, offering a blend of performance and design.
+The above method achieves this without introducing any JavaScript to our site.
 
 ## Critical CSS
 
@@ -153,13 +153,13 @@ This strategy provides several benefits. It accelerates the initial content rend
 
 Responsive design has revolutionized how sites adjust across devices, but it's not without hurdles. For instance, while strategies like asynchronous content loading shows a lot of 'promise' — pun very much intended — it can occasionally result in unexpected layout shifts. Such shifts disorient users, leading to unintended clicks and detracting from a seamless browsing experience.
 
-To address these issues, forward-thinking solutions are essential. A hands-on approach is to establish size constraints for elements that might adjust with incoming content. As an example, if a font swap alters an element's dimensions, the application of `min-height` and `min-width` becomes a vital safeguard. This strategy ensures that our content is primed to adapt to any changes, be they CMS updates or device reconfigurations, whilst maintaining a steadfast structure.
+A hands-on approach is to establish size constraints for elements that might adjust with incoming content. As an example, if a font swap alters an element's dimensions, the application of `min-height` and `min-width` becomes a vital safeguard. This strategy ensures that our content is primed to adapt to any changes, be they CMS updates or device reconfigurations, whilst maintaining a steadfast structure.
 
 ## Responsive Images
 
-As screen sizes become more diverse, the need for responsive image techniques grows. Choosing the right image size not only boosts a website's visual appeal but also ensures optimal performance. Here, the `sizes` attribute stands out.
+As screen sizes become more diverse, the need for responsive image techniques grows. Choosing the right image size not only boosts a website's visual appeal but also ensures optimal performance. Here, the HTML attribute, `sizes`, stands out.
 
-The `sizes` attribute allows us to guide the browser on the image display size for varying viewport conditions. By defining both upper and lower limits with this attribute, we ensure the best-suited image variant gets loaded.
+The `sizes` attribute of the `picture` element allows us to guide the browser on the image display size for varying viewport conditions. By defining both upper and lower limits with this attribute, we ensure the best-suited image variant gets loaded.
 
 For instance, with the `sizes` attribute, we can dictate how the image adapts across different device widths. Here is how it works:
 
@@ -183,7 +183,7 @@ The result is crisp visuals across devices, faster page loads, saved energy, and
 
 At first glance, embedding inline CSS directly into HTML appears to be a straightforward approach to styling. Yet, this simplicity can be deceptive, as it opens up potential security vulnerabilities and challenges, particularly when the CSS undergoes changes during development.
 
-To counter such vulnerabilities, modern browsers have incorporated a vital security feature called the Content Security Policy (CSP) Header. This feature delineates where various content types, be it scripts, styles, or images, can be sourced from, ensuring that only content from trusted sources gets executed or rendered.
+To counter such vulnerabilities, modern browsers have incorporated a security feature called the Content Security Policy (CSP) Header. This feature delineates where various content types, be it scripts, styles, or images, can be sourced from, ensuring that only content from trusted sources gets executed or rendered.
 
 The significance of CSP becomes even clearer when we consider threats like cross-site scripting. This nefarious tactic allows attackers to inject code into web pages that unsuspecting users then view. Not only can it jeopardize user data, but it can also transform reputable sites into hubs of malicious activity. The CSP stands as a safeguard against these and other similar threats.
 
@@ -212,4 +212,4 @@ By harnessing these strategies, we create sites that excel both visually and fun
 
 In the end, the elegance of a website isn't just in its visible design but also in its underlying mechanics. As designers and developers, our goal is to master both fronts, crafting experiences that are not only beautiful but are also performant, secure, and sustainable.
 
-With this, I would like to thank my colleagues at factor10 from whom I learn every day. I would also like to thank my co-workers Anders and Peter who have worked alongside me for their excellent work.
+With this, I would like to thank my colleagues at factor10 from whom I learn every day. I would also like to thank my co-workers [Anders](https://www.linkedin.com/in/wengelin/) and [Peter](https://www.linkedin.com/in/okkido/) who have worked alongside me for their excellent work.
