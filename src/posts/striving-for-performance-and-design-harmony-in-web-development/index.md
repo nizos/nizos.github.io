@@ -17,7 +17,7 @@ In modern web development, a fine balance between performance and user-centric d
 
 The project involved transforming a site initially built using 11ty and Forestry CMS. The goal was clear: transitioning to Cloudcannon and securing top-notch performance metrics across the board.
 
-{% image "./assets/webperf-factor10-score.png", "Website score on webperf.se" %}
+{% image "./assets/webperf.png", "Website score on webperf" %}
 *Website score on [webperf.se](https://webperf.se/), a service that measures the performance of sites in Sweden.*
 
 ## Crafting the Developer Experience
