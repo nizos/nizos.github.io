@@ -87,7 +87,7 @@ const postcss = require('postcss')
 const cssnano = require('cssnano')
 const autoprefixer = require('autoprefixer')
 
-const inputCSS = 'a { transition: transform 1s; }';  // Simple CSS for demonstration.
+const inputCSS = 'a { transition: transform 1s; }'  // Simple CSS for demonstration.
 
 const processedCSS = await postcss([autoprefixer, cssnano]).process(inputCSS);
 
