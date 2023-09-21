@@ -18,7 +18,7 @@ In modern web development, a fine balance between performance and user-centric d
 The project involved transforming a site initially built using 11ty and Forestry CMS. The goal was clear: transitioning to Cloudcannon and securing top-notch performance metrics across the board.
 
 {% image "./assets/webperf.png", "Website score on webperf" %}
-*Website score on [webperf.se](https://webperf.se/), a service that measures the performance of sites in Sweden.*
+*The website's final scores for accessibility, speed, standards, privacy, and security. Securing it the top position of all websites in Sweden measured by [webperf.se](https://webperf.se/toplist/).*
 
 ## Crafting the Developer Experience
 
@@ -79,19 +79,17 @@ Here, we create an in-memory virtual SCSS file that imports every SCSS file dete
 
 Compilation, while crucial, is just one part of the equation. We must enhance and optimize the compiled styles. This is where powerful tools like [PostCSS](https://www.npmjs.com/package/postcss) and [cssnano](https://www.npmjs.com/package/cssnano) come into play.
 
-PostCSS doesn't merely refine styles; it transforms them. The [Autoprefixer](https://www.npmjs.com/package/autoprefixer) plugin is a prime example, appending vendor prefixes based on [Can I use](https://caniuse.com/) data, ensuring consistent, cross-browser compatibility.
-While PostCSS refines, cssnano tightens. It compresses, strips, and trims the CSS into its leanest form. 
+PostCSS is a tool that doesn't merely refine styles — it transforms them through its plugin-based system, allowing developers to decide exactly which transformations they want to apply. The [Autoprefixer](https://www.npmjs.com/package/autoprefixer) plugin is a prime example, appending vendor prefixes based on [Can I use](https://caniuse.com/) data, ensuring consistent cross-browser compatibility.
+While PostCSS transforms, cssnano tightens. It compresses, strips, and trims the CSS into its leanest form. 
 
 ```js
 const postcss = require('postcss')
 const cssnano = require('cssnano')
 const autoprefixer = require('autoprefixer')
 
-const processedCSS = await postcss([autoprefixer, cssnano])
-    .process(output.css, { 
-        from: 'input.css',  // source file (it can be virtual)
-        to: 'output.css'    // destination file
-    });
+const inputCSS = 'a { transition: transform 1s; }';  // Simple CSS for demonstration.
+
+const processedCSS = await postcss([autoprefixer, cssnano]).process(inputCSS);
 
 const finalCss = processedCSS.css;
 ```
@@ -173,7 +171,7 @@ For instance, with the `sizes` attribute, we can dictate how the image adapts ac
 - For screens wider than 1280 pixels, the image will be displayed at a fixed width of 426 pixels.
 - For screens between 768 and 1280 pixels, the image will take up 33% of the viewport width.
 - On screens ranging from 640 to 768 pixels, the image will cover half the viewport width.
-- For a screen width of 640 pixels or less, the image will span the entire viewport width.
+- For a screen width of 640 pixels or fewer, the image will span the entire viewport width.
 
 Alongside the `sizes` attribute, it's worth highlighting the value of `srcset`. While we dictate display conditions with `sizes`, `srcset` lists multiple image versions, letting the browser select the optimal one based on device specifics.
 
