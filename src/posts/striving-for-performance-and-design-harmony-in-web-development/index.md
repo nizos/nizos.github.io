@@ -94,7 +94,7 @@ const processedCSS = await postcss([autoprefixer, cssnano]).process(inputCSS);
 const finalCss = processedCSS.css;
 ```
 
-Together, PostCSS and cssnano guarantee that our CSS is not only adaptable but also blazing fast.
+Together, PostCSS and cssnano aim to make our CSS not only adaptable but also blazing fast.
 
 ### Writing
 
@@ -198,7 +198,7 @@ We can make this process smoother and hands-free by utilizing a Python script du
 3. Hash Calculation: For each detected style, the script computes its hash.
 4. Config File Generation: Using a predefined template, the script produces a new configuration file for the site. Within this file, a placeholder is replaced with the calculated `style-src` hashes.
 5. Deployment and Validation: A critical step in the process. Before pushing any changes, the script runs a series of tests and checks, validates the syntax and other parameters. Only when the validation succeeds are the deployment files sent to their designated destination. Subsequently, the configuration file is refreshed, and the server reloads it.
-6. Reversion: Should any test fail or any irregularities emerge, all changes are reverted to guarantee the website’s integrity.
+6. Cleanup: If tests uncover issues or anomalies, all interim changes within the processing directory are discarded without affecting the live website.
 
 This allows us to safeguard our site's security while also eliminating manual intervention that can be tedious and error-prone.
 
