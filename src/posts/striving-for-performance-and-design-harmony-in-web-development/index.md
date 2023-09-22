@@ -206,8 +206,8 @@ This allows us to safeguard our site's security while also eliminating manual in
 *Summary of the headers security analysis from [securityheaders.com](https://securityheaders.com/)*
 
 ## Putting it all together
-By harnessing these strategies, we create sites that excel both visually and functionally. Their elegance lies not just in design but in robust mechanics. Our task is two-fold: crafting aesthetically pleasing experiences while ensuring they remain performant, secure, and sustainable.
-
-In the end, the elegance of a website isn't just in its visible design but also in its underlying mechanics. As designers and developers, our goal is to master both fronts, crafting experiences that are not only beautiful but are also performant, secure, and sustainable.
+By harnessing these strategies, we create sites that excel both visually and functionally. In the end, the elegance of a website isn't just in its visible design but also in its underlying mechanics. As designers and developers, our goal is to master both fronts, crafting experiences that are not only beautiful but are also performant, secure, and sustainable.
 
 With this, I would like to thank my colleagues at factor10 from whom I learn every day. I would also like to thank my co-workers [Anders](https://www.linkedin.com/in/wengelin/) and [Peter](https://www.linkedin.com/in/okkido/) who have worked alongside me for their excellent work.
+
+Feel free to check out the result for yourself: [factor10.com](https://factor10.com/)
