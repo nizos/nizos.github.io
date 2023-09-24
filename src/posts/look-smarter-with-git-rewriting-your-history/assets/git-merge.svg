@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 702">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #ff7bac;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4 {
+        stroke-width: 2px;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5 {
+        stroke: #4d4d4d;
+        stroke-miterlimit: 10;
+      }
+
+      .cls-2 {
+        fill: #ff931e;
+      }
+
+      .cls-3 {
+        fill: #3fa9f5;
+      }
+
+      .cls-4 {
+        fill: #7ac943;
+      }
+
+      .cls-6 {
+        font-family: MyriadPro-Regular, 'Myriad Pro';
+        font-size: 72px;
+      }
+
+      .cls-7 {
+        letter-spacing: 0em;
+      }
+
+      .cls-5 {
+        fill: none;
+        stroke-width: 10px;
+      }
+    </style>
+  </defs>
+  <line class="cls-5" x1="100" y1="226" x2="1800" y2="226"/>
+  <circle class="cls-4" cx="100" cy="226" r="30"/>
+  <circle class="cls-3" cx="1399" cy="226" r="30"/>
+  <path class="cls-5" d="m648,226s-48.65,0,0,0c175-1,19,354.12,149,354,195.35-.18,613,0,613,0h81.16c162.84,0,301.84-67,301.84-354"/>
+  <circle class="cls-4" cx="495" cy="226" r="30"/>
+  <circle class="cls-2" cx="930" cy="580" r="30"/>
+  <circle class="cls-3" cx="930" cy="226" r="30"/>
+  <circle class="cls-2" cx="1399" cy="580" r="30"/>
+  <text class="cls-6" transform="translate(1678.1 134.97)"><tspan class="cls-7" x="0" y="0">M</tspan><tspan x="58.32" y="0">ain</tspan></text>
+  <circle class="cls-1" cx="1793" cy="226" r="30"/>
+</svg>
