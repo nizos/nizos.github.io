@@ -13,10 +13,12 @@ body {
     font-variant-ligatures: contextual;
     -webkit-overflow-scrolling: touch;
     -webkit-text-size-adjust: 100%;
-    font-family: "Segoe UI", "Open Sans", "Helvetica Neue", sans-serif;
+    font-family: 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
     box-sizing: inherit;
     border-style: solid;
     border-width: 0;
@@ -76,7 +78,8 @@ ul {
     list-style-position: inside;
 }
 
-b, strong {
+b,
+strong {
     font-weight: 500;
 }
 
@@ -147,7 +150,6 @@ blockquote {
     font-style: italic;
 }
 
-
 .visually-hidden {
     clip: rect(1px, 1px, 1px, 1px);
     height: 1px;
@@ -157,10 +159,15 @@ blockquote {
     width: 1px;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     line-height: 1.3;
     font-weight: 400;
-    color: #262626
+    color: #262626;
 }
 
 h1 {
@@ -323,9 +330,12 @@ p {
     font-size: 3rem;
 }
 
-.hero p {
+.hero h2 {
     font-size: 1.5rem;
     margin-top: 1rem;
+}
+
+.hero p {
 }
 
 .hero__social-links {
@@ -337,6 +347,7 @@ p {
 }
 
 .hero__social-links > li {
+    margin-left: 2rem;
     margin-right: 2rem;
     margin-top: 1rem;
 }
@@ -362,7 +373,6 @@ p {
 }
 
 .tags > * {
-    margin-right: 1rem;
     margin-top: 0.5rem;
 }
 
@@ -374,7 +384,10 @@ p {
 
 .tags a {
     text-decoration: none;
-    color: #262626;
+}
+
+.post-tag {
+    margin-right: 0.5rem;
 }
 
 .post-list__wrapper {
@@ -424,7 +437,7 @@ p {
 }
 
 .post-list__meta * + * {
-    margin-left: 1rem;
+    margin-left: 0.5rem;
 }
 
 .post-list__tags {
@@ -470,9 +483,8 @@ p {
 }
 
 .all-posts-link {
-    margin-top: 4rem;
+    margin-top: 1rem;
     width: fit-content;
-    display: inline-block;
     margin-left: auto;
     margin-right: auto;
     font-size: 1.125rem;
@@ -579,7 +591,6 @@ p {
 }
 
 .post-excerpt {
-
 }
 
 mark {
@@ -613,11 +624,13 @@ kbd {
     margin: 0 2px;
 }
 
-pre, code {
+pre,
+code {
     font-size: 0.85rem;
-    font-family: "Roboto Mono","Source Code Pro", "Liberation Mono", "Lucida Console", monospace;
-    background: #FAFAFAFF;
-    color: #383A42FF;
+    font-family: 'Roboto Mono', 'Source Code Pro', 'Liberation Mono',
+    'Lucida Console', monospace;
+    background: #fafafaff;
+    color: #383a42ff;
 }
 
 pre code {
@@ -628,17 +641,17 @@ pre code {
 
 code,
 pre,
-pre[class*=language-] {
+pre[class*='language-'] {
     background: #f8f9fa;
     border: 1px solid #dadce0;
     border-radius: 3px;
 }
 
 pre,
-pre[class*=language-] {
+pre[class*='language-'] {
     color: #202124;
     overflow: auto;
-    padding: 0.5em
+    padding: 0.5em;
 }
 
 code {
@@ -650,7 +663,7 @@ pre > code {
     background: initial;
     border: initial;
     border-radius: initial;
-    padding: initial
+    padding: initial;
 }
 
 .token.comment {
@@ -686,8 +699,8 @@ pre > code {
     color: #d01884;
 }
 
-code[class*="language-"],
-pre[class*="language-"] {
+code[class*='language-'],
+pre[class*='language-'] {
     direction: ltr;
     text-align: left;
     white-space: pre;
@@ -702,32 +715,36 @@ pre[class*="language-"] {
     hyphens: none;
 }
 
-pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
-code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
-    background: #E5E5E6FF;
+pre[class*='language-']::-moz-selection,
+pre[class*='language-'] ::-moz-selection,
+code[class*='language-']::-moz-selection,
+code[class*='language-'] ::-moz-selection {
+    background: #e5e5e6ff;
     color: inherit;
 }
 
-pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
-code[class*="language-"]::selection, code[class*="language-"] ::selection {
-    background: #E5E5E6FF;
+pre[class*='language-']::selection,
+pre[class*='language-'] ::selection,
+code[class*='language-']::selection,
+code[class*='language-'] ::selection {
+    background: #e5e5e6ff;
     color: inherit;
 }
 
 @media print {
-    code[class*="language-"],
-    pre[class*="language-"] {
+    code[class*='language-'],
+    pre[class*='language-'] {
         text-shadow: none;
     }
 }
 
-pre[class*="language-"] {
+pre[class*='language-'] {
     padding: 0.5em;
     margin: 0.5em 0;
     overflow: auto;
 }
 
-:not(pre) > code[class*="language-"],
-pre[class*="language-"] {
+:not(pre) > code[class*='language-'],
+pre[class*='language-'] {
     background: #f8f9fa;
 }
