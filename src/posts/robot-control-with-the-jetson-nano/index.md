@@ -1,6 +1,6 @@
 ---
 title: 'Robot Control with the Jetson Nano'
-description: 'Two years ago, I got to dive into a project at the intersection of machine learning and hardware - right before ChatGPT became a household name and when terms like "overfitting" puzzled me. Nonetheless, I was really excited about it, especially because it involved both software and hardware, a combination Im quite fond of.'
+description: 'Two years ago, I got to dive into a project at the intersection of machine learning and hardware - right before ChatGPT became a household name and when terms like overfitting puzzled me. Nonetheless, I was really excited about it, especially because it involved both software and hardware, a combination Im quite fond of.'
 date: 2024-04-02
 author: Nizar
 permalink: /{{ title | slugify }}/index.html
@@ -11,7 +11,7 @@ tags: [ai, cv, robotics, ml]
 ---
 
 Two years ago, I got to dive into a project at the intersection of machine learning and hardware - right before
-ChatGPT became a household name and when terms like "overfitting" puzzled me.
+ChatGPT became a household name and when terms like [overfitting](https://en.wikipedia.org/wiki/Overfitting) puzzled me.
 Nonetheless, I was really excited about it, especially because it involved both software and hardware, a combination
 I'm quite fond of.
 
@@ -73,7 +73,9 @@ While the project may seem straightforward, it was incredibly insightful, making
 learning feel much more attainable.
 
 Every so often, I reflect on this project and wonder if a simpler solution exists for accurately considering distance.
-Perhaps I'll revisit it with fresh eyes in the future.
+An intriguing possibility that comes to mind is the use of two cameras, mirroring the binocular vision of humans, to
+facilitate a more straightforward approach to depth perception. This idea excites me, and I'm keen to explore it
+further, possibly revisiting the project with a new perspective in the future.
 
 You can find the source code and assembly instruction on my GitHub [repo](https://github.com/nizos/jetarm).
 If you are curious about machine learning or robotics, I encourage you to give it a look - who knows what you might
