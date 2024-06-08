@@ -1,5 +1,5 @@
 ---
-title: 'Simple Tips for Sustainable Workflows'
+title: 'Sustainability in Development: Optimizing GitHub Workflows'
 description: "In today's fast-paced development environment, efficiency is important, not just in terms of time and cost but also sustainability. Over the past couple of years, I've integrated GitHub Actions into my daily workflow, discovering several simple yet effective strategies to make my processes more sustainable. Here, I share these insights to help you enhance your workflows with minimal effort."
 date: 2024-06-07
 author: Nizar
@@ -16,7 +16,7 @@ sustainability. Over the past couple of years, I've integrated GitHub Actions in
 several simple yet effective strategies to make my processes more sustainable. Here, I share these insights to help
 you enhance your workflows with minimal effort.
 
-## Cancel In-Progress
+## Cancel Redundant Jobs
 
 When working on active branches, changes are often pushed in quick succession, leading to multiple instances of the
 same workflows getting queued up or running in parallel. This redundancy can be quite wasteful, particularly for
@@ -57,7 +57,7 @@ on one branch does not cancel or affect one running on another branch.
 With this simple change, we can ensure that our PR checks are efficient and do not waste resources by running multiple
 redundant or outdated jobs, while still maintaining the integrity of our code base.
 
-## Timeout
+## Set Workflow Timeouts
 
 The default workflow timeout is 6 hours, which can be wasteful if a process hangs. For workflows that typically finish
 in under 2 minutes, setting a timeout of 10 minutes is more than sufficient.
@@ -76,9 +76,9 @@ the sustainability of your workflows by minimizing the idle resource consumption
 
 You can find more information [here](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions).
 
-## Caching
+## Utilize Caching for Efficiency
 
-### Dependencies
+### Optimize Dependency Handling
 
 Many workflow runs share the exact same dependencies, which must be downloaded each time. We can save time and
 resources by caching them properly. For this, I like to use the
@@ -101,7 +101,7 @@ rather than installed packages.
 Using `npm ci` instead of `npm install` also speeds up builds as it installs exact versions specified in the
 `package-lock.json` file, thereby ensuring reproducible builds and avoiding dependency resolution overheads.
 
-### Assets
+### Cache and Restore Build Assets
 
 In some scenarios, we want to cache certain build outputs that do not change frequently and take a lot of time and
 resources to create. We can use the [cache action](https://github.com/actions/cache) for those.
@@ -146,7 +146,7 @@ for any branch. This is because it will try to match against the most recent cac
 For further customizations, such as taking the operating system into the account, check the
 [official repository](https://github.com/actions/cache).
 
-### Code Change
+## Optimize Workflow Triggers
 
 We can avoid running workflows when they are not needed by using `paths` and `paths-ignore`, specifying which files or
 directories should trigger workflows. This helps in focusing our resources on meaningful changes.
@@ -180,7 +180,22 @@ sustainable and cost-effective.
 For more advanced usage, refer to the official GitHub Actions documentation
 [here](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onpushpull_requestpull_request_targetpathspaths-ignore).
 
-## Energy Estimation
+## Leverage ARM Architecture for Efficiency
+
+GitHub has recently announced the availability of
+[ARM-based runners](https://github.blog/2024-06-03-arm64-on-github-actions-powering-faster-more-efficient-build-systems/)
+for GitHub Team and Enterprise Cloud plans and plans to offer them for open-source projects before the end of the year.
+
+These runners provide improvements in speed and energy consumption thanks to their reduced instruction set. They have
+been shown to consume 30-40% less energy for some of the most widely deployed workflows. They are also 37% cheaper than
+their x64 counterparts, making them a no-brainer for suitable workflows.
+
+However, not all workflows are ideal for ARM runners. For instance, workflows that depend on software or libraries not
+yet optimized for ARM architecture, or that rely on x64-specific optimizations, may not run as well. Testing and
+evaluating your workflows will help you identify any compatibility issues and measure the potential benefits in terms
+of speed, cost, and energy consumption.
+
+## Estimate Workflow Energy Consumption
 
 It is not always clear which strategy consumes fewer resources. Tools like the
 [eco-ci-energy-estimation](https://github.com/green-coding-solutions/eco-ci-energy-estimation) action allow us to get
@@ -222,22 +237,7 @@ Once the workflow is completed, it produces a summary like this:
 The action sends metrics data to metrics.green-coding.io by default. If you do not want that, set `send-data`
 to `false`.
 
-## ARM Runners
-
-GitHub has recently announced the availability of
-[ARM-based runners](https://github.blog/2024-06-03-arm64-on-github-actions-powering-faster-more-efficient-build-systems/)
-for GitHub Team and Enterprise Cloud plans and plans to offer them for open-source projects before the end of the year.
-
-These runners provide improvements in speed and energy consumption thanks to their reduced instruction set. They have
-been shown to consume 30-40% less energy for some of the most widely deployed workflows. They are also 37% cheaper than
-their x64 counterparts, making them a no-brainer for suitable workflows.
-
-However, not all workflows are ideal for ARM runners. For instance, workflows that depend on software or libraries not
-yet optimized for ARM architecture, or that rely on x64-specific optimizations, may not run as well. Testing and
-evaluating your workflows will help you identify any compatibility issues and measure the potential benefits in terms
-of speed, cost, and energy consumption.
-
-## Further Tips
+## More Ways to Optimize Workflows
 
 With these simple tips, you can save a lot of cost, time, and resources that can be put to better use. For more tips,
 I highly recommend watching the
