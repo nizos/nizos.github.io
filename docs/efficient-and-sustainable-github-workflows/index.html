@@ -86,7 +86,7 @@ in-progress jobs when a new instance is triggered.</p>
 <pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">on</span><span class="token punctuation">:</span><br>  <span class="token key atrule">push</span><span class="token punctuation">:</span><br>    <span class="token key atrule">branches</span><span class="token punctuation">:</span><br>      <span class="token punctuation">-</span> main<br><br><span class="token key atrule">concurrency</span><span class="token punctuation">:</span><br>  <span class="token key atrule">group</span><span class="token punctuation">:</span> integration<span class="token punctuation">-</span>tests<br>  <span class="token key atrule">cancel-in-progress</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></code></pre>
 <p>We can further customize the execution conditions by using dynamic expressions in the group naming.
 For example, by referencing the branch that triggered the workflow, we can group workflows by branch.</p>
-<pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">concurrency</span><span class="token punctuation">:</span><br>  <span class="token key atrule">group</span><span class="token punctuation">:</span> integration<span class="token punctuation">-</span>tests<span class="token punctuation">-</span>$<br>  <span class="token key atrule">cancel-in-progress</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></code></pre>
+<pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">concurrency</span><span class="token punctuation">:</span><br>  <span class="token key atrule">group</span><span class="token punctuation">:</span> integration<span class="token punctuation">-</span>tests<span class="token punctuation">-</span>$<span class="token punctuation">{</span><span class="token punctuation">{</span> github.ref <span class="token punctuation">}</span><span class="token punctuation">}</span><br>  <span class="token key atrule">cancel-in-progress</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></code></pre>
 <p>This ensures that the concurrency conditions are limited to the branches they are triggered by, so a workflow triggered
 on one branch does not cancel or affect one running on another branch.</p>
 <p>With this simple change, we can ensure that our PR checks are efficient and do not waste resources by running multiple
@@ -97,9 +97,9 @@ in under 2 minutes, setting a timeout of 10 minutes is more than sufficient.
 This can be done by specifying <code>timeout-minutes</code> for the workflow.</p>
 <pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">jobs</span><span class="token punctuation">:</span><br>  <span class="token key atrule">lint-checks</span><span class="token punctuation">:</span><br>    <span class="token key atrule">runs-on</span><span class="token punctuation">:</span> ubuntu<span class="token punctuation">-</span>latest<br>    <span class="token key atrule">timeout-minutes</span><span class="token punctuation">:</span> <span class="token number">10</span></code></pre>
 <p>There's no need to keep it running for another 5 hours and 50 minutes to know something went wrong. Instead, we can put
-those 350 GitHub Actions minutes to better use elsewhere. Optimizing timeouts is a simple step but can greatly enhance
-the sustainability of your workflows by minimizing the idle resource consumption.</p>
-<p>You can find more information <a href="https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions">here</a>.</p>
+those 350 GitHub Actions minutes to better use elsewhere.</p>
+<p>Optimizing timeouts is a simple step but can greatly enhance the sustainability of your workflows by minimizing the
+idle resource consumption. You can find more information <a href="https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions">here</a>.</p>
 <h2>Utilize Caching for Efficiency</h2>
 <h3>Optimize Dependency Handling</h3>
 <p>Many workflow runs share the exact same dependencies, which must be downloaded each time. We can save time and
@@ -124,7 +124,7 @@ images it creates will be saved in the cache for the next time. This saves time 
 recreate everything. This can happen when we use dynamic expressions in the key naming. For example, if we want to
 reference the branches or operating systems, and so on. In those cases, we can specify <code>restore-key</code>, which will be
 used to restore the cache if no hit is found for the <code>key</code>.</p>
-<pre class="language-yaml"><code class="language-yaml"><span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Cache Assets<br>  <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/cache@v4<br>  <span class="token key atrule">with</span><span class="token punctuation">:</span><br>    <span class="token key atrule">path</span><span class="token punctuation">:</span> assets<br>    <span class="token key atrule">key</span><span class="token punctuation">:</span> assets<span class="token punctuation">-</span>$<br>    <span class="token key atrule">restore-keys</span><span class="token punctuation">:</span> <span class="token punctuation">|</span><span class="token scalar string"><br>      assets-</span></code></pre>
+<pre class="language-yaml"><code class="language-yaml"><span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Cache Assets<br>  <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/cache@v4<br>  <span class="token key atrule">with</span><span class="token punctuation">:</span><br>    <span class="token key atrule">path</span><span class="token punctuation">:</span> assets<br>    <span class="token key atrule">key</span><span class="token punctuation">:</span> assets<span class="token punctuation">-</span>$<span class="token punctuation">{</span><span class="token punctuation">{</span> github.run_id <span class="token punctuation">}</span><span class="token punctuation">}</span><br>    <span class="token key atrule">restore-keys</span><span class="token punctuation">:</span> <span class="token punctuation">|</span><span class="token scalar string"><br>      assets-</span></code></pre>
 <p>The example above references the branch in the <code>key</code> value. This means that it first tries to match against the most
 recent assets cache for the current branch. If none are found, it tries to restore from the most recent assets cache
 for any branch. This is because it will try to match against the most recent cache key that starts with <code>assets-</code>.</p>
@@ -138,7 +138,7 @@ directories should trigger workflows. This helps in focusing our resources on me
 <p>Here, any change in the <code>docs</code> directory will not trigger the workflow, conserving resources for non-code updates.</p>
 <p>To run workflows only for front-end code changes (e.g., JavaScript files):</p>
 <pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">on</span><span class="token punctuation">:</span><br>  <span class="token key atrule">push</span><span class="token punctuation">:</span><br>    <span class="token key atrule">paths</span><span class="token punctuation">:</span><br>      <span class="token punctuation">-</span> <span class="token string">'frontend/**.js'</span></code></pre>
-<p>This workflow triggers only when <code>js</code> files in the <code>'frontend</code> directory are modified, ensuring relevant tasks like
+<p>This workflow triggers only when <code>js</code> files in the <code>frontend</code> directory are modified, ensuring relevant tasks like
 linting are run only when there are relevant changes.</p>
 <p>Using <code>paths</code> and <code>paths-ignore</code> efficiently reduces unnecessary workflow executions, making your processes more
 sustainable and cost-effective.</p>
@@ -189,6 +189,9 @@ Raniz, who inspired me to write this post.</p>
             
                 
                 <a href="/tags/automation/">#automation</a>
+            
+                
+                <a href="/tags/sustainability/">#sustainability</a>
             
         </div>
     </aside>

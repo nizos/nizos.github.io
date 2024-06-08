@@ -7,7 +7,7 @@ permalink: /{{ title | slugify }}/index.html
 cover: 'assets/wind-turbine.jpg'
 socialImage: '/assets/images/simple-tips-for-sustainable-workflows-social-image.jpg'
 caption: 'Original photo by <a href="https://unsplash.com/@bfigas">Bruno Figueiredo</a> on <a href="https://unsplash.com/photos/white-windmill-during-day-KAXSflHqAl0">Unsplash</a>'
-tags: [ci, automation]
+tags: [ci, automation, sustainability]
 draft: true
 ---
 
@@ -45,11 +45,13 @@ concurrency:
 We can further customize the execution conditions by using dynamic expressions in the group naming.
 For example, by referencing the branch that triggered the workflow, we can group workflows by branch.
 
+{% raw %}
 ```yaml
 concurrency:
   group: integration-tests-${{ github.ref }}
   cancel-in-progress: true
 ```
+{% endraw %}
 
 This ensures that the concurrency conditions are limited to the branches they are triggered by, so a workflow triggered
 on one branch does not cancel or affect one running on another branch.
@@ -71,10 +73,10 @@ jobs:
 ```
 
 There's no need to keep it running for another 5 hours and 50 minutes to know something went wrong. Instead, we can put
-those 350 GitHub Actions minutes to better use elsewhere. Optimizing timeouts is a simple step but can greatly enhance
-the sustainability of your workflows by minimizing the idle resource consumption.
+those 350 GitHub Actions minutes to better use elsewhere.
 
-You can find more information [here](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions).
+Optimizing timeouts is a simple step but can greatly enhance the sustainability of your workflows by minimizing the
+idle resource consumption. You can find more information [here](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions).
 
 ## Utilize Caching for Efficiency
 
@@ -129,6 +131,7 @@ recreate everything. This can happen when we use dynamic expressions in the key 
 reference the branches or operating systems, and so on. In those cases, we can specify `restore-key`, which will be
 used to restore the cache if no hit is found for the `key`.
 
+{% raw %}
 ```yaml
 - name: Cache Assets
   uses: actions/cache@v4
@@ -138,6 +141,7 @@ used to restore the cache if no hit is found for the `key`.
     restore-keys: |
       assets-
 ```
+{% endraw %}
 
 The example above references the branch in the `key` value. This means that it first tries to match against the most
 recent assets cache for the current branch. If none are found, it tries to restore from the most recent assets cache
@@ -171,7 +175,7 @@ on:
       - 'frontend/**.js'
 ```
 
-This workflow triggers only when `js` files in the `'frontend` directory are modified, ensuring relevant tasks like
+This workflow triggers only when `js` files in the `frontend` directory are modified, ensuring relevant tasks like
 linting are run only when there are relevant changes.
 
 Using `paths` and `paths-ignore` efficiently reduces unnecessary workflow executions, making your processes more
