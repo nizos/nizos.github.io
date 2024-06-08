@@ -142,6 +142,11 @@ img {
     margin-top: 1rem;
 }
 
+article ul,
+article ol {
+    margin-top: 1.5rem;
+}
+
 blockquote {
     margin-top: 1rem;
     margin-bottom: 1rem;
