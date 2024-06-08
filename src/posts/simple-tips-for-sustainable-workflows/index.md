@@ -8,6 +8,7 @@ cover: 'assets/wind-turbine.jpg'
 socialImage: '/assets/images/simple-tips-for-sustainable-workflows-social-image.jpg'
 caption: 'Original photo by <a href="https://unsplash.com/@bfigas">Bruno Figueiredo</a> on <a href="https://unsplash.com/photos/white-windmill-during-day-KAXSflHqAl0">Unsplash</a>'
 tags: [ci, automation]
+draft: true
 ---
 
 In today's fast-paced development environment, efficiency is important, not just in terms of time and cost but also
