@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/assets/css/main.css" rel="stylesheet" />
+
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+
+        
+        
+        
+            <meta name="description" content="In today&#39;s fast-paced development environment, efficiency is important, not just in terms of time and cost but also sustainability. Over the past couple of years, I&#39;ve integrated GitHub Actions into my daily workflow, discovering several simple yet effective strategies to make my processes more sustainable. Here, I share these insights to help you enhance your workflows with minimal effort.">
+            <meta property="og:description" content="In today&#39;s fast-paced development environment, efficiency is important, not just in terms of time and cost but also sustainability. Over the past couple of years, I&#39;ve integrated GitHub Actions into my daily workflow, discovering several simple yet effective strategies to make my processes more sustainable. Here, I share these insights to help you enhance your workflows with minimal effort.">
+            <meta name="description" content="In today&#39;s fast-paced development environment, efficiency is important, not just in terms of time and cost but also sustainability. Over the past couple of years, I&#39;ve integrated GitHub Actions into my daily workflow, discovering several simple yet effective strategies to make my processes more sustainable. Here, I share these insights to help you enhance your workflows with minimal effort."/>
+        
+
+        
+        
+            <meta property="og:image" content="/assets/images/simple-tips-for-sustainable-workflows-social-image.jpg"/>
+            <meta name="twitter:image" content="/assets/images/simple-tips-for-sustainable-workflows-social-image.jpg"/>
+        
+
+        <title>
+            
+                Simple Tips for Sustainable Workflows | Nizar&#39;s Blog
+            
+        </title>
+
+        <meta property="og:site_name" content="Nizar's Blog">
+        <meta property="og:type" content="website">
+        <script defer data-domain="nizar.se" src="https://plausible.io/js/script.js"></script>
+    </head>
+    <body>
+        <div class="layout-wrapper">
+            <header class="header">
+    <div class="header__content">
+        <h1 class="site-title">
+            <a href="/">Nizar's Blog</a>
+        </h1>
+        <nav class="nav">
+            <ul class="nav__list">
+                <li class="nav-item">
+                    <a href="/about">About</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+            <main class="main">
+                <article class="post">
+    <header class="post__header">
+        <h1>Simple Tips for Sustainable Workflows</h1>
+        <div class="post__details">
+            <time>07 Jun 2024</time>
+            <span> | </span>
+            <span>5 minutes</span>
+        </div>
+    </header>
+
+    <div class="post__cover">
+        <picture><source type="image/avif" srcset="/simple-tips-for-sustainable-workflows/SCWLZmHAc6-300.avif 300w, /simple-tips-for-sustainable-workflows/SCWLZmHAc6-600.avif 600w, /simple-tips-for-sustainable-workflows/SCWLZmHAc6-750.avif 750w, /simple-tips-for-sustainable-workflows/SCWLZmHAc6-900.avif 900w, /simple-tips-for-sustainable-workflows/SCWLZmHAc6-1200.avif 1200w, /simple-tips-for-sustainable-workflows/SCWLZmHAc6-1400.avif 1400w" sizes="Cover image"><source type="image/jpeg" srcset="/simple-tips-for-sustainable-workflows/SCWLZmHAc6-300.jpeg 300w, /simple-tips-for-sustainable-workflows/SCWLZmHAc6-600.jpeg 600w, /simple-tips-for-sustainable-workflows/SCWLZmHAc6-750.jpeg 750w, /simple-tips-for-sustainable-workflows/SCWLZmHAc6-900.jpeg 900w, /simple-tips-for-sustainable-workflows/SCWLZmHAc6-1200.jpeg 1200w, /simple-tips-for-sustainable-workflows/SCWLZmHAc6-1400.jpeg 1400w" sizes="Cover image"><img alt="Cover image" loading="lazy" decoding="async" src="/simple-tips-for-sustainable-workflows/SCWLZmHAc6-300.jpeg" width="1400" height="787"></picture>
+        <p class="post__cover-caption">Original photo by <a href="https://unsplash.com/@bfigas">Bruno Figueiredo</a> on <a href="https://unsplash.com/photos/white-windmill-during-day-KAXSflHqAl0">Unsplash</a></p>
+    </div>
+
+    <main class="post__content">
+        <p>In today's fast-paced development environment, efficiency is important, not just in terms of time and cost but also
+sustainability. Over the past couple of years, I've integrated GitHub Actions into my daily workflow, discovering
+several simple yet effective strategies to make my processes more sustainable. Here, I share these insights to help
+you enhance your workflows with minimal effort.</p>
+<h2>Cancel In-Progress</h2>
+<p>When working on active branches, changes are often pushed in quick succession, leading to multiple instances of the
+same workflows getting queued up or running in parallel. This redundancy can be quite wasteful, particularly for
+pull request (PR) checks.</p>
+<p>Fortunately, we can use <a href="https://docs.github.com/en/enterprise-cloud@latest/actions/using-jobs/using-concurrency#using-concurrency-in-different-scenarios">concurrency groups</a>
+to manage workflow executions more efficiently. By specifying a concurrency key, we can group workflows and control
+their execution. GitHub ensures that only one job or workflow in the same concurrency group runs at a time.
+Additionally, there can be at most one running and one pending job in a concurrency group at any given time.</p>
+<p>The <code>cancel-in-progress</code> expression allows us to cancel any running job or workflow in the same concurrency group
+when a new instance is triggered. The following example adds the workflow to a concurrency group called
+<code>integration-tests</code> and ensures that only one instance of the workflow runs at any given time, canceling any
+in-progress jobs when a new instance is triggered.</p>
+<pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">on</span><span class="token punctuation">:</span><br>  <span class="token key atrule">push</span><span class="token punctuation">:</span><br>    <span class="token key atrule">branches</span><span class="token punctuation">:</span><br>      <span class="token punctuation">-</span> main<br><br><span class="token key atrule">concurrency</span><span class="token punctuation">:</span><br>  <span class="token key atrule">group</span><span class="token punctuation">:</span> integration<span class="token punctuation">-</span>tests<br>  <span class="token key atrule">cancel-in-progress</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></code></pre>
+<p>We can further customize the execution conditions by using dynamic expressions in the group naming.
+For example, by referencing the branch that triggered the workflow, we can group workflows by branch.</p>
+<pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">concurrency</span><span class="token punctuation">:</span><br>  <span class="token key atrule">group</span><span class="token punctuation">:</span> integration<span class="token punctuation">-</span>tests<span class="token punctuation">-</span>$<br>  <span class="token key atrule">cancel-in-progress</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></code></pre>
+<p>This ensures that the concurrency conditions are limited to the branches they are triggered by, so a workflow triggered
+on one branch does not cancel or affect one running on another branch.</p>
+<p>With this simple change, we can ensure that our PR checks are efficient and do not waste resources by running multiple
+redundant or outdated jobs, while still maintaining the integrity of our code base.</p>
+<h2>Timeout</h2>
+<p>The default workflow timeout is 6 hours, which can be wasteful if a process hangs. For workflows that typically finish
+in under 2 minutes, setting a timeout of 10 minutes is more than sufficient.
+This can be done by specifying <code>timeout-minutes</code> for the workflow.</p>
+<pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">jobs</span><span class="token punctuation">:</span><br>  <span class="token key atrule">lint-checks</span><span class="token punctuation">:</span><br>    <span class="token key atrule">runs-on</span><span class="token punctuation">:</span> ubuntu<span class="token punctuation">-</span>latest<br>    <span class="token key atrule">timeout-minutes</span><span class="token punctuation">:</span> <span class="token number">10</span></code></pre>
+<p>There's no need to keep it running for another 5 hours and 50 minutes to know something went wrong. Instead, we can put
+those 350 GitHub Actions minutes to better use elsewhere. Optimizing timeouts is a simple step but can greatly enhance
+the sustainability of your workflows by minimizing the idle resource consumption.</p>
+<p>You can find more information <a href="https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions">here</a>.</p>
+<h2>Caching</h2>
+<h3>Dependencies</h3>
+<p>Many workflow runs share the exact same dependencies, which must be downloaded each time. We can save time and
+resources by caching them properly. For this, I like to use the
+<a href="https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows#about-caching-workflow-dependencies">setup actions</a>.</p>
+<p>The following example shows how to set up Node.js with caching:</p>
+<pre class="language-yaml"><code class="language-yaml"><span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Setup Node.js<br>  <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/setup<span class="token punctuation">-</span>node@v4<br>  <span class="token key atrule">with</span><span class="token punctuation">:</span><br>    <span class="token key atrule">node-version</span><span class="token punctuation">:</span> <span class="token number">20</span><br>    <span class="token key atrule">cache</span><span class="token punctuation">:</span> <span class="token string">'npm'</span></code></pre>
+<p>The action performs the caching on the <code>~/.npm</code> directory instead of the <code>node_modules</code>, providing benefits such as
+smaller size and increased reusability across different environments since they are stored as tarballs and metadata
+rather than installed packages.</p>
+<p>Using <code>npm ci</code> instead of <code>npm install</code> also speeds up builds as it installs exact versions specified in the
+<code>package-lock.json</code> file, thereby ensuring reproducible builds and avoiding dependency resolution overheads.</p>
+<h3>Assets</h3>
+<p>In some scenarios, we want to cache certain build outputs that do not change frequently and take a lot of time and
+resources to create. We can use the <a href="https://github.com/actions/cache">cache action</a> for those.</p>
+<pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">jobs</span><span class="token punctuation">:</span><br>  <span class="token key atrule">build</span><span class="token punctuation">:</span><br>    <span class="token key atrule">runs-on</span><span class="token punctuation">:</span> ubuntu<span class="token punctuation">-</span>latest<br>    <span class="token key atrule">steps</span><span class="token punctuation">:</span><br><br>      <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Cache Assets<br>        <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/cache@v4<br>        <span class="token key atrule">with</span><span class="token punctuation">:</span><br>          <span class="token key atrule">path</span><span class="token punctuation">:</span> assets<br>          <span class="token key atrule">key</span><span class="token punctuation">:</span> assets</code></pre>
+<p>In the above example, we create the <code>assets</code> directory by restoring it from the cache. Any changes we make to it later
+on will also be applied to the cache. An example use for this would be handling responsive image generation.
+By restoring the images from the cache, the build process can skip generating images that already exist, and any new
+images it creates will be saved in the cache for the next time. This saves time and resources.</p>
+<p>However, if there are no key hits, the <code>assets</code> directory will not be restored and the build process will have to
+recreate everything. This can happen when we use dynamic expressions in the key naming. For example, if we want to
+reference the branches or operating systems, and so on. In those cases, we can specify <code>restore-key</code>, which will be
+used to restore the cache if no hit is found for the <code>key</code>.</p>
+<pre class="language-yaml"><code class="language-yaml"><span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Cache Assets<br>  <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/cache@v4<br>  <span class="token key atrule">with</span><span class="token punctuation">:</span><br>    <span class="token key atrule">path</span><span class="token punctuation">:</span> assets<br>    <span class="token key atrule">key</span><span class="token punctuation">:</span> assets<span class="token punctuation">-</span>$<br>    <span class="token key atrule">restore-keys</span><span class="token punctuation">:</span> <span class="token punctuation">|</span><span class="token scalar string"><br>      assets-</span></code></pre>
+<p>The example above references the branch in the <code>key</code> value. This means that it first tries to match against the most
+recent assets cache for the current branch. If none are found, it tries to restore from the most recent assets cache
+for any branch. This is because it will try to match against the most recent cache key that starts with <code>assets-</code>.</p>
+<p>For further customizations, such as taking the operating system into the account, check the
+<a href="https://github.com/actions/cache">official repository</a>.</p>
+<h3>Code Change</h3>
+<p>We can avoid running workflows when they are not needed by using <code>paths</code> and <code>paths-ignore</code>, specifying which files or
+directories should trigger workflows. This helps in focusing our resources on meaningful changes.</p>
+<p>For example, to skip workflows for documentation changes:</p>
+<pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">on</span><span class="token punctuation">:</span><br>  <span class="token key atrule">push</span><span class="token punctuation">:</span><br>    <span class="token key atrule">paths-ignore</span><span class="token punctuation">:</span><br>      <span class="token punctuation">-</span> <span class="token string">'docs/**'</span></code></pre>
+<p>Here, any change in the <code>docs</code> directory will not trigger the workflow, conserving resources for non-code updates.</p>
+<p>To run workflows only for front-end code changes (e.g., JavaScript files):</p>
+<pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">on</span><span class="token punctuation">:</span><br>  <span class="token key atrule">push</span><span class="token punctuation">:</span><br>    <span class="token key atrule">paths</span><span class="token punctuation">:</span><br>      <span class="token punctuation">-</span> <span class="token string">'frontend/**.js'</span></code></pre>
+<p>This workflow triggers only when <code>js</code> files in the <code>'frontend</code> directory are modified, ensuring relevant tasks like
+linting are run only when there are relevant changes.</p>
+<p>Using <code>paths</code> and <code>paths-ignore</code> efficiently reduces unnecessary workflow executions, making your processes more
+sustainable and cost-effective.</p>
+<p>For more advanced usage, refer to the official GitHub Actions documentation
+<a href="https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onpushpull_requestpull_request_targetpathspaths-ignore">here</a>.</p>
+<h2>Energy Estimation</h2>
+<p>It is not always clear which strategy consumes fewer resources. Tools like the
+<a href="https://github.com/green-coding-solutions/eco-ci-energy-estimation">eco-ci-energy-estimation</a> action allow us to get
+estimates and help us make informed decisions.</p>
+<p>For example, I wasn't sure whether caching npm dependencies would reduce resource consumption. With the help of this
+tool, I ran 5 workflow runs with caching and 5 without and found that caching npm dependencies reduced overall energy
+consumption and time.</p>
+<p><picture><source type="image/avif" srcset="/simple-tips-for-sustainable-workflows/vo2j1uNT_t-300.avif 300w, /simple-tips-for-sustainable-workflows/vo2j1uNT_t-600.avif 600w, /simple-tips-for-sustainable-workflows/vo2j1uNT_t-750.avif 750w, /simple-tips-for-sustainable-workflows/vo2j1uNT_t-900.avif 900w" sizes="100vw"><source type="image/jpeg" srcset="/simple-tips-for-sustainable-workflows/vo2j1uNT_t-300.jpeg 300w, /simple-tips-for-sustainable-workflows/vo2j1uNT_t-600.jpeg 600w, /simple-tips-for-sustainable-workflows/vo2j1uNT_t-750.jpeg 750w, /simple-tips-for-sustainable-workflows/vo2j1uNT_t-900.jpeg 900w" sizes="100vw"><img alt="Energy comparison of using caching vs not using caching" loading="lazy" decoding="async" src="/simple-tips-for-sustainable-workflows/vo2j1uNT_t-300.jpeg" width="900" height="439"></picture>
+<em>Energy comparison of using caching vs not using caching</em></p>
+<p>The following example shows how to set it up in a workflow to take measurements. Call <code>start-measurement</code> before
+running the work to be measured, and <code>get-measurement</code> and <code>display-results</code> after.</p>
+<pre class="language-yaml"><code class="language-yaml"><span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Initialize Energy Estimation<br>  <span class="token key atrule">uses</span><span class="token punctuation">:</span> green<span class="token punctuation">-</span>coding<span class="token punctuation">-</span>solutions/eco<span class="token punctuation">-</span>ci<span class="token punctuation">-</span>energy<span class="token punctuation">-</span>estimation@v3<br>  <span class="token key atrule">with</span><span class="token punctuation">:</span><br>    <span class="token key atrule">task</span><span class="token punctuation">:</span> start<span class="token punctuation">-</span>measurement<br><br><span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Tests measurement<br>  <span class="token key atrule">uses</span><span class="token punctuation">:</span> green<span class="token punctuation">-</span>coding<span class="token punctuation">-</span>solutions/eco<span class="token punctuation">-</span>ci<span class="token punctuation">-</span>energy<span class="token punctuation">-</span>estimation@v3<br>  <span class="token key atrule">with</span><span class="token punctuation">:</span><br>    <span class="token key atrule">task</span><span class="token punctuation">:</span> get<span class="token punctuation">-</span>measurement<br>    <span class="token key atrule">label</span><span class="token punctuation">:</span> <span class="token string">'Install'</span><br><br><span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Show Energy Results<br>  <span class="token key atrule">uses</span><span class="token punctuation">:</span> green<span class="token punctuation">-</span>coding<span class="token punctuation">-</span>solutions/eco<span class="token punctuation">-</span>ci<span class="token punctuation">-</span>energy<span class="token punctuation">-</span>estimation@v3<br>  <span class="token key atrule">with</span><span class="token punctuation">:</span><br>    <span class="token key atrule">task</span><span class="token punctuation">:</span> display<span class="token punctuation">-</span>results</code></pre>
+<p>Once the workflow is completed, it produces a summary like this:</p>
+<p><picture><source type="image/avif" srcset="/simple-tips-for-sustainable-workflows/zx3fsUhZ8L-300.avif 300w, /simple-tips-for-sustainable-workflows/zx3fsUhZ8L-600.avif 600w, /simple-tips-for-sustainable-workflows/zx3fsUhZ8L-750.avif 750w, /simple-tips-for-sustainable-workflows/zx3fsUhZ8L-900.avif 900w, /simple-tips-for-sustainable-workflows/zx3fsUhZ8L-1200.avif 1200w, /simple-tips-for-sustainable-workflows/zx3fsUhZ8L-1400.avif 1400w" sizes="100vw"><source type="image/jpeg" srcset="/simple-tips-for-sustainable-workflows/zx3fsUhZ8L-300.jpeg 300w, /simple-tips-for-sustainable-workflows/zx3fsUhZ8L-600.jpeg 600w, /simple-tips-for-sustainable-workflows/zx3fsUhZ8L-750.jpeg 750w, /simple-tips-for-sustainable-workflows/zx3fsUhZ8L-900.jpeg 900w, /simple-tips-for-sustainable-workflows/zx3fsUhZ8L-1200.jpeg 1200w, /simple-tips-for-sustainable-workflows/zx3fsUhZ8L-1400.jpeg 1400w" sizes="100vw"><img alt="Workflow summary showing measurement estimates" loading="lazy" decoding="async" src="/simple-tips-for-sustainable-workflows/zx3fsUhZ8L-300.jpeg" width="1400" height="1022"></picture>
+<em>Workflow summary showing measurement estimates</em></p>
+<p>The action sends metrics data to metrics.green-coding.io by default. If you do not want that, set <code>send-data</code>
+to <code>false</code>.</p>
+<h2>ARM Runners</h2>
+<p>GitHub has recently announced the availability of
+<a href="https://github.blog/2024-06-03-arm64-on-github-actions-powering-faster-more-efficient-build-systems/">ARM-based runners</a>
+for GitHub Team and Enterprise Cloud plans and plans to offer them for open-source projects before the end of the year.</p>
+<p>These runners provide improvements in speed and energy consumption thanks to their reduced instruction set. They have
+been shown to consume 30-40% less energy for some of the most widely deployed workflows. They are also 37% cheaper than
+their x64 counterparts, making them a no-brainer for suitable workflows.</p>
+<p>However, not all workflows are ideal for ARM runners. For instance, workflows that depend on software or libraries not
+yet optimized for ARM architecture, or that rely on x64-specific optimizations, may not run as well. Testing and
+evaluating your workflows will help you identify any compatibility issues and measure the potential benefits in terms
+of speed, cost, and energy consumption.</p>
+<h2>Further Tips</h2>
+<p>With these simple tips, you can save a lot of cost, time, and resources that can be put to better use. For more tips,
+I highly recommend watching the
+&quot;<a href="https://www.youtube.com/watch?v=mYBkSg1dz2Y">Things your Pipeline Should (Not) Do</a>&quot; presentation by my colleague
+Raniz, who inspired me to write this post.</p>
+
+    </main>
+
+    <aside class="post__aside">
+        <div class="post__tags">
+            
+            
+                
+                <a href="/tags/ci/">#ci</a>
+            
+                
+                <a href="/tags/automation/">#automation</a>
+            
+        </div>
+    </aside>
+</article>
+
+            </main>
+
+            <footer class="footer">
+    <div class="footer__content">
+        <p class="footer__attribution">Powered by <a href="https://www.11ty.dev">11ty</a>, based on <a href="https://github.com/yinkakun/eleventy-duo">Eleventy Duo</a></p>
+    </div>
+</footer>
+        </div>
+    </body>
+</html>
