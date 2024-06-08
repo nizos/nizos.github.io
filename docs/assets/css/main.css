@@ -415,6 +415,14 @@ p {
     border-bottom: none;
 }
 
+.post-list__link, .post-list__link:hover {
+    text-decoration: none;
+}
+
+.post-list__link:hover .post-list__title {
+    text-decoration: underline;
+}
+
 .post-list__title {
     font-size: 1.5rem;
     margin-top: 0.5rem;
