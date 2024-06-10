@@ -1,6 +1,6 @@
 ---
 title: 'Optimizing GitHub Workflows for Efficiency and Sustainability'
-description: "Over the past few years, I have significantly integrated GitHub Actions into my development processes. In this post, I share several effective strategies to enhance the efficiency of these workflows. We will discuss canceling redundant jobs, setting appropriate workflow timeouts, optimizing caching techniques, and effectively managing workflow triggers. These tips aim to help you streamline your workflows efficiently and sustainably."
+description: "In recent years, I've increasingly integrated GitHub Actions into my development practices. This post outlines several strategies to enhance the efficiency and sustainability of these workflows, including canceling redundant jobs, setting appropriate workflow timeouts, optimizing caching techniques, and managing workflow triggers effectively."
 date: 2024-06-07
 author: Nizar
 permalink: /{{ title | slugify }}/index.html
@@ -11,11 +11,10 @@ tags: [ci, automation, sustainability]
 draft: true
 ---
 
-Over the past few years, I have significantly integrated GitHub Actions into my development processes.
-In this post, I share several effective strategies to enhance the efficiency of these workflows.
-We will discuss canceling redundant jobs, setting appropriate workflow timeouts, optimizing caching techniques,
-and effectively managing workflow triggers. These tips aim to help you streamline your workflows efficiently
-and sustainably.
+In recent years, I've increasingly integrated GitHub Actions into my development practices.
+This post outlines several strategies to enhance the efficiency and sustainability of these workflows, including
+canceling redundant jobs, setting appropriate workflow timeouts, optimizing caching techniques,
+and managing workflow triggers effectively.
 
 ## Cancel Redundant Jobs
 
