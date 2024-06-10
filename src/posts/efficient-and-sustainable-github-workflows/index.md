@@ -1,6 +1,6 @@
 ---
 title: 'Efficient and Sustainable GitHub Workflows'
-description: "In today's fast-paced development environment, efficiency is important, not just in terms of time and cost but also sustainability. Over the past couple of years, I've integrated GitHub Actions into my daily workflow, discovering several simple yet effective strategies to make my processes more sustainable. Here, I share these insights to help you enhance your workflows with minimal effort."
+description: "In today's fast-paced development environment, efficiency is important, not just in terms of time and cost but also sustainability. Over the past couple of years, I've integrated GitHub Actions into my daily workflow, discovering several simple yet effective strategies to make my processes more sustainable. I hope these insights can help you enhance your workflows with minimal effort."
 date: 2024-06-07
 author: Nizar
 permalink: /{{ title | slugify }}/index.html
