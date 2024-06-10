@@ -128,7 +128,7 @@ used to restore the cache if no hit is found for the <code>key</code>.</p>
 <p>The example above references the branch in the <code>key</code> value. This means that it first tries to match against the most
 recent assets cache for the current branch. If none are found, it tries to restore from the most recent assets cache
 for any branch. This is because it will try to match against the most recent cache key that starts with <code>assets-</code>.</p>
-<p>For further customizations, such as taking the operating system into the account, check the
+<p>For further customizations, such as taking the operating system into account, check the
 <a href="https://github.com/actions/cache">official repository</a>.</p>
 <h2>Optimize Workflow Triggers</h2>
 <p>We can avoid running workflows when they are not needed by using <code>paths</code> and <code>paths-ignore</code>, specifying which files or

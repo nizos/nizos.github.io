@@ -147,7 +147,7 @@ The example above references the branch in the `key` value. This means that it f
 recent assets cache for the current branch. If none are found, it tries to restore from the most recent assets cache
 for any branch. This is because it will try to match against the most recent cache key that starts with `assets-`.
 
-For further customizations, such as taking the operating system into the account, check the
+For further customizations, such as taking the operating system into account, check the
 [official repository](https://github.com/actions/cache).
 
 ## Optimize Workflow Triggers
