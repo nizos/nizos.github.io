@@ -69,8 +69,8 @@
     <main class="post__content">
         <p>In today's fast-paced development environment, efficiency is important, not just in terms of time and cost but also
 sustainability. Over the past couple of years, I've integrated GitHub Actions into my daily workflow, discovering
-several simple yet effective strategies to make my processes more sustainable. Here, I share these insights to help
-you enhance your workflows with minimal effort.</p>
+several simple yet effective strategies to make my processes more sustainable. I hope these insights can help you
+enhance your workflows with minimal effort.</p>
 <h2>Cancel Redundant Jobs</h2>
 <p>When working on active branches, changes are often pushed in quick succession, leading to multiple instances of the
 same workflows getting queued up or running in parallel. This redundancy can be quite wasteful, particularly for
@@ -89,8 +89,8 @@ For example, by referencing the branch that triggered the workflow, we can group
 <pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">concurrency</span><span class="token punctuation">:</span><br>  <span class="token key atrule">group</span><span class="token punctuation">:</span> integration<span class="token punctuation">-</span>tests<span class="token punctuation">-</span>$<span class="token punctuation">{</span><span class="token punctuation">{</span> github.ref <span class="token punctuation">}</span><span class="token punctuation">}</span><br>  <span class="token key atrule">cancel-in-progress</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></code></pre>
 <p>This ensures that the concurrency conditions are limited to the branches they are triggered by, so a workflow triggered
 on one branch does not cancel or affect one running on another branch.</p>
-<p>With this simple change, we can ensure that our PR checks are efficient and do not waste resources by running multiple
-redundant or outdated jobs, while still maintaining the integrity of our code base.</p>
+<p>With this simple adjustment, we can ensure that our PR checks are efficient and do not waste resources by running
+multiple redundant or outdated jobs, while still maintaining the integrity of our code base.</p>
 <h2>Set Workflow Timeouts</h2>
 <p>The default workflow timeout is 6 hours, which can be wasteful if a process hangs. For workflows that typically finish
 in under 2 minutes, setting a timeout of 10 minutes is more than sufficient.
@@ -98,7 +98,7 @@ This can be done by specifying <code>timeout-minutes</code> for the workflow.</p
 <pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">jobs</span><span class="token punctuation">:</span><br>  <span class="token key atrule">lint-checks</span><span class="token punctuation">:</span><br>    <span class="token key atrule">runs-on</span><span class="token punctuation">:</span> ubuntu<span class="token punctuation">-</span>latest<br>    <span class="token key atrule">timeout-minutes</span><span class="token punctuation">:</span> <span class="token number">10</span></code></pre>
 <p>There's no need to keep it running for another 5 hours and 50 minutes to know something went wrong. Instead, we can put
 those 350 GitHub Actions minutes to better use elsewhere.</p>
-<p>Optimizing timeouts is a simple step but can greatly enhance the sustainability of your workflows by minimizing the
+<p>Optimizing timeouts is a straightforward step but can greatly enhance the sustainability of your workflows by minimizing the
 idle resource consumption. You can find more information <a href="https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions">here</a>.</p>
 <h2>Utilize Caching for Efficiency</h2>
 <h3>Optimize Dependency Handling</h3>
@@ -173,7 +173,7 @@ running the work to be measured, and <code>get-measurement</code> and <code>disp
 <p>The action sends metrics data to metrics.green-coding.io by default. If you do not want that, set <code>send-data</code>
 to <code>false</code>.</p>
 <h2>More Ways to Optimize Workflows</h2>
-<p>With these simple tips, you can save a lot of cost, time, and resources that can be put to better use. For more tips,
+<p>With these simple tips, you might save a lot of cost, time, and resources that can be put to better use. For more tips,
 I highly recommend watching the
 &quot;<a href="https://www.youtube.com/watch?v=mYBkSg1dz2Y">Things your Pipeline Should (Not) Do</a>&quot; presentation by my colleague
 Raniz, who inspired me to write this post.</p>

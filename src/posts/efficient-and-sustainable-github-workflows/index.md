@@ -13,8 +13,8 @@ draft: true
 
 In today's fast-paced development environment, efficiency is important, not just in terms of time and cost but also
 sustainability. Over the past couple of years, I've integrated GitHub Actions into my daily workflow, discovering
-several simple yet effective strategies to make my processes more sustainable. Here, I share these insights to help
-you enhance your workflows with minimal effort.
+several simple yet effective strategies to make my processes more sustainable. I hope these insights can help you
+enhance your workflows with minimal effort.
 
 ## Cancel Redundant Jobs
 
@@ -56,8 +56,8 @@ concurrency:
 This ensures that the concurrency conditions are limited to the branches they are triggered by, so a workflow triggered
 on one branch does not cancel or affect one running on another branch.
 
-With this simple change, we can ensure that our PR checks are efficient and do not waste resources by running multiple
-redundant or outdated jobs, while still maintaining the integrity of our code base.
+With this simple adjustment, we can ensure that our PR checks are efficient and do not waste resources by running
+multiple redundant or outdated jobs, while still maintaining the integrity of our code base.
 
 ## Set Workflow Timeouts
 
@@ -75,7 +75,7 @@ jobs:
 There's no need to keep it running for another 5 hours and 50 minutes to know something went wrong. Instead, we can put
 those 350 GitHub Actions minutes to better use elsewhere.
 
-Optimizing timeouts is a simple step but can greatly enhance the sustainability of your workflows by minimizing the
+Optimizing timeouts is a straightforward step but can greatly enhance the sustainability of your workflows by minimizing the
 idle resource consumption. You can find more information [here](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions).
 
 ## Utilize Caching for Efficiency
@@ -243,7 +243,7 @@ to `false`.
 
 ## More Ways to Optimize Workflows
 
-With these simple tips, you can save a lot of cost, time, and resources that can be put to better use. For more tips,
+With these simple tips, you might save a lot of cost, time, and resources that can be put to better use. For more tips,
 I highly recommend watching the
 "[Things your Pipeline Should (Not) Do](https://www.youtube.com/watch?v=mYBkSg1dz2Y)" presentation by my colleague
 Raniz, who inspired me to write this post.
