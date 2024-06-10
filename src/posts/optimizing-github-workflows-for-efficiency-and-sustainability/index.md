@@ -120,9 +120,8 @@ If there isn't an exact match, the `restore-keys` option allows the build to use
 `assets-`. This technique is particularly useful for processes like generating responsive images, where restoring them
 from the cache can save significant time and resources.
 
-Note that GitHub retains caches for 7 days after the last access. Thus, a storage-based solution might be more suitable
-for workflows that run infrequently. There are also situations where you might want to invalidate the cache, which can
-be managed through the repository's [web interface](https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows#deleting-cache-entries).
+Note: GitHub retains caches for 7 days after the last access. For infrequent workflows, a storage-based solution might
+be more appropriate. Cache management, including invalidation, can be handled through the repository's [web interface](https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows#deleting-cache-entries).
 
 ## Optimize Workflow Triggers
 
