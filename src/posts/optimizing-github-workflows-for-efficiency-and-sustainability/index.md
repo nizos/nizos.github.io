@@ -1,7 +1,7 @@
 ---
 title: 'Optimizing GitHub Workflows for Efficiency and Sustainability'
 description: "In recent years, integrating automation into my development workflows has become increasingly important. This post outlines several strategies I've employed to optimize the efficiency and sustainability of these workflows. Topics covered include canceling redundant jobs, setting appropriate workflow timeouts, optimizing caching techniques, and effectively managing workflow triggers."
-date: 2024-06-07
+date: 2024-06-11
 author: Nizar
 permalink: /{{ title | slugify }}/index.html
 cover: 'assets/wind-turbine.jpg'
