@@ -55,7 +55,7 @@
     <header class="post__header">
         <h1>Optimizing GitHub Workflows for Efficiency and Sustainability</h1>
         <div class="post__details">
-            <time>11 Jun 2024</time>
+            <time>12 Jun 2024</time>
             <span> | </span>
             <span>4 minutes</span>
         </div>
@@ -67,13 +67,13 @@
     </div>
 
     <main class="post__content">
-        <p>In recent years, integrating automation into my development workflows has become increasingly important.
-This post outlines several strategies I've employed to optimize the efficiency and sustainability of these workflows.
-Topics covered include canceling redundant jobs, setting appropriate workflow timeouts,
-optimizing caching techniques, and effectively managing workflow triggers.</p>
+        <p>Integrating automation into development workflows has become crucial in recent years. In this post, I'll share a few
+strategies I've found useful for making these workflows both more efficient and sustainable. We'll look into strategies
+such as canceling redundant jobs, setting appropriate workflow timeouts, optimizing caching techniques, and managing
+workflow triggers more effectively.</p>
 <h2>Cancel Redundant Jobs</h2>
-<p>Active development branches often receive rapid, successive updates, triggering multiple instances of the same workflow.
-This redundancy, particularly for pull request (PR) checks, consumes excessive resources and can be wasteful.</p>
+<p>When active development branches receive rapid updates, they often trigger multiple instances of the same workflow.
+This redundancy, particularly for pull request (PR) checks, can lead to unnecessary resource consumption.</p>
 <p>One effective solution is to utilize <a href="https://docs.github.com/en/enterprise-cloud@latest/actions/using-jobs/using-concurrency#using-concurrency-in-different-scenarios">concurrency groups</a>.
 By assigning a concurrency key, you can group workflows, thereby controlling their execution more effectively.
 GitHub ensures that within a concurrency group, only one job or workflow runs at a time, limiting it to one running
