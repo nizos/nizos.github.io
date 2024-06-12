@@ -57,7 +57,7 @@
         <div class="post__details">
             <time>12 Jun 2024</time>
             <span> | </span>
-            <span>4 minutes</span>
+            <span>5 minutes</span>
         </div>
     </header>
 
@@ -72,27 +72,31 @@ strategies I've found useful for making these workflows both more efficient and 
 such as canceling redundant jobs, setting appropriate workflow timeouts, optimizing caching techniques, and managing
 workflow triggers more effectively.</p>
 <h2>Cancel Redundant Jobs</h2>
-<p>When active development branches receive rapid updates, they often trigger multiple instances of the same workflow.
-This redundancy, particularly for pull request (PR) checks, can lead to unnecessary resource consumption.</p>
+<p>When active development branches receive rapid updates, whether through direct pushes or pull requests, they often
+trigger multiple instances of the same workflow. This redundancy can lead to unnecessary resource consumption and
+potential delays in integration processes.</p>
 <p>One effective solution is to utilize <a href="https://docs.github.com/en/enterprise-cloud@latest/actions/using-jobs/using-concurrency#using-concurrency-in-different-scenarios">concurrency groups</a>.
 By assigning a concurrency key, you can group workflows, thereby controlling their execution more effectively.
 GitHub ensures that within a concurrency group, only one job or workflow runs at a time, limiting it to one running
-and one pending job.</p>
-<p>Here is how to configure the <code>cancel-in-progress</code> property, which cancels any ongoing workflow within the same
-concurrency group when a new one is triggered:</p>
+and one pending job. Any new jobs that are triggered at that point will instead be queued.</p>
+<p>However, by setting <code>cancel-in-progress</code> to true, we cancel any ongoing workflows within the same concurrency group
+when a new one is triggered. This approach effectively clears the queue and ensures that any running workflows are
+processing the latest changes:</p>
 <pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">on</span><span class="token punctuation">:</span><br>  <span class="token key atrule">push</span><span class="token punctuation">:</span><br>    <span class="token key atrule">branches</span><span class="token punctuation">:</span><br>      <span class="token punctuation">-</span> main<br><br><span class="token key atrule">concurrency</span><span class="token punctuation">:</span><br>  <span class="token key atrule">group</span><span class="token punctuation">:</span> integration<span class="token punctuation">-</span>tests<br>  <span class="token key atrule">cancel-in-progress</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></code></pre>
-<p>For more granular control, consider using dynamic expressions in the group naming, such as the branch triggering
-the workflow:</p>
+<p>For more granular control, particularly useful in environments that utilize branching strategies, consider using dynamic
+expressions in the group naming. This configuration allows workflows triggered on different branches to be grouped
+separately, ensuring that updates on one branch do not interfere with the progress of workflows on another:</p>
 <pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">concurrency</span><span class="token punctuation">:</span><br>  <span class="token key atrule">group</span><span class="token punctuation">:</span> integration<span class="token punctuation">-</span>tests<span class="token punctuation">-</span>$<span class="token punctuation">{</span><span class="token punctuation">{</span> github.ref <span class="token punctuation">}</span><span class="token punctuation">}</span><br>  <span class="token key atrule">cancel-in-progress</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></code></pre>
-<p>This adjustment ensures that workflows triggered on different branches do not interfere with each other, optimizing
-PR checks by avoiding redundant or outdated jobs while maintaining the integrity of our codebase.</p>
+<p>Employing this strategy optimizes the use of CI resources by avoiding redundant or outdated jobs while maintaining the
+integrity of our codebase across all types of updates.</p>
 <h2>Set Workflow Timeouts</h2>
 <p>The default workflow timeout is 6 hours, which is often excessive for processes that complete within minutes.
-Setting a more appropriate duration prevents wasteful use of resources, such as when a process hangs.
-For instance, a lint check that typically completes within two minutes might only need a 10-minute timeout:</p>
+Setting a more appropriate duration prevents wasteful use of resources, especially in cases where a process might
+hang due to issues like deadlocks, resource starvation, or software bugs. For instance, a lint check that typically
+completes within two minutes might only need a 10-minute timeout:</p>
 <pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">jobs</span><span class="token punctuation">:</span><br>  <span class="token key atrule">lint-checks</span><span class="token punctuation">:</span><br>    <span class="token key atrule">runs-on</span><span class="token punctuation">:</span> ubuntu<span class="token punctuation">-</span>latest<br>    <span class="token key atrule">timeout-minutes</span><span class="token punctuation">:</span> <span class="token number">10</span></code></pre>
-<p>This simple adjustment prevents resources from being idly consumed, directing them towards more critical tasks and
-enhancing the sustainability of your workflows.</p>
+<p>This simple adjustment prevents resources from being idly consumed, allowing them to be used for more critical tasks
+and thereby enhancing the sustainability of your workflows.</p>
 <h2>Utilize Caching for Efficiency</h2>
 <h3>Optimize Dependency Handling</h3>
 <p>Workflow runs often share the exact same dependencies, which must be downloaded each time. Efficient caching can save
@@ -109,9 +113,9 @@ reducing size and enhancing reusability across different environments.</p>
 <pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">jobs</span><span class="token punctuation">:</span><br>  <span class="token key atrule">build</span><span class="token punctuation">:</span><br>    <span class="token key atrule">runs-on</span><span class="token punctuation">:</span> ubuntu<span class="token punctuation">-</span>latest<br>    <span class="token key atrule">steps</span><span class="token punctuation">:</span><br><br>      <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Cache Assets<br>        <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/cache@v4<br>        <span class="token key atrule">with</span><span class="token punctuation">:</span><br>          <span class="token key atrule">path</span><span class="token punctuation">:</span> assets<br>          <span class="token key atrule">key</span><span class="token punctuation">:</span> assets<span class="token punctuation">-</span>$<span class="token punctuation">{</span><span class="token punctuation">{</span> github.run_id <span class="token punctuation">}</span><span class="token punctuation">}</span><br>          <span class="token key atrule">restore-keys</span><span class="token punctuation">:</span> <span class="token punctuation">|</span><span class="token scalar string"><br>            assets-</span></code></pre>
 <p>This configuration caches the <code>assets</code> directory, restoring it at the start of each build.
 By referencing the run ID in the cache key, each build attempt will initially seek its own unique cache.
-If there isn't an exact match, the <code>restore-keys</code> option allows the build to use the most recent cache starting with
-<code>assets-</code>. This technique is particularly useful for processes like generating responsive images, where restoring them
-from the cache can save significant time and resources.</p>
+If there isn’t an exact match, the <code>restore-keys</code> option allows the build to use the most recent cache starting
+with <code>assets-</code>. This technique is particularly useful for processes like generating responsive images, where restoring
+them from the cache can save significant time and resources.</p>
 <p>Note: GitHub retains caches for 7 days after the last access. For infrequent workflows, a storage-based solution might
 be more appropriate. Cache management, including invalidation, can be handled through the repository's <a href="https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows#deleting-cache-entries">web interface</a>.</p>
 <h2>Optimize Workflow Triggers</h2>
@@ -125,8 +129,6 @@ non-code updates.</p>
 <pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">on</span><span class="token punctuation">:</span><br>  <span class="token key atrule">push</span><span class="token punctuation">:</span><br>    <span class="token key atrule">paths</span><span class="token punctuation">:</span><br>      <span class="token punctuation">-</span> <span class="token string">'frontend/**.js'</span></code></pre>
 <p>This setting ensures that workflows are triggered only when <code>js</code> files in the <code>frontend</code> directory are modified,
 ensuring relevant tasks like linting are executed only when necessary.</p>
-<p>Using <code>paths</code> and <code>paths-ignore</code> efficiently reduces unnecessary workflow executions, making your processes more
-sustainable and cost-effective.</p>
 <p>For more advanced usage, refer to the official GitHub Actions documentation <a href="https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onpushpull_requestpull_request_targetpathspaths-ignore">here</a>.
 Feel free to also check out the <a href="https://github.com/dorny/paths-filter">paths-filter</a> action which offers more advanced
 features.</p>
@@ -139,6 +141,12 @@ for GitHub Team and Enterprise Cloud plans, with plans to offer them for open-so
 optimized for ARM architecture, or that rely on x64-specific optimizations. Testing and evaluating your workflows will
 help you identify any compatibility issues and measure the potential benefits in terms of speed, cost, and energy
 consumption.</p>
+<p>To utilize these ARM runners in your workflows, you first need to create an ARM-based runner as shown in <a href="https://www.youtube.com/watch?v=cgI6SBP8pEM">this video</a>
+or documented <a href="https://docs.github.com/en/actions/using-github-hosted-runners/about-larger-runners/about-larger-runners">here</a>.
+Once set up, you can specify the runner by its name in the <code>runs-on</code> field in your GitHub Actions workflow. For example:</p>
+<pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">jobs</span><span class="token punctuation">:</span><br>  <span class="token key atrule">build</span><span class="token punctuation">:</span><br>    <span class="token key atrule">runs-on</span><span class="token punctuation">:</span> my<span class="token punctuation">-</span>org<span class="token punctuation">-</span>arm<span class="token punctuation">-</span>runner</code></pre>
+<p>This configuration directs GitHub Actions to use the specified ARM-based runner, allowing you to take advantage of the
+efficiency and cost savings offered by ARM architecture.</p>
 <h2>Estimate Workflow Energy Consumption</h2>
 <p>Determining which strategy consumes fewer resources can sometimes be challenging. Tools like the <a href="https://github.com/green-coding-solutions/eco-ci-energy-estimation">eco-ci-energy-estimation</a>
 action allow us to get estimates and help us make informed decisions.</p>
@@ -152,8 +160,10 @@ before running the work to be measured, and <code>get-measurement</code> and <co
 <p>Upon completion, the workflow produces a summary that looks like this:</p>
 <p><picture><source type="image/avif" srcset="/optimizing-github-workflows-for-efficiency-and-sustainability/zx3fsUhZ8L-300.avif 300w, /optimizing-github-workflows-for-efficiency-and-sustainability/zx3fsUhZ8L-600.avif 600w, /optimizing-github-workflows-for-efficiency-and-sustainability/zx3fsUhZ8L-750.avif 750w, /optimizing-github-workflows-for-efficiency-and-sustainability/zx3fsUhZ8L-900.avif 900w, /optimizing-github-workflows-for-efficiency-and-sustainability/zx3fsUhZ8L-1200.avif 1200w, /optimizing-github-workflows-for-efficiency-and-sustainability/zx3fsUhZ8L-1400.avif 1400w" sizes="100vw"><source type="image/jpeg" srcset="/optimizing-github-workflows-for-efficiency-and-sustainability/zx3fsUhZ8L-300.jpeg 300w, /optimizing-github-workflows-for-efficiency-and-sustainability/zx3fsUhZ8L-600.jpeg 600w, /optimizing-github-workflows-for-efficiency-and-sustainability/zx3fsUhZ8L-750.jpeg 750w, /optimizing-github-workflows-for-efficiency-and-sustainability/zx3fsUhZ8L-900.jpeg 900w, /optimizing-github-workflows-for-efficiency-and-sustainability/zx3fsUhZ8L-1200.jpeg 1200w, /optimizing-github-workflows-for-efficiency-and-sustainability/zx3fsUhZ8L-1400.jpeg 1400w" sizes="100vw"><img alt="Workflow summary showing measurement estimates" loading="lazy" decoding="async" src="/optimizing-github-workflows-for-efficiency-and-sustainability/zx3fsUhZ8L-300.jpeg" width="1400" height="1022"></picture>
 <em>Workflow summary showing measurement estimates</em></p>
-<p>The action sends metrics data to metrics.green-coding.io by default. If you prefer not to send data, simply set
-<code>send-data</code> to <code>false</code>.</p>
+<p>The action sends metrics data to metrics.green-coding.io by default, including energy values, duration of measurements,
+CPU model, and details about your repository and commit. This data is used to create a badge and a detailed display of
+your CU runs’ energy consumption, viewable <a href="https://metrics.green-coding.io/ci-index.html">here</a>.</p>
+<p>If you prefer not to share this data, simply set <code>send-data</code> to <code>false</code> in the action’s configuration.</p>
 <h2>More Ways to Optimize Workflows</h2>
 <p>With these simple tips, you can significantly reduce costs, save time, and better allocate resources. For more tips,
 I highly recommend the presentation &quot;<a href="https://www.youtube.com/watch?v=mYBkSg1dz2Y">Things your Pipeline Should (Not) Do</a>&quot;
