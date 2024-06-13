@@ -225,7 +225,7 @@ Upon completion, the workflow produces a summary that looks like this:
 
 The action sends metrics data to metrics.green-coding.io by default, including energy values, duration of measurements,
 CPU model, and details about your repository and commit. This data is used to create a badge and a detailed display of
-your CU runs’ energy consumption, viewable [here](https://metrics.green-coding.io/ci-index.html).
+your CI runs’ energy consumption, viewable [here](https://metrics.green-coding.io/ci-index.html).
 
 If you prefer not to share this data, simply set `send-data` to `false` in the action’s configuration.
 
