@@ -109,7 +109,7 @@ notes that even static websites, which don't handle user input, can benefit from
 Subresource Integrity (SRI). This can help prevent malicious code from being loaded on the website if one of the
 third-party sites hosting JavaScript files (such as analytics scripts) is compromised.</p>
 </blockquote>
-<p>Here's a basic CSP rule enforcing SRI can:</p>
+<p>Here's a basic CSP rule enforcing SRI:</p>
 <pre class="language-text"><code class="language-text">Content-Security-Policy: script-src 'self' https://cdn.com; require-sri-for script style;</code></pre>
 <p>This rule ensures that only trusted scripts and styles are executed, while Subresource Integrity are enforced.</p>
 <h2>Common Threats and How CSP Helps</h2>
