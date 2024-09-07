@@ -1,10 +1,10 @@
 ---
 title: Supply Chain Security Risks Even for Static Sites
 description: >-
-  Static websites are often perceived as less vulnerable due to their simplicity, particularly because
-  they don’t rely on complex server-side interactions. While this perception holds some truth—static sites avoid risks
-  like SQL injection—it can also foster a false sense of security. In reality, static sites are still susceptible to
-  specific attack vectors, especially supply chain attacks.
+  Static websites are often perceived as less vulnerable due to their simplicity, especially since they don't rely
+  on complex server-side processes. While they do avoid certain risks like SQL injection, this perception can create a
+  false sense of security. In reality, static sites are still exposed to specific attack vectors—particularly supply
+  chain attacks.
 date: 2024-09-09
 author: Nizar
 permalink: /{{ title | slugify }}/index.html
