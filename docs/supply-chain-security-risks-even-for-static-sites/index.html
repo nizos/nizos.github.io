@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/assets/css/main.css" rel="stylesheet" />
+
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+
+        
+        
+        
+            <meta name="description" content="Static websites are often perceived as less vulnerable due to their simplicity, particularly because they don’t rely on complex server-side interactions. While this perception holds some truth—static sites avoid risks like SQL injection—it can also foster a false sense of security. In reality, static sites are still susceptible to specific attack vectors, especially supply chain attacks.">
+            <meta property="og:description" content="Static websites are often perceived as less vulnerable due to their simplicity, particularly because they don’t rely on complex server-side interactions. While this perception holds some truth—static sites avoid risks like SQL injection—it can also foster a false sense of security. In reality, static sites are still susceptible to specific attack vectors, especially supply chain attacks.">
+            <meta name="description" content="Static websites are often perceived as less vulnerable due to their simplicity, particularly because they don’t rely on complex server-side interactions. While this perception holds some truth—static sites avoid risks like SQL injection—it can also foster a false sense of security. In reality, static sites are still susceptible to specific attack vectors, especially supply chain attacks."/>
+        
+
+        
+        
+            <meta property="og:image" content="/assets/images/shipping-containers-social-image.jpg"/>
+            <meta name="twitter:image" content="/assets/images/shipping-containers-social-image.jpg"/>
+        
+
+        <title>
+            
+                Supply Chain Security Risks Even for Static Sites | Nizar&#39;s Blog
+            
+        </title>
+
+        <meta property="og:site_name" content="Nizar's Blog">
+        <meta property="og:type" content="website">
+        <script defer data-domain="nizar.se" src="https://plausible.io/js/script.js"></script>
+    </head>
+    <body>
+        <div class="layout-wrapper">
+            <header class="header">
+    <div class="header__content">
+        <h1 class="site-title">
+            <a href="/">Nizar's Blog</a>
+        </h1>
+        <nav class="nav">
+            <ul class="nav__list">
+                <li class="nav-item">
+                    <a href="/about">About</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+            <main class="main">
+                <article class="post">
+    <header class="post__header">
+        <h1>Supply Chain Security Risks Even for Static Sites</h1>
+        <div class="post__details">
+            <time>09 Sep 2024</time>
+            <span> | </span>
+            <span>5 minutes</span>
+        </div>
+    </header>
+
+    <div class="post__cover">
+        <picture><source type="image/avif" srcset="/supply-chain-security-risks-even-for-static-sites/T71OCN30Vz-300.avif 300w, /supply-chain-security-risks-even-for-static-sites/T71OCN30Vz-600.avif 600w, /supply-chain-security-risks-even-for-static-sites/T71OCN30Vz-750.avif 750w, /supply-chain-security-risks-even-for-static-sites/T71OCN30Vz-900.avif 900w, /supply-chain-security-risks-even-for-static-sites/T71OCN30Vz-1200.avif 1200w, /supply-chain-security-risks-even-for-static-sites/T71OCN30Vz-1400.avif 1400w" sizes="Cover image"><source type="image/jpeg" srcset="/supply-chain-security-risks-even-for-static-sites/T71OCN30Vz-300.jpeg 300w, /supply-chain-security-risks-even-for-static-sites/T71OCN30Vz-600.jpeg 600w, /supply-chain-security-risks-even-for-static-sites/T71OCN30Vz-750.jpeg 750w, /supply-chain-security-risks-even-for-static-sites/T71OCN30Vz-900.jpeg 900w, /supply-chain-security-risks-even-for-static-sites/T71OCN30Vz-1200.jpeg 1200w, /supply-chain-security-risks-even-for-static-sites/T71OCN30Vz-1400.jpeg 1400w" sizes="Cover image"><img alt="Cover image" loading="lazy" decoding="async" src="/supply-chain-security-risks-even-for-static-sites/T71OCN30Vz-300.jpeg" width="1400" height="787"></picture>
+        <p class="post__cover-caption">Original photo by <a href="https://unsplash.com/@ventiviews">Venti Views</a> on <a href="https://unsplash.com/photos/aerial-view-of-city-buildings-during-daytime-6p0JBES_65E">Unsplash</a></p>
+    </div>
+
+    <main class="post__content">
+        <p>Static websites are often perceived as less vulnerable due to their simplicity, particularly because they don’t rely on
+complex server-side interactions. While this perception holds some truth—static sites avoid risks like SQL injection
+—it can also foster a false sense of security. In reality, static sites are still susceptible to specific attack
+vectors, especially supply chain attacks.</p>
+<h2>Static Sites</h2>
+<p>Static websites, composed of pre-rendered HTML, CSS, and JavaScript, are popular for their speed, security, scalability,
+and cost-effectiveness. With no need for server-side processing or databases, they can be optimized to be incredibly
+lightweight, which boosts performance. This often translates into reduced energy usage and a smaller carbon footprint,
+although the actual impact varies based on traffic, hosting, and other factors.</p>
+<p>However, static sites aren’t restricted to simple content. Through JavaScript libraries, static sites can handle form
+submissions via asynchronous API requests. More complex interactions, like booking tickets with live seat availability,
+can be handled by integrating serverless services. These services scale with demand or shut down when not in use, making
+them highly efficient.</p>
+<p>While this modular approach adds flexibility, it also introduces risks. Relying on third-party libraries and services
+can expose sites to supply chain attacks if not properly managed. These attacks are not unique to static sites; any site
+can be vulnerable. However, static sites may downplay these risks due to their perceived simplicity.</p>
+<h2>Supply Chain Attacks</h2>
+<p>One significant risk comes from supply chain attacks on third-party libraries and services. A notable example is the
+Polyfill.io attack, where a widely used web compatibility tool was compromised at the domain level. Malicious code was
+injected, impacting over 100,000 websites.</p>
+<p><a href="https://sansec.io/">Sansec.io</a>, a security research firm, <a href="https://sansec.io/research/polyfill-supply-chain-attack">discovered that a malware</a>
+used in the attack redirected mobile users to a sports betting site while evading detection:</p>
+<blockquote>
+<p>The code has specific protection against reverse engineering, and only activates on specific mobile devices at
+specific hours. It also does not activate when it detects an admin user. It also delays execution when a web analytics
+service is found, presumably to not end up in the stats.</p>
+</blockquote>
+<p>This malware cleverly exploited the less rigorous security checks typically found on mobile devices and non-admin users,
+allowing the attack to persist undetected for longer.</p>
+<p>Similar attacks can occur at the Content Delivery Network (CDN) level. CDNs, often used to serve JavaScript libraries,
+fonts, and analytics scripts, are not immune to compromise. The 2021 Cloudflare <a href="https://www.bleepingcomputer.com/news/security/critical-cloudflare-cdn-flaw-allowed-compromise-of-12-percent-of-all-sites/">CDNJS vulnerability</a>
+demonstrated this risk. A potential bug could have allowed attackers to inject malicious code into libraries served to
+millions of websites, potentially affecting up to 12% of the web. This underscores how even static sites, despite their
+simplicity, are not immune to supply chain threats.</p>
+<h2>Subresource Integrity (SRI)</h2>
+<p>To mitigate the risks of supply chain attacks, Subresource Integrity (SRI) is a crucial defense. SRI allows browsers to
+verify that resources like JavaScript or CSS files haven’t been altered by comparing their hash with an expected value.
+If the hashes don’t match, the resource is blocked, preventing the execution of malicious code.</p>
+<p>However, SRI has limitations:</p>
+<ul>
+<li>It only works when you can guarantee and specify the hash of the exact resource version you’re expecting, which
+requires regular updates whenever the resource changes.</li>
+<li>It doesn’t protect against malicious code hosted directly at the source. For example, if a CDN itself is compromised
+and serves a malicious file that matches the expected hash, SRI won’t prevent the attack.</li>
+</ul>
+<p>Despite these limitations, SRI remains an effective layer of defense when used in conjunction with other security
+measures like Content Security Policy (CSP).</p>
+<h2>Content Security Policy (CSP)</h2>
+<p>A Content Security Policy (CSP) adds another layer of protection by controlling which resources a website can load,
+helping prevent unauthorized scripts and styles from executing.</p>
+<p>According to the <a href="https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html#defense-in-depth">OWASP CSP Cheat Sheet</a>:</p>
+<blockquote>
+<p>Even on a fully static website, which does not accept any user input, a CSP can be used to enforce the use of
+Subresource Integrity (SRI). This can help prevent malicious code from being loaded on the website if one of the
+third-party sites hosting JavaScript files (such as analytics scripts) is compromised.</p>
+</blockquote>
+<p>However, CSPs come with challenges. A strict CSP can break site functionality, especially if your site relies on dynamic
+content or third-party services. Extensive testing is necessary to ensure that your CSP doesn’t interfere with the
+site’s functionality. Common mistakes, such as allowing <code>unsafe-inline</code> or <code>unsafe-eval</code>, can weaken the protection
+and should be avoided.</p>
+<p>For developers looking to test and fine-tune security headers, my <a href="https://github.com/nizos/csp-docker">csp-docker</a>
+project offers an easy-to-use NGINX environment. It allows modifications to HTML, CSS, JS, and NGINX configuration files
+to be reflected immediately in the running container, making it ideal for quick experimentation.</p>
+<p>Here’s an example of a simplified but effective CSP rule:</p>
+<pre class="language-text"><code class="language-text">Content-Security-Policy: default-src 'none'; script-src 'sha256-<hash>' https://plausible.io; style-src 'sha256-<hash>';<br>object-src 'none'; base-uri 'none'; frame-ancestors 'none'; report-uri /csp-violation-report;</code></pre>
+<p>This CSP allows only scripts with specific integrity hashes or those from trusted sources like Plausible. Inline styles
+are verified using SRI, and external objects and iframes are blocked to prevent attacks like Cross-Site Scripting (XSS)
+and Clickjacking. Additionally, it blocks data URIs and other potentially malicious sources, which can be common attack
+vectors.</p>
+<h2>Cross-Site Scripting (XSS), Clickjacking, and Defacement</h2>
+<p>With the right security measures in place, you can also protect against common threats like Cross-Site Scripting (XSS),
+Clickjacking, and Defacement:</p>
+<ul>
+<li>XSS allows attackers to inject malicious scripts that run in users’ browsers, potentially stealing sensitive
+information or hijacking sessions.</li>
+<li>Clickjacking tricks users into performing unintended actions by overlaying malicious elements on legitimate pages,
+such as authorizing transactions or downloading malware.</li>
+<li>Defacement alters the appearance or content of a site, damaging its reputation.</li>
+</ul>
+<p>A strong CSP, when combined with SRI, can significantly reduce these risks by preventing unauthorized resources from
+being executed.</p>
+<h2>Improving CSP with Automation</h2>
+<p>To better protect our <a href="https://www.factor10.com/websites/">sites</a>, we reassessed our use of third-party analytics,
+such as <a href="https://plausible.io/">Plausible</a>, a privacy-focused, GDPR-compliant solution. Initially, we served the
+Plausible script through an NGINX proxy, which reduced exposure to external risks. However, we realized that it was
+still vulnerable to supply chain attacks like the Polyfill incident.</p>
+<p>We implemented several workflow improvements:</p>
+<ol>
+<li>Automated Script Handling: A utility now downloads the latest version of third-party scripts during the build
+process, ensuring we control when new script changes are introduced.</li>
+<li>Build Process Integration: Once scripts are downloaded, they are minified and compressed during the build process.</li>
+<li>Automated Subresource Integrity: Hashes are automatically calculated for all scripts and inline styles, ensuring only
+verified resources are executed.</li>
+<li>Automated Security Headers: During deployment, a workflow calculates hashes and generates the NGINX configuration
+with the correct CSP rules. If any verification fails, the deployment is discarded, keeping the live site secure.</li>
+</ol>
+<p>This approach enhances security while minimizing complexity. By downloading, verifying, and securing these resources as
+part of our deployment process, we prevent malicious updates and ensure optimal loading performance. Browsers can verify
+and cache resources efficiently, and can only load the exact versions we approve.</p>
+<h2>Tools for Security Testing</h2>
+<p>To evaluate and improve your site’s security, tools like <a href="https://csp-evaluator.withgoogle.com/">Google’s CSP Evaluator</a>
+assess your CSP and provide feedback. For more comprehensive testing, <a href="http://webperf.se">webperf.se</a> offers an
+open-source suite that evaluates performance, sustainability, accessibility, and security.</p>
+<p>Here’s a command-line example to test CSP using <a href="https://github.com/Webperf-se/webperf_core">webperf core</a> with Docker:</p>
+<pre><code>python3 default.py -r -t 21 --setting sitespeed_use_docker=true --setting csp_only=true --setting details=true -u https://www.yourwebsite.com
+</code></pre>
+<p>Running these tests regularly ensures that your security remains up to date. For our sites, we’ve subscribed to
+webperf’s premium service to have them run daily and have also set up webhooks to alert us on Slack whenever manual
+intervention is required.</p>
+<h2>Wrapping Up</h2>
+<p>Static websites may seem simpler and less vulnerable, but this simplicity can be deceptive. The Polyfill.io attack shows
+how even static sites can be targeted through supply chain vulnerabilities. Implementing a defense-in-depth strategy
+with CSP, SRI, and automation is essential for mitigating these risks.</p>
+<p>Automation reduces human error, ensuring consistent application of security best practices. By automating tasks like
+calculating hashes, updating security headers, and verifying third-party resources, you create workflows that enhance
+security without adding unnecessary complexity.</p>
+<p>Monitoring and regularly updating your policies and workflows is crucial as threats evolve. By integrating strong
+security measures with automation and continuously testing your security, you can ensure that even static sites remain
+resilient against evolving threats.</p>
+
+    </main>
+
+    <aside class="post__aside">
+        <div class="post__tags">
+            
+            
+                
+                <a href="/tags/web/">#web</a>
+            
+                
+                <a href="/tags/security/">#security</a>
+            
+        </div>
+    </aside>
+</article>
+
+            </main>
+
+            <footer class="footer">
+    <div class="footer__content">
+        <p class="footer__attribution">Powered by <a href="https://www.11ty.dev">11ty</a>, based on <a href="https://github.com/yinkakun/eleventy-duo">Eleventy Duo</a></p>
+    </div>
+</footer>
+        </div>
+    </body>
+</html>
