@@ -16,9 +16,9 @@ draft: true
 ---
 
 Static websites are often perceived as less vulnerable due to their simplicity, particularly because they don’t rely on
-complex server-side interactions. While this perception holds some truth—static sites avoid risks like SQL injection
-—it can also foster a false sense of security. In reality, static sites are still susceptible to specific attack
-vectors, especially supply chain attacks.
+complex server-side interactions. While this perception holds some truth—static sites avoid risks like SQL injection—it
+can also foster a false sense of security. In reality, static sites are still susceptible to specific attack vectors,
+especially supply chain attacks.
 
 ## Static Sites
 
