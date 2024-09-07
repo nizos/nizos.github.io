@@ -110,7 +110,7 @@ Subresource Integrity (SRI). This can help prevent malicious code from being loa
 third-party sites hosting JavaScript files (such as analytics scripts) is compromised.</p>
 </blockquote>
 <p>Here's a basic CSP rule enforcing SRI can:</p>
-<pre class="language-text"><code class="language-text">Content-Security-Policy: script-src 'self' https://cdn.example.com; require-sri-for script style;</code></pre>
+<pre class="language-text"><code class="language-text">Content-Security-Policy: script-src 'self' https://cdn.com; require-sri-for script style;</code></pre>
 <p>This rule ensures that only trusted scripts and styles are executed, while Subresource Integrity are enforced.</p>
 <h2>Common Threats and How CSP Helps</h2>
 <p>When paired with SRI, CSP can defend against common threats such as Cross-Site Scripting (XSS), Clickjacking, and

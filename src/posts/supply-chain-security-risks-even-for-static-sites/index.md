@@ -71,7 +71,7 @@ notes that even static websites, which don't handle user input, can benefit from
 Here's a basic CSP rule enforcing SRI can:
 
 ```text
-Content-Security-Policy: script-src 'self' https://cdn.example.com; require-sri-for script style;
+Content-Security-Policy: script-src 'self' https://cdn.com; require-sri-for script style;
 ```
 
 This rule ensures that only trusted scripts and styles are executed, while Subresource Integrity are enforced.
