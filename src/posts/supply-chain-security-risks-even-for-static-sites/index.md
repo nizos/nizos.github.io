@@ -36,7 +36,7 @@ underestimated because of the assumption that static sites are inherently safer.
 ## The Threat of Supply Chain Attacks
 
 One significant risk for static sites is supply chain attacks targeting third-party libraries and services. For example,
-the Polyfill.io attack compromised a widely used web compatibility tool at the domain level, affected over 100,000
+the Polyfill.io attack compromised a widely used web compatibility tool at the domain level, affecting over 100,000
 websites. [Malicious code](https://sansec.io/research/polyfill-supply-chain-attack) was injected, specifically targeting
 mobile devices by redirecting them to a sports betting site while avoiding detection by admin users and analytics
 services:
