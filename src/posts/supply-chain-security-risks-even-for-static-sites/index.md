@@ -61,28 +61,49 @@ simplicity, are not immune to supply chain threats.
 ## Subresource Integrity (SRI)
 
 To mitigate the risks of supply chain attacks, Subresource Integrity (SRI) is a crucial defense. SRI allows browsers to
-verify that resources like JavaScript or CSS files haven’t been altered by comparing their hash with an expected value.
-If the hashes don’t match, the resource is blocked, preventing the execution of malicious code.
+verify that any network-fetched resource—whether external or from your own server—hasn’t been altered by comparing its
+hash with an expected value. If the hashes don’t match, the resource is blocked, preventing the execution of malicious
+code.
 
 However, SRI has limitations:
-- It only works when you can guarantee and specify the hash of the exact resource version you’re expecting, which
-  requires regular updates whenever the resource changes.
-- It doesn’t protect against malicious code hosted directly at the source. For example, if a CDN itself is compromised
-  and serves a malicious file that matches the expected hash, SRI won’t prevent the attack.
+- It requires you to specify the exact hash of the resource, which means it must be updated each time the resource
+  changes.
 
-Despite these limitations, SRI remains an effective layer of defense when used in conjunction with other security
+Despite this limitation, SRI remains an effective layer of defense when used in conjunction with other security
 measures like Content Security Policy (CSP).
 
 ## Content Security Policy (CSP)
 
-A Content Security Policy (CSP) adds another layer of protection by controlling which resources a website can load,
-helping prevent unauthorized scripts and styles from executing.
+A Content Security Policy (CSP) adds another layer of protection by controlling which internal and external resources a
+website can load, helping prevent unauthorized scripts and styles from executing.
 
 According to the [OWASP CSP Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html#defense-in-depth):
 
 > Even on a fully static website, which does not accept any user input, a CSP can be used to enforce the use of
   Subresource Integrity (SRI). This can help prevent malicious code from being loaded on the website if one of the
   third-party sites hosting JavaScript files (such as analytics scripts) is compromised.
+
+A CSP rule enforcing SRI for external scripts can look like this:
+
+```text
+Content-Security-Policy: script-src 'self' https://cdn.example.com; require-sri-for script style;
+```
+
+This CSP directive ensures that only scripts served from your own domain or trusted CDN are allowed to execute. The 
+`require-sri-for script style` instruction enforces Subresource Integrity for all network-fetched scripts and styles,
+preventing the browser from loading these resources if they don't have the expected SRI hashes.
+
+For example, if you're including a third-party script, your HTML might look like this:
+
+```html
+<script src="https://cdn.example.com/library.js" integrity="sha256-abc123..." crossorigin="anonymous"></script>
+```
+
+This combination of CSP and SRI provides an added layer of security, ensuring that the external resource hasn't been
+tampered with, even if the source itself is compromised.
+
+CSP can also block inline scripts and styles unless nonces or hashes are used to allow them. This is to prevent
+malicious inline content from being executed. Developers should avoid using `unsafe-inline`, which weakens the policy.
 
 However, CSPs come with challenges. A strict CSP can break site functionality, especially if your site relies on dynamic
 content or third-party services. Extensive testing is necessary to ensure that your CSP doesn’t interfere with the
@@ -92,18 +113,6 @@ and should be avoided.
 For developers looking to test and fine-tune security headers, my [csp-docker](https://github.com/nizos/csp-docker)
 project offers an easy-to-use NGINX environment. It allows modifications to HTML, CSS, JS, and NGINX configuration files
 to be reflected immediately in the running container, making it ideal for quick experimentation.
-
-Here’s an example of a simplified but effective CSP rule:
-
-```text
-Content-Security-Policy: default-src 'none'; script-src 'sha256-<hash>' https://plausible.io; style-src 'sha256-<hash>';
-object-src 'none'; base-uri 'none'; frame-ancestors 'none'; report-uri /csp-violation-report;
-```
-
-This CSP allows only scripts with specific integrity hashes or those from trusted sources like Plausible. Inline styles
-are verified using SRI, and external objects and iframes are blocked to prevent attacks like Cross-Site Scripting (XSS)
-and Clickjacking. Additionally, it blocks data URIs and other potentially malicious sources, which can be common attack
-vectors.
 
 ## Cross-Site Scripting (XSS), Clickjacking, and Defacement
 
@@ -131,14 +140,14 @@ We implemented several workflow improvements:
 1. Automated Script Handling: A utility now downloads the latest version of third-party scripts during the build
    process, ensuring we control when new script changes are introduced.
 2. Build Process Integration: Once scripts are downloaded, they are minified and compressed during the build process.
-3. Automated Subresource Integrity: Hashes are automatically calculated for all scripts and inline styles, ensuring only
+3. Automated Subresource Integrity: Hashes are automatically calculated for all network-fetched scripts, ensuring only
    verified resources are executed.
 4. Automated Security Headers: During deployment, a workflow calculates hashes and generates the NGINX configuration
    with the correct CSP rules. If any verification fails, the deployment is discarded, keeping the live site secure.
 
 This approach enhances security while minimizing complexity. By downloading, verifying, and securing these resources as
 part of our deployment process, we prevent malicious updates and ensure optimal loading performance. Browsers can verify
-and cache resources efficiently, and can only load the exact versions we approve.
+and cache resources efficiently and only load the exact versions we approve.
 
 ## Tools for Security Testing
 

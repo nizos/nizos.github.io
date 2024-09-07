@@ -57,7 +57,7 @@
         <div class="post__details">
             <time>09 Sep 2024</time>
             <span> | </span>
-            <span>5 minutes</span>
+            <span>6 minutes</span>
         </div>
     </header>
 
@@ -103,26 +103,36 @@ millions of websites, potentially affecting up to 12% of the web. This underscor
 simplicity, are not immune to supply chain threats.</p>
 <h2>Subresource Integrity (SRI)</h2>
 <p>To mitigate the risks of supply chain attacks, Subresource Integrity (SRI) is a crucial defense. SRI allows browsers to
-verify that resources like JavaScript or CSS files haven’t been altered by comparing their hash with an expected value.
-If the hashes don’t match, the resource is blocked, preventing the execution of malicious code.</p>
+verify that any network-fetched resource—whether external or from your own server—hasn’t been altered by comparing its
+hash with an expected value. If the hashes don’t match, the resource is blocked, preventing the execution of malicious
+code.</p>
 <p>However, SRI has limitations:</p>
 <ul>
-<li>It only works when you can guarantee and specify the hash of the exact resource version you’re expecting, which
-requires regular updates whenever the resource changes.</li>
-<li>It doesn’t protect against malicious code hosted directly at the source. For example, if a CDN itself is compromised
-and serves a malicious file that matches the expected hash, SRI won’t prevent the attack.</li>
+<li>It requires you to specify the exact hash of the resource, which means it must be updated each time the resource
+changes.</li>
 </ul>
-<p>Despite these limitations, SRI remains an effective layer of defense when used in conjunction with other security
+<p>Despite this limitation, SRI remains an effective layer of defense when used in conjunction with other security
 measures like Content Security Policy (CSP).</p>
 <h2>Content Security Policy (CSP)</h2>
-<p>A Content Security Policy (CSP) adds another layer of protection by controlling which resources a website can load,
-helping prevent unauthorized scripts and styles from executing.</p>
+<p>A Content Security Policy (CSP) adds another layer of protection by controlling which internal and external resources a
+website can load, helping prevent unauthorized scripts and styles from executing.</p>
 <p>According to the <a href="https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html#defense-in-depth">OWASP CSP Cheat Sheet</a>:</p>
 <blockquote>
 <p>Even on a fully static website, which does not accept any user input, a CSP can be used to enforce the use of
 Subresource Integrity (SRI). This can help prevent malicious code from being loaded on the website if one of the
 third-party sites hosting JavaScript files (such as analytics scripts) is compromised.</p>
 </blockquote>
+<p>A CSP rule enforcing SRI for external scripts can look like this:</p>
+<pre class="language-text"><code class="language-text">Content-Security-Policy: script-src 'self' https://cdn.example.com; require-sri-for script style;</code></pre>
+<p>This CSP directive ensures that only scripts served from your own domain or trusted CDN are allowed to execute. The
+<code>require-sri-for script style</code> instruction enforces Subresource Integrity for all network-fetched scripts and styles,
+preventing the browser from loading these resources if they don't have the expected SRI hashes.</p>
+<p>For example, if you're including a third-party script, your HTML might look like this:</p>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://cdn.example.com/library.js<span class="token punctuation">"</span></span> <span class="token attr-name">integrity</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>sha256-abc123...<span class="token punctuation">"</span></span> <span class="token attr-name">crossorigin</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>anonymous<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span></code></pre>
+<p>This combination of CSP and SRI provides an added layer of security, ensuring that the external resource hasn't been
+tampered with, even if the source itself is compromised.</p>
+<p>CSP can also block inline scripts and styles unless nonces or hashes are used to allow them. This is to prevent
+malicious inline content from being executed. Developers should avoid using <code>unsafe-inline</code>, which weakens the policy.</p>
 <p>However, CSPs come with challenges. A strict CSP can break site functionality, especially if your site relies on dynamic
 content or third-party services. Extensive testing is necessary to ensure that your CSP doesn’t interfere with the
 site’s functionality. Common mistakes, such as allowing <code>unsafe-inline</code> or <code>unsafe-eval</code>, can weaken the protection
@@ -130,12 +140,6 @@ and should be avoided.</p>
 <p>For developers looking to test and fine-tune security headers, my <a href="https://github.com/nizos/csp-docker">csp-docker</a>
 project offers an easy-to-use NGINX environment. It allows modifications to HTML, CSS, JS, and NGINX configuration files
 to be reflected immediately in the running container, making it ideal for quick experimentation.</p>
-<p>Here’s an example of a simplified but effective CSP rule:</p>
-<pre class="language-text"><code class="language-text">Content-Security-Policy: default-src 'none'; script-src 'sha256-<hash>' https://plausible.io; style-src 'sha256-<hash>';<br>object-src 'none'; base-uri 'none'; frame-ancestors 'none'; report-uri /csp-violation-report;</code></pre>
-<p>This CSP allows only scripts with specific integrity hashes or those from trusted sources like Plausible. Inline styles
-are verified using SRI, and external objects and iframes are blocked to prevent attacks like Cross-Site Scripting (XSS)
-and Clickjacking. Additionally, it blocks data URIs and other potentially malicious sources, which can be common attack
-vectors.</p>
 <h2>Cross-Site Scripting (XSS), Clickjacking, and Defacement</h2>
 <p>With the right security measures in place, you can also protect against common threats like Cross-Site Scripting (XSS),
 Clickjacking, and Defacement:</p>
@@ -158,14 +162,14 @@ still vulnerable to supply chain attacks like the Polyfill incident.</p>
 <li>Automated Script Handling: A utility now downloads the latest version of third-party scripts during the build
 process, ensuring we control when new script changes are introduced.</li>
 <li>Build Process Integration: Once scripts are downloaded, they are minified and compressed during the build process.</li>
-<li>Automated Subresource Integrity: Hashes are automatically calculated for all scripts and inline styles, ensuring only
+<li>Automated Subresource Integrity: Hashes are automatically calculated for all network-fetched scripts, ensuring only
 verified resources are executed.</li>
 <li>Automated Security Headers: During deployment, a workflow calculates hashes and generates the NGINX configuration
 with the correct CSP rules. If any verification fails, the deployment is discarded, keeping the live site secure.</li>
 </ol>
 <p>This approach enhances security while minimizing complexity. By downloading, verifying, and securing these resources as
 part of our deployment process, we prevent malicious updates and ensure optimal loading performance. Browsers can verify
-and cache resources efficiently, and can only load the exact versions we approve.</p>
+and cache resources efficiently and only load the exact versions we approve.</p>
 <h2>Tools for Security Testing</h2>
 <p>To evaluate and improve your site’s security, tools like <a href="https://csp-evaluator.withgoogle.com/">Google’s CSP Evaluator</a>
 assess your CSP and provide feedback. For more comprehensive testing, <a href="http://webperf.se">webperf.se</a> offers an
