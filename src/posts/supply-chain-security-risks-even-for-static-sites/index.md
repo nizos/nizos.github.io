@@ -15,29 +15,28 @@ tags: ['web', 'security']
 draft: true
 ---
 
-Static websites are often perceived as less vulnerable due to their simplicity, especially since they don't rely
-on complex server-side processes. While they do avoid certain risks like SQL injection, this perception can create a
-false sense of security. In reality, static sites are still exposed to specific attack vectors—particularly supply
-chain attacks.
+Static websites are often viewed as less vulnerable because of their simplicity and lack of complex server-side
+processes. While they do avoid certain risks like SQL injection, this perception can create a false sense of security.
+In reality, static sites are still exposed to specific attack vectors—particularly supply chain attacks.
 
 ## What are Static Sites?
 
-Static websites are built using pre-rendered HTML, CSS, and JavaScript files, which are directly served to the users'
-browsers. These sites are popular due to their speed, scalability, and cost-effectiveness. By eliminating the need for
+Static websites consist of pre-rendered HTML, CSS, and JavaScript files that are directly served to the users' browsers.
+These sites are popular due to their speed, scalability, and cost-effectiveness. By eliminating the need for
 dynamic servers or databases, static sites often deliver better performance and reduced energy consumption, contributing
 to a smaller carbon footprint.
 
 Despite their perceived simplicity, many static sites integrate JavaScript libraries for added functionality, such as
 handling form submissions via API requests or utilizing serverless services for tasks like live ticket bookings.
 
-This modular, flexible approach introduces security risks, particularly from third-party services. These risks are often
-underestimated because of the assumption that static sites are inherently safer.
+While this modular approach adds flexibility, it also introduces security risks, especially from third-party services.
+These risks are often underestimated because static sites are seen as inherently safer.
 
 ## The Threat of Supply Chain Attacks
 
-One significant risk for static sites is supply chain attacks targeting third-party libraries and services. For example,
-the Polyfill.io attack compromised a widely used web compatibility tool at the domain level, affecting over 100,000
-websites. [Malicious code](https://sansec.io/research/polyfill-supply-chain-attack) was injected, specifically targeting
+A major threat to static sites is supply chain attacks, which target third-party libraries and services. For example,
+the Polyfill.io attack compromised a widely used web compatibility tool, impacting over 100,000 websites.
+[Malicious code](https://sansec.io/research/polyfill-supply-chain-attack) was injected, specifically targeting
 mobile devices by redirecting them to a sports betting site while avoiding detection by admin users and analytics
 services:
 
@@ -51,9 +50,9 @@ risks.
 
 ## Defending Against Supply Chain Attacks
 
-**Subresource Integrity (SRI)** is a key defense mechanism for supply chain attacks. SRI enables browsers to verify that
-a network-fetched resource, such as an external script, has not been tampered with by comparing its hash against an
-expected value. If the hashes don't match, the browser blocks the resource, preventing malicious code from running.
+**Subresource Integrity (SRI)** is a key defense mechanism for supply chain attacks. SRI allows browsers to verify that
+a network-fetched resource, like an external script, hasn't been altered by comparing its hash against an expected
+value. If the hashes don't match, the browser blocks the resource, preventing malicious code from running.
 
 SRI requires updating the hash each time the resource changes, which can be cumbersome. However, when combined with
 other measures, SRI remains a vital security practice.
@@ -74,7 +73,7 @@ Here's a basic CSP rule enforcing SRI:
 Content-Security-Policy: script-src 'self' https://cdn.com; require-sri-for script style;
 ```
 
-This rule ensures that only trusted scripts and styles are executed, while Subresource Integrity are enforced.
+This rule ensures that only trusted scripts and styles are executed, enforcing Subresource Integrity at the same time.
 
 ## Common Threats and How CSP Helps
 
@@ -118,8 +117,8 @@ changes cannot be introduced.
 
 ## Tools for Security Testing
 
-To continuously monitor site security, tools like [Google’s CSP Evaluator](https://csp-evaluator.withgoogle.com/)
-can provide insights into improving your CSP. For more comprehensive testing, [webperf.se](http://webperf.se) offers an
+Tools like [Google’s CSP Evaluator](https://csp-evaluator.withgoogle.com/) offer insights for continuously improving
+your CSP configuration. For more comprehensive testing, [webperf.se](http://webperf.se) offers an
 open-source suite that analyzes performance, sustainability, accessibility, and security.
 
 You can run CSP tests using [webperf core](https://github.com/Webperf-se/webperf_core) with Docker like this:
@@ -133,7 +132,7 @@ At factor10, we use webperf's [premium service](https://webperf.se/erbjudande/) 
 
 ## Conclusion
 
-Static websites may be simpler, but they are not immune to modern supply chain threats. The Polyfill.io incident
+While static websites are simpler, they aren't immune to modern supply chain threats. The Polyfill.io incident
 highlights the risks posed by third-party libraries and services. To mitigate these threats, implementing a
 defense-in-depth strategy with CSP, SRI, and automated security processes is crucial.
 
