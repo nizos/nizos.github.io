@@ -27,10 +27,8 @@ browsers. These sites are popular due to their speed, scalability, and cost-effe
 dynamic servers or databases, static sites often deliver better performance and reduced energy consumption, contributing
 to a smaller carbon footprint.
 
-Static site generators like [11ty](https://www.11ty.dev/), [Jekyll](https://jekyllrb.com/), [Hugo](https://gohugo.io/),
-and [Gatsby](https://www.gatsbyjs.com/) streamline the creation of static sites. Despite their perceived simplicity,
-many static sites integrate JavaScript libraries for added functionality, such as handling form submissions via API
-requests or utilizing serverless services for tasks like live ticket bookings.
+Despite their perceived simplicity, many static sites integrate JavaScript libraries for added functionality, such as
+handling form submissions via API requests or utilizing serverless services for tasks like live ticket bookings.
 
 This modular, flexible approach introduces security risks, particularly from third-party services. These risks are often
 underestimated because of the assumption that static sites are inherently safer.
