@@ -1,10 +1,10 @@
 ---
 title: Supply Chain Security Risks Even for Static Sites
 description: >-
-  Static websites are often perceived as less vulnerable due to their simplicity, especially since they don't rely
-  on complex server-side processes. While they do avoid certain risks like SQL injection, this perception can create a
-  false sense of security. In reality, static sites are still exposed to specific attack vectors—particularly supply
-  chain attacks.
+  Static websites are often viewed as less vulnerable because of their simplicity and lack of complex server-side
+  processes. While they do avoid certain risks like SQL injection, this perception can create a false sense of security.
+  In reality, many of the same risks that affect dynamic websites—particularly supply chain attacks—can just as easily
+  impact static sites.
 date: 2024-09-09
 author: Nizar
 permalink: /{{ title | slugify }}/index.html
@@ -17,7 +17,8 @@ draft: true
 
 Static websites are often viewed as less vulnerable because of their simplicity and lack of complex server-side
 processes. While they do avoid certain risks like SQL injection, this perception can create a false sense of security.
-In reality, static sites are still exposed to specific attack vectors—particularly supply chain attacks.
+In reality, many of the same risks that affect dynamic websites—particularly supply chain attacks—can just as easily
+impact static sites.
 
 ## What are Static Sites?
 
@@ -26,11 +27,9 @@ These sites are popular due to their speed, scalability, and cost-effectiveness.
 dynamic servers or databases, static sites often deliver better performance and reduced energy consumption, contributing
 to a smaller carbon footprint.
 
-Despite their perceived simplicity, many static sites integrate JavaScript libraries for added functionality, such as
-handling form submissions via API requests or utilizing serverless services for tasks like live ticket bookings.
-
-While this modular approach adds flexibility, it also introduces security risks, especially from third-party services.
-These risks are often underestimated because static sites are seen as inherently safer.
+Although are simpler by nature, many still incorporate JavaScript libraries to enhance functionality, such as handling
+form submissions via APIs. While this approach offers flexibility, it also introduces security risks, especially when
+relying on third-party services. These risks are often underestimated because static sites are seen as inherently safer.
 
 ## The Threat of Supply Chain Attacks
 
@@ -132,9 +131,9 @@ At factor10, we use webperf's [premium service](https://webperf.se/erbjudande/) 
 
 ## Conclusion
 
-While static websites are simpler, they aren't immune to modern supply chain threats. The Polyfill.io incident
-highlights the risks posed by third-party libraries and services. To mitigate these threats, implementing a
-defense-in-depth strategy with CSP, SRI, and automated security processes is crucial.
+While static websites are simpler by design, this simplicity doesn't shield them from modern supply chain threats. The
+Polyfill.io incident highlights the risks posed by third-party libraries and services. To mitigate these threats,
+implementing a defense-in-depth strategy with CSP, SRI, and automated security processes is crucial.
 
 By automating key security tasks like resource verification and security header management, developers can ensure their
 sites remain secure without sacrificing efficiency. Regular testing and policy updates further safeguard against
