@@ -1,10 +1,10 @@
 ---
 title: Supply Chain Security Risks in Static Sites
 description: >-
-  Static sites are seen as simpler and more secure than dynamic sites, but this perception can lead to overlooked
-  security threats. Despite lacking server-side components, static sites are still vulnerable to supply chain attacks
-  due to their reliance on third-party libraries and services. This article explores how these threats emerge and the
-  defenses you can implement to safeguard your site.
+  Static sites are ofter seen as more secure than dynamic sites due to their simplicity and lack of server-side
+  components. However, this perception can lead to overlooked security threats, especially those stemming from
+  third-party libraries and services that introduce vulnerabilities. This article explores how these threats emerge and
+  the defenses you can implement to safeguard your site.
 date: 2024-09-09
 author: Nizar
 permalink: /{{ title | slugify }}/index.html
@@ -15,26 +15,26 @@ tags: ['web', 'security']
 draft: true
 ---
 
-Static sites are seen as simpler and more secure than dynamic sites, but this perception can lead to overlooked security
-threats. Despite lacking server-side components, static sites are still vulnerable to supply chain attacks due to their
-reliance on third-party libraries and services. This article explores how these threats emerge and the defenses you can
-implement to safeguard your site.
+Static sites are ofter seen as more secure than dynamic sites due to their simplicity and lack of server-side
+components. However, this perception can lead to overlooked security threats, especially those stemming from third-party
+libraries and services that introduce vulnerabilities. This article explores how these threats emerge and the defenses
+you can implement to safeguard your site.
 
 ## What Are Static Sites?
 
 Static websites consist of pre-rendered HTML, CSS, and JavaScript files that are delivered directly to the user's
-browser. They have grown in popularity due to their speed, scalability, and cost-effectiveness. With no need for
-dynamic servers or databases, static sites generally offer better performance and consume fewer resources, which can also
-contribute to reduced environmental impact.
+browser. Their popularity stems from their speed, scalability, and cost-effectiveness. Without the need for dynamic
+servers or databases, static sites generally offer better performance and consume fewer resources, contributing to
+reduced environmental impact.
 
-While static sites avoid many server-side vulnerabilities, they frequently depend on third-party JavaScript libraries
+While static sites avoid many server-side vulnerabilities, they frequently depend on third-party JavaScript libraries or
 services for added functionality, such as form handling, analytics, or dynamic content integration via APIs. These
 dependencies, however, open the door to supply chain vulnerabilities, where compromised third-party code becomes an
 attack vector.
 
 ## The Threat of Supply Chain Attacks
 
-A supply chain attack occurs when malicious actors compromise third-party libraries or services that your site depends
+A supply chain attack occurs when malicious actors compromise third-party libraries or services, which your site depends
 on. A recent example is the [Polyfill.io attack](https://sansec.io/research/polyfill-supply-chain-attack), where
 malicious code was injected into a widely used compatibility tool, impacting over 100,000 websites. The attack was
 particularly sophisticated, targeting mobile devices and redirecting users to a sports betting site while avoiding
@@ -108,11 +108,11 @@ to attacks. For more guidance on configuring CSP, refer to the [CSP specificatio
 
 Pairing SRI with a well-configured CSP can help defend against several common threats:
 
-- **Cross-Site Scripting (XSS)**: Malicious scripts injected into a site can steal data, hijack sessions, or carry out
+- **Cross-Site Scripting (XSS):** Malicious scripts injected into a site can steal data, hijack sessions, or carry out
   unwanted actions. CSP limits the ability of unauthorized scripts to execute.
-- **Clickjacking**: Attackers trick users into clicking hidden elements, leading to unintended actions such as form
+- **Clickjacking:** Attackers trick users into clicking hidden elements, leading to unintended actions such as form
   submissions or transactions. CSP can prevent the use of frames, which are often used for clickjacking.
-- **Site Defacement**: Attackers can alter the content of a website, damaging its credibility. CSP, combined with SRI,
+- **Site Defacement:** Attackers can alter the content of a website, damaging its credibility. CSP, combined with SRI,
   ensures that only trusted content and scripts are loaded, reducing the likelihood of defacement.
 
 ## Automating Security Practices
