@@ -117,7 +117,7 @@ offers a powerful safeguard:</p>
 Subresource Integrity (SRI). This can help prevent malicious code from being loaded on the website if one of the
 third-party sites hosting JavaScript files (such as analytics scripts) is compromised.</p>
 </blockquote>
-<p>Here's an example of a CSP configuration that enforces both SRI and hash-based integrity:</p>
+<p>Here's an example of a CSP configuration that enforces hash-based integrity:</p>
 <pre class="language-text"><code class="language-text">Content-Security-Policy: default-src 'none'; script-src 'sha384-abc123...';</code></pre>
 <p>The <code>default-src 'none'</code> directive blocks all content from loading by default, ensuring that only explicitly defined
 sources are allowed. The <code>script-src 'sha384-abc123...'</code> directive allows only scripts matching the specific

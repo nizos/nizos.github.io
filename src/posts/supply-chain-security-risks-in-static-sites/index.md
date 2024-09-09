@@ -82,7 +82,7 @@ offers a powerful safeguard:
   Subresource Integrity (SRI). This can help prevent malicious code from being loaded on the website if one of the
   third-party sites hosting JavaScript files (such as analytics scripts) is compromised.
 
-Here's an example of a CSP configuration that enforces both SRI and hash-based integrity:
+Here's an example of a CSP configuration that enforces hash-based integrity:
 
 ```text
 Content-Security-Policy: default-src 'none'; script-src 'sha384-abc123...';
