@@ -97,12 +97,15 @@ cryptographic hash, ensuring integrity regardless of where the script is hosted.
 To apply CSP effectively, it's important to implement the rules via HTTP headers. This ensures the policy is enforced
 before any content is rendered. If you don't have access to server configurations, CSP can also be [applied using a meta tag](https://content-security-policy.com/examples/meta/).
 
+Be wary of using directives like `unsafe-inline` or `unsafe-eval`, as they can weaken your policy and expose your site
+to attacks. For more guidance on configuring CSP, refer to the [CSP specification](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy).
+
 While CSP is a powerful tool, it can sometimes block legitimate functionality, especially when using third-party
 services like analytics or payment gateways. To avoid this, start by applying CSP in `report-only` mode. This lets you
 monitor violations without affecting functionality, giving you time to fine-tune your policies before full enforcement.
 
-Be wary of using directives like `unsafe-inline` or `unsafe-eval`, as they can weaken your policy and expose your site
-to attacks. For more guidance on configuring CSP, refer to the [CSP specification](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy).
+For developers who want to experiment with security headers, my [csp-docker](https://github.com/nizos/csp-docker)
+project offers an easy-to-use NGINX environment for doing just that.
 
 ### Common Threats and How CSP Helps
 
@@ -139,9 +142,6 @@ analyzes your policy and offers suggestions for strengthening it.
 For more comprehensive testing, tools like [Mozilla Observatory](https://observatory.mozilla.org/) and [securityheaders.com](https://securityheaders.com/)
 offer insights into various security headers. [webperf.se](http://webperf.se) also provides an [open-source suite](https://github.com/Webperf-se/webperf_core)
 for analyzing performance, accessibility, and security.
-
-For developers who want to experiment with security headers, my [csp-docker](https://github.com/nizos/csp-docker)
-project offers an easy-to-use NGINX environment for doing just that.
 
 At factor10, we use [webperf's premium service](https://webperf.se/erbjudande/) for daily tests, combined with
 [automated alerts](https://webperf.se/articles/webhooks/) via Slack to notify us of any issues.

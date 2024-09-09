@@ -125,11 +125,13 @@ cryptographic hash, ensuring integrity regardless of where the script is hosted.
 <h3>Applying CSP Effectively</h3>
 <p>To apply CSP effectively, it's important to implement the rules via HTTP headers. This ensures the policy is enforced
 before any content is rendered. If you don't have access to server configurations, CSP can also be <a href="https://content-security-policy.com/examples/meta/">applied using a meta tag</a>.</p>
+<p>Be wary of using directives like <code>unsafe-inline</code> or <code>unsafe-eval</code>, as they can weaken your policy and expose your site
+to attacks. For more guidance on configuring CSP, refer to the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy">CSP specification</a>.</p>
 <p>While CSP is a powerful tool, it can sometimes block legitimate functionality, especially when using third-party
 services like analytics or payment gateways. To avoid this, start by applying CSP in <code>report-only</code> mode. This lets you
 monitor violations without affecting functionality, giving you time to fine-tune your policies before full enforcement.</p>
-<p>Be wary of using directives like <code>unsafe-inline</code> or <code>unsafe-eval</code>, as they can weaken your policy and expose your site
-to attacks. For more guidance on configuring CSP, refer to the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy">CSP specification</a>.</p>
+<p>For developers who want to experiment with security headers, my <a href="https://github.com/nizos/csp-docker">csp-docker</a>
+project offers an easy-to-use NGINX environment for doing just that.</p>
 <h3>Common Threats and How CSP Helps</h3>
 <p>Pairing SRI with a well-configured CSP can help defend against several common threats:</p>
 <ul>
@@ -160,8 +162,6 @@ analyzes your policy and offers suggestions for strengthening it.</p>
 <p>For more comprehensive testing, tools like <a href="https://observatory.mozilla.org/">Mozilla Observatory</a> and <a href="https://securityheaders.com/">securityheaders.com</a>
 offer insights into various security headers. <a href="http://webperf.se">webperf.se</a> also provides an <a href="https://github.com/Webperf-se/webperf_core">open-source suite</a>
 for analyzing performance, accessibility, and security.</p>
-<p>For developers who want to experiment with security headers, my <a href="https://github.com/nizos/csp-docker">csp-docker</a>
-project offers an easy-to-use NGINX environment for doing just that.</p>
 <p>At factor10, we use <a href="https://webperf.se/erbjudande/">webperf's premium service</a> for daily tests, combined with
 <a href="https://webperf.se/articles/webhooks/">automated alerts</a> via Slack to notify us of any issues.</p>
 <h2>Conclusion</h2>
