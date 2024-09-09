@@ -13,9 +13,9 @@
         
         
         
-            <meta name="description" content="Static sites are often seen as inherently secure, but this perception can leave developers blind to real threats. Even without server-side components, static sites face significant risks, particularly in the supply chain.">
-            <meta property="og:description" content="Static sites are often seen as inherently secure, but this perception can leave developers blind to real threats. Even without server-side components, static sites face significant risks, particularly in the supply chain.">
-            <meta name="description" content="Static sites are often seen as inherently secure, but this perception can leave developers blind to real threats. Even without server-side components, static sites face significant risks, particularly in the supply chain."/>
+            <meta name="description" content="Static sites are seen as simpler and more secure than dynamic sites, but this perception can lead to overlooked security threats. Despite lacking server-side components, static sites are still vulnerable to supply chain attacks due to their reliance on third-party libraries and services. This article explores how these threats emerge and the defenses you can implement to safeguard your site.">
+            <meta property="og:description" content="Static sites are seen as simpler and more secure than dynamic sites, but this perception can lead to overlooked security threats. Despite lacking server-side components, static sites are still vulnerable to supply chain attacks due to their reliance on third-party libraries and services. This article explores how these threats emerge and the defenses you can implement to safeguard your site.">
+            <meta name="description" content="Static sites are seen as simpler and more secure than dynamic sites, but this perception can lead to overlooked security threats. Despite lacking server-side components, static sites are still vulnerable to supply chain attacks due to their reliance on third-party libraries and services. This article explores how these threats emerge and the defenses you can implement to safeguard your site."/>
         
 
         
@@ -67,65 +67,70 @@
     </div>
 
     <main class="post__content">
-        <p>Static sites are often seen as inherently secure, but this perception can leave developers blind to real threats. Even
-without server-side components, static sites face significant risks, particularly in the supply chain.</p>
+        <p>Static sites are seen as simpler and more secure than dynamic sites, but this perception can lead to overlooked security
+threats. Despite lacking server-side components, static sites are still vulnerable to supply chain attacks due to their
+reliance on third-party libraries and services. This article explores how these threats emerge and the defenses you can
+implement to safeguard your site.</p>
 <h2>What Are Static Sites?</h2>
-<p>A static website consists of pre-rendered HTML, CSS, and JavaScript files that are served directly to the user's
-browser. These sites are popular due to their speed, scalability, and cost-effectiveness. By eliminating the need for
-dynamic servers or databases, static sites generally provide better performance and are less resource-intensive, which
-can contribute to a lower environmental impact.</p>
-<p>While static sites are simpler by design, they frequently rely on JavaScript libraries and third-party services to add
-functionality, such as form handling, analytics, and dynamic content via APIs. These integrations introduce significant
-security risks, particularly through the supply chain, as third-party code can become a vulnerability if not carefully
-managed.</p>
+<p>Static websites consist of pre-rendered HTML, CSS, and JavaScript files that are delivered directly to the user's
+browser. They have grown in popularity due to their speed, scalability, and cost-effectiveness. With no need for
+dynamic servers or databases, static sites generally offer better performance and consume fewer resources, which can also
+contribute to reduced environmental impact.</p>
+<p>While static sites avoid many server-side vulnerabilities, they frequently depend on third-party JavaScript libraries
+services for added functionality, such as form handling, analytics, or dynamic content integration via APIs. These
+dependencies, however, open the door to supply chain vulnerabilities, where compromised third-party code becomes an
+attack vector.</p>
 <h2>The Threat of Supply Chain Attacks</h2>
-<p>One of the most concerning risks for static sites is the supply chain attack, where malicious actors compromise
-third-party libraries or services that your site depends on. A recent example is the <a href="https://sansec.io/research/polyfill-supply-chain-attack">Polyfill.io attack</a>,
-which injected malicious code into a popular web compatibility tool used by over 100,000 websites. The attack
-specifically targeted mobile devices by redirecting users to a sports betting site while avoiding detection by admin
-users and analytics tools:</p>
+<p>A supply chain attack occurs when malicious actors compromise third-party libraries or services that your site depends
+on. A recent example is the <a href="https://sansec.io/research/polyfill-supply-chain-attack">Polyfill.io attack</a>, where
+malicious code was injected into a widely used compatibility tool, impacting over 100,000 websites. The attack was
+particularly sophisticated, targeting mobile devices and redirecting users to a sports betting site while avoiding
+detection by analytics tools and admin users:</p>
 <blockquote>
 <p>The code has specific protection against reverse engineering, and only activates on specific mobile devices at
 specific hours. It also does not activate when it detects an admin user. It also delays execution when a web analytics
 service is found, presumably to not end up in the stats.</p>
 </blockquote>
-<p>A similar incident involved Cloudflare's CDNJS service, which exposed up to <a href="https://www.bleepingcomputer.com/news/security/critical-cloudflare-cdn-flaw-allowed-compromise-of-12-percent-of-all-sites/">12% of websites</a>
-to potential code injection attacks. This highlights that even major Content Delivery Networks (CDNs) are susceptible
-to supply chain threats.</p>
+<p>In another case, Cloudflare's CDNJS service had a vulnerability that exposed up to <a href="https://www.bleepingcomputer.com/news/security/critical-cloudflare-cdn-flaw-allowed-compromise-of-12-percent-of-all-sites/">12% of websites</a>
+to potential code injection attacks. Even major Content Delivery Networks (CDNs), considered essential for static sites,
+can be susceptible to supply chain threats.</p>
 <h2>Defending Against Supply Chain Attacks</h2>
-<p><strong>Subresource Integrity (SRI)</strong> allows browsers to verify that network-fetched resources, such as scripts, haven't been
-tampered with. By comparing the file's cryptographic hash against an expected value, SRI ensures that the resource
-hasn't been altered maliciously.</p>
-<p>Here's how you can implement SRI in your HTML:</p>
-<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://cdn.example.com/script.js<span class="token punctuation">"</span></span> <span class="token attr-name">integrity</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>sha256-abc123...<span class="token punctuation">"</span></span> <span class="token attr-name">crossorigin</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>anonymous<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span></code></pre>
-<p>In this example, the <code>integrity</code> attribute contains a cryptographic hash of the script. If the script's hash changes,
-whether due to legitimate or malicious modification, the browser will block it. This is particularly important for
-ensuring the integrity of resources from third-party sources.</p>
-<p>To ease the burden of manually updating the hashes every time a file changes, you can automate the process using build
-tools. For example, tools like <a href="https://www.npmjs.com/package/webpack-subresource-integrity">webpack-subresource-integrity</a>
-can handle this automatically.</p>
-<p><strong>Content Security Policy (CSP)</strong> is another vital defense against supply chain attacks. CSP allows developers to define
-which sources are permitted to load resources such as scripts, styles, and images. A strong CSP can prevent unauthorized
-scripts from running, even if a third-party resource has been compromised.</p>
-<p>The <a href="https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html#defense-in-depth">OWASP CSP Cheat Sheet</a>
-suggests enforcing SRI through CSP, even for static sites that don't accept user input:</p>
+<p>There are two key tools for defending against supply chain attacks: <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity">Subresource Integrity</a> (SRI)
+and <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">Content Security Policy</a> (CSP). While each serves a distinct
+purpose, they are most effective when used together for layered protection.</p>
+<h3>Subresource Integrity (SRI)</h3>
+<p>SRI ensures that fetched resources, such as JavaScript files, have not been tampered with by comparing their
+cryptographic hash to an expected value. If a file has been altered, the browser will block it, protecting the site from
+running malicious code.</p>
+<p>For example:</p>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://cdn.example.com/script.js<span class="token punctuation">"</span></span> <span class="token attr-name">integrity</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>sha384-abc123...<span class="token punctuation">"</span></span> <span class="token attr-name">crossorigin</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>anonymous<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span></code></pre>
+<p>In this example, the <code>integrity</code> attribute contains the cryptographic hash of the script. If the file's content changes
+unexpectedly, the browser will reject it. Tools like <a href="https://www.npmjs.com/package/webpack-subresource-integrity">webpack-subresource-integrity</a>
+can automate the generation of these hashes, reducing the risk of human error.</p>
+<h3>Content Security Policy (CSP)</h3>
+<p>CSP is another vital defense mechanism that complements SRI. By defining which sources are allowed to load resources
+such as scripts, styles, and images, CSP reduces the risk of code injections.</p>
+<p>Pairing CSP with SRI, as recommended by the <a href="https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html#defense-in-depth">OWASP CSP Cheat Sheet</a>,
+offers a powerful safeguard:</p>
 <blockquote>
 <p>Even on a fully static website, which does not accept any user input, a CSP can be used to enforce the use of
 Subresource Integrity (SRI). This can help prevent malicious code from being loaded on the website if one of the
 third-party sites hosting JavaScript files (such as analytics scripts) is compromised.</p>
 </blockquote>
-<p>Here's an example of a CSP rule enforcing SRI:</p>
-<pre class="language-text"><code class="language-text">Content-Security-Policy: script-src 'self' https://cdn.example.com; require-sri-for script;</code></pre>
-<p>This rule specifies that only scripts from your domain (<code>'self'</code>) and the trusted CDN (<code>https://cdn.example.com</code>) are
-allowed to execute. The <code>require-sri-for</code> directive ensures that any script fetched from these sources must have valid
-integrity hashes.</p>
-<p>It's generally better to apply CSP rules via HTTP headers rather than meta tags since headers are processed earlier in
-the page load, providing greater security. However, if you don't have access to server configuration, using a <code>&lt;meta&gt;</code>
-tag in the <code>&lt;head&gt;</code> section is better than having no protection at all.</p>
-<p>To fully secure a site, similar rules should be applied to styles and other resources. Additionally, blocking frames and
-object embedding can protect against attacks such as Cross-Site Scripting (XSS) and Clickjacking. For more details on
-configuring CSP rules, refer to the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy">CSP specification</a>.</p>
-<h2>Common Threats and How CSP Helps</h2>
+<p>Here's an example of a CSP configuration that enforces both SRI and hash-based integrity:</p>
+<pre class="language-text"><code class="language-text">Content-Security-Policy: default-src 'none'; script-src 'sha384-abc123...';</code></pre>
+<p>The <code>default-src 'none'</code> directive blocks all content from loading by default, ensuring that only explicitly defined
+sources are allowed. The <code>script-src 'sha384-abc123...'</code> directive allows only scripts matching the specific
+cryptographic hash, ensuring integrity regardless of where the script is hosted.</p>
+<h3>Applying CSP Effectively</h3>
+<p>To apply CSP effectively, it's important to implement the rules via HTTP headers. This ensures the policy is enforced
+before any content is rendered. If you don't have access to server configurations, CSP can also be <a href="https://content-security-policy.com/examples/meta/">applied using a meta tag</a>.</p>
+<p>While CSP is a powerful tool, it can sometimes block legitimate functionality, especially when using third-party
+services like analytics or payment gateways. To avoid this, start by applying CSP in <code>report-only</code> mode. This lets you
+monitor violations without affecting functionality, giving you time to fine-tune your policies before full enforcement.</p>
+<p>Be wary of using directives like <code>unsafe-inline</code> or <code>unsafe-eval</code>, as they can weaken your policy and expose your site
+to attacks. For more guidance on configuring CSP, refer to the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy">CSP specification</a>.</p>
+<h3>Common Threats and How CSP Helps</h3>
 <p>Pairing SRI with a well-configured CSP can help defend against several common threats:</p>
 <ul>
 <li><strong>Cross-Site Scripting (XSS)</strong>: Malicious scripts injected into a site can steal data, hijack sessions, or carry out
@@ -135,42 +140,37 @@ submissions or transactions. CSP can prevent the use of frames, which are often 
 <li><strong>Site Defacement</strong>: Attackers can alter the content of a website, damaging its credibility. CSP, combined with SRI,
 ensures that only trusted content and scripts are loaded, reducing the likelihood of defacement.</li>
 </ul>
-<p>That said, overly strict CSP configurations can disrupt legitimate functionality, especially if you rely on third-party
-services like analytics or payment gateways. Testing your policies carefully is crucial to balancing security with
-functionality. Always avoid weak configurations like <code>unsafe-inline</code> or <code>unsafe-eval</code>, as they can weaken your policy
-and expose your site to attacks.</p>
-<p>For developers who want to experiment with security headers, my <a href="https://github.com/nizos/csp-docker">csp-docker</a>
-project offers an easy-to-use NGINX environment that allows for rapid testing of CSP, SRI, and other security
-configurations.</p>
-<h2>Automating Security</h2>
-<p>Automating key steps like SRI generation, script handling, and CSP configuration helps reduce human error while
-maintaining flexibility for quick interventions when needed. Here's how we do it at <a href="https://www.factor10.com/websites/">factor10</a>:</p>
+<h2>Automating Security Practices</h2>
+<p>Automating the implementation of SRI, script handling, and CSP configuration helps reduce human error while ensuring
+flexibility for quick interventions when needed. Here's how we do it at <a href="https://www.factor10.com/websites/">factor10</a>:</p>
 <ol>
-<li><strong>Automated Script Handling</strong>: During our build process, a utility fetches the latest versions of third-party
+<li><strong>Automated Script Handling:</strong> During our build process, a utility fetches the latest versions of third-party
 scripts, ensuring we control when updates are introduced.</li>
-<li><strong>Automated SRI Generation</strong>: Hashes for all fetched scripts are automatically calculated and embedded
-into the HTML, so the integrity of resources is always verified.</li>
-<li><strong>Automated Security Headers</strong>: CSP rules are generated and applied to our NGINX configuration during deployment.
-If any verification fails, the deployment is discarded, keeping the live site secure.</li>
+<li><strong>Automated SRI Generation:</strong> Hashes for all fetched scripts are automatically calculated and embedded
+into the HTML, ensuring integrity.</li>
+<li><strong>Automated Security Headers:</strong> CSP rules are generated and applied to our NGINX configuration during deployment.
+If any verification fails, the deployment is discarded, maintaining the security of the live site.</li>
 </ol>
-<p>By combining automation with monitoring tools, we ensure our security practices are consistently applied. Alerts notify
-our team when deviations from the expected security posture occur, allowing us to maintain control and respond quickly.</p>
+<p>By automating these steps and pairing them with monitoring tools, we ensure our security practices are consistently
+applied. Alerts notify our team when deviations from the expected security posture occur, allowing us to maintain
+control and respond quickly.</p>
 <h2>Tools for Security Testing</h2>
 <p>Several tools can help you test and improve your security posture. For example, <a href="https://csp-evaluator.withgoogle.com/">Google’s CSP Evaluator</a>
 analyzes your policy and offers suggestions for strengthening it.</p>
 <p>For more comprehensive testing, tools like <a href="https://observatory.mozilla.org/">Mozilla Observatory</a> and <a href="https://securityheaders.com/">securityheaders.com</a>
 offer insights into various security headers. <a href="http://webperf.se">webperf.se</a> also provides an <a href="https://github.com/Webperf-se/webperf_core">open-source suite</a>
 for analyzing performance, accessibility, and security.</p>
+<p>For developers who want to experiment with security headers, my <a href="https://github.com/nizos/csp-docker">csp-docker</a>
+project offers an easy-to-use NGINX environment for doing just that.</p>
 <p>At factor10, we use <a href="https://webperf.se/erbjudande/">webperf's premium service</a> for daily tests, combined with
 <a href="https://webperf.se/articles/webhooks/">automated alerts</a> via Slack to notify us of any issues.</p>
 <h2>Conclusion</h2>
-<p>While static websites are simpler than dynamic ones, they aren't immune to modern supply chain threats. The Polyfill.io
-incident serves as a clear reminder that third-party libraries can introduce vulnerabilities, even to static sites. By
-implementing security measures such as Subresource Integrity (SRI) and Content Security Policy (CSP), and by automating
-these processes, developers can significantly reduce their exposure to these risks.</p>
-<p>However, no strategy is complete without ongoing vigilance. Regular testing and monitoring are crucial to maintaining
-the resilience of your static site in the face of evolving threats. By integrating automation with manual oversight, you
-can ensure that your site remains secure without sacrificing performance or efficiency.</p>
+<p>While static websites are simpler than dynamic ones, they are not immune to modern supply chain threats. The Polyfill.io
+incident serves as a reminder that even static sites can be compromised by third-party dependencies. Implementing
+security measures like Subresource Integrity (SRI) and Content Security Policy (CSP), paired with
+automation, significantly reduces exposure to these risks.</p>
+<p>However, no defense strategy is complete without regular testing and monitoring. Vigilance, combined with automation,
+ensures that your site remains resilient in the face of evolving threats without sacrificing performance or efficiency.</p>
 
     </main>
 
