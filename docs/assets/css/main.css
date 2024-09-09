@@ -65,18 +65,24 @@ a:hover {
     color: #060606;
 }
 
-ol {
-    list-style-position: inside;
-}
-
 ol ol {
     list-style-type: lower-alpha;
 }
 
+ul, ol {
+    list-style-position: outside;
+    padding-left: 0;
+}
+
 ul {
     list-style-type: disc;
-    list-style-position: inside;
 }
+
+li {
+    margin-bottom: 1rem;
+    padding-left: 0.8rem;
+}
+
 
 b,
 strong {
@@ -151,8 +157,7 @@ blockquote {
     margin-top: 1rem;
     margin-bottom: 1rem;
     padding-left: 1rem;
-    border-left: 3px solid skyblue;
-    font-style: italic;
+    border-left: 3px solid #e5e7eb;
 }
 
 .visually-hidden {
