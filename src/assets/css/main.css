@@ -150,7 +150,7 @@ img {
 
 article ul,
 article ol {
-    margin-top: 1.5rem;
+    margin-top: 1rem;
 }
 
 blockquote {
@@ -758,7 +758,7 @@ code[class*='language-'] ::selection {
 
 pre[class*='language-'] {
     padding: 0.5em;
-    margin-top: 1.5rem;
+    margin-top: 0.5rem;
     overflow: auto;
 }
 
