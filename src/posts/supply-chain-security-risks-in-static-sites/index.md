@@ -34,7 +34,7 @@ attack vectors.
 
 Supply chain attacks occur when third-party code that your site relies on is compromised. One notorious example is the
 [Polyfill.io attack](https://sansec.io/research/polyfill-supply-chain-attack), where malicious code affected over
-100,000 websites. The code was redirected users to a sports betting site while evading detection:
+100,000 websites. The code redirected users to a sports betting site while evading detection:
 
 > The code has specific protection against reverse engineering, and only activates on specific mobile devices at
   specific hours. It also does not activate when it detects an admin user. It also delays execution when a web analytics
