@@ -2,7 +2,7 @@
 title: Supply Chain Security Risks in Static Sites
 description: >-
   Static sites are perceived as more secure than their dynamic counterparts due to their simplicity and lack of
-  server-side components. However, this assumption can lead to overlooked threats, particularly those introduced by
+  server-side components. However, this perception can lead to overlooked threats, particularly those introduced by
   third-party libraries and services. In this article, we'll explore how these vulnerabilities arise and how you can
   defend your site against them.
 date: 2024-09-10
@@ -16,7 +16,7 @@ draft: true
 ---
 
 Static sites are perceived as more secure than their dynamic counterparts due to their simplicity and lack of
-server-side components. However, this assumption can lead to overlooked threats, particularly those introduced by
+server-side components. However, this perception can lead to overlooked threats, particularly those introduced by
 third-party libraries and services. In this article, we'll explore how these vulnerabilities arise and how you can
 defend your site against them.
 
@@ -34,14 +34,14 @@ attack vectors.
 
 Supply chain attacks occur when third-party code that your site relies on is compromised. One notorious example is the
 [Polyfill.io attack](https://sansec.io/research/polyfill-supply-chain-attack), where malicious code affected over
-100,000 websites. The code was redirecting users to a sports betting site while avoiding detection:
+100,000 websites. The code was redirected users to a sports betting site while evading detection:
 
 > The code has specific protection against reverse engineering, and only activates on specific mobile devices at
   specific hours. It also does not activate when it detects an admin user. It also delays execution when a web analytics
   service is found, presumably to not end up in the stats.
 
-Similarly, Cloudflare's CDNJS service exposed up to [12% of websites](https://www.bleepingcomputer.com/news/security/critical-cloudflare-cdn-flaw-allowed-compromise-of-12-percent-of-all-sites/)
-to potential code injection attacks, showing that even well-regarded Content Delivery Networks (CDNs) can be vulnerable.
+In another incident, Cloudflare's CDNJS service exposed up to [12% of all websites](https://www.bleepingcomputer.com/news/security/critical-cloudflare-cdn-flaw-allowed-compromise-of-12-percent-of-all-sites/)
+on the internet to potential code injection attacks, showing that even well-regarded Content Delivery Networks (CDNs) can be vulnerable.
 
 ## Defending Against Supply Chain Attacks
 
@@ -127,7 +127,7 @@ At [factor10](https://www.factor10.com/), we automate several security practices
 flexibility for quick security intervention. Here's how we do it:
 
 1. **Automated Script Handling**: During our build process, a utility fetches the latest versions of third-party
-   scripts, ensuring we control when updates are introduced.
+   scripts, but changes are only introduced after a manual diff-check, giving us full control over updates.
 2. **Automated SRI Generation**: Hashes for all fetched scripts are automatically calculated and embedded
    into the HTML, ensuring integrity.
 3. **Automated Security Headers**: CSP rules are generated and applied to our NGINX configuration during deployment.

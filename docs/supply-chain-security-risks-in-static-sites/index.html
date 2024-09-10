@@ -13,9 +13,9 @@
         
         
         
-            <meta name="description" content="Static sites are perceived as more secure than their dynamic counterparts due to their simplicity and lack of server-side components. However, this assumption can lead to overlooked threats, particularly those introduced by third-party libraries and services. In this article, we&#39;ll explore how these vulnerabilities arise and how you can defend your site against them.">
-            <meta property="og:description" content="Static sites are perceived as more secure than their dynamic counterparts due to their simplicity and lack of server-side components. However, this assumption can lead to overlooked threats, particularly those introduced by third-party libraries and services. In this article, we&#39;ll explore how these vulnerabilities arise and how you can defend your site against them.">
-            <meta name="description" content="Static sites are perceived as more secure than their dynamic counterparts due to their simplicity and lack of server-side components. However, this assumption can lead to overlooked threats, particularly those introduced by third-party libraries and services. In this article, we&#39;ll explore how these vulnerabilities arise and how you can defend your site against them."/>
+            <meta name="description" content="Static sites are perceived as more secure than their dynamic counterparts due to their simplicity and lack of server-side components. However, this perception can lead to overlooked threats, particularly those introduced by third-party libraries and services. In this article, we&#39;ll explore how these vulnerabilities arise and how you can defend your site against them.">
+            <meta property="og:description" content="Static sites are perceived as more secure than their dynamic counterparts due to their simplicity and lack of server-side components. However, this perception can lead to overlooked threats, particularly those introduced by third-party libraries and services. In this article, we&#39;ll explore how these vulnerabilities arise and how you can defend your site against them.">
+            <meta name="description" content="Static sites are perceived as more secure than their dynamic counterparts due to their simplicity and lack of server-side components. However, this perception can lead to overlooked threats, particularly those introduced by third-party libraries and services. In this article, we&#39;ll explore how these vulnerabilities arise and how you can defend your site against them."/>
         
 
         
@@ -68,7 +68,7 @@
 
     <main class="post__content">
         <p>Static sites are perceived as more secure than their dynamic counterparts due to their simplicity and lack of
-server-side components. However, this assumption can lead to overlooked threats, particularly those introduced by
+server-side components. However, this perception can lead to overlooked threats, particularly those introduced by
 third-party libraries and services. In this article, we'll explore how these vulnerabilities arise and how you can
 defend your site against them.</p>
 <h2>What Are Static Sites?</h2>
@@ -81,14 +81,14 @@ attack vectors.</p>
 <h2>The Threat of Supply Chain Attacks</h2>
 <p>Supply chain attacks occur when third-party code that your site relies on is compromised. One notorious example is the
 <a href="https://sansec.io/research/polyfill-supply-chain-attack">Polyfill.io attack</a>, where malicious code affected over
-100,000 websites. The code was redirecting users to a sports betting site while avoiding detection:</p>
+100,000 websites. The code was redirected users to a sports betting site while evading detection:</p>
 <blockquote>
 <p>The code has specific protection against reverse engineering, and only activates on specific mobile devices at
 specific hours. It also does not activate when it detects an admin user. It also delays execution when a web analytics
 service is found, presumably to not end up in the stats.</p>
 </blockquote>
-<p>Similarly, Cloudflare's CDNJS service exposed up to <a href="https://www.bleepingcomputer.com/news/security/critical-cloudflare-cdn-flaw-allowed-compromise-of-12-percent-of-all-sites/">12% of websites</a>
-to potential code injection attacks, showing that even well-regarded Content Delivery Networks (CDNs) can be vulnerable.</p>
+<p>In another incident, Cloudflare's CDNJS service exposed up to <a href="https://www.bleepingcomputer.com/news/security/critical-cloudflare-cdn-flaw-allowed-compromise-of-12-percent-of-all-sites/">12% of all websites</a>
+on the internet to potential code injection attacks, showing that even well-regarded Content Delivery Networks (CDNs) can be vulnerable.</p>
 <h2>Defending Against Supply Chain Attacks</h2>
 <p>The best defenses against supply chain attacks include <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity">Subresource Integrity</a>
 (SRI) and <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">Content Security Policy</a> (CSP). These tools work best
@@ -149,7 +149,7 @@ CSP and SRI ensures that only authorized content is loaded, significantly reduci
 flexibility for quick security intervention. Here's how we do it:</p>
 <ol>
 <li><strong>Automated Script Handling</strong>: During our build process, a utility fetches the latest versions of third-party
-scripts, ensuring we control when updates are introduced.</li>
+scripts, but changes are only introduced after a manual diff-check, giving us full control over updates.</li>
 <li><strong>Automated SRI Generation</strong>: Hashes for all fetched scripts are automatically calculated and embedded
 into the HTML, ensuring integrity.</li>
 <li><strong>Automated Security Headers</strong>: CSP rules are generated and applied to our NGINX configuration during deployment.
