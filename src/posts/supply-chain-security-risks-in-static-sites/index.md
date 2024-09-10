@@ -145,7 +145,7 @@ The following tools can help you automate security practices and assess or impro
   strengthening it.
 - [Mozilla Observatory](https://observatory.mozilla.org/): Provides insights into security headers and suggests
   improvements.
-- [securityheaders.com](https://securityheaders.com/): Tests your site's HTTP headers based on best practices.
+- [securityheaders.com](https://securityheaders.com/): Tests and rates your site's HTTP headers based on best practices.
 - [Playwright](https://playwright.dev/): A versatile tool for cross-browser testing to ensure consistent security
   behavior.
 - [Webperf.se](http://webperf.se): Offers an [open-source suite](https://github.com/Webperf-se/webperf_core) for
