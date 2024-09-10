@@ -126,7 +126,7 @@ When used alongside SRI, a well-configured CSP helps mitigate several prevalent 
 At [factor10](https://www.factor10.com/), we automate several security practices to reduce human error and maintain
 flexibility for quick security intervention. Here's how we do it:
 
-1. **Automated Script Handling**: During our build process, a utility fetches the latest versions of third-party
+1. **Controlled Script Updates**: During our build process, a utility fetches the latest versions of third-party
    scripts, but changes are only introduced after a manual diff-check, giving us full control over updates.
 2. **Automated SRI Generation**: Hashes for all fetched scripts are automatically calculated and embedded
    into the HTML, ensuring integrity.
