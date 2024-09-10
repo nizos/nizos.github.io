@@ -141,12 +141,11 @@ control and respond quickly.
 Testing your site's security is crucial for maintaining a strong defense against supply chain attacks. Several
 tools can help assess and improve your security posture:
 
-- [Google’s CSP Evaluator](https://csp-evaluator.withgoogle.com/): Analyzes your CSN policy and offers suggestions for
+- [Google’s CSP Evaluator](https://csp-evaluator.withgoogle.com/): Analyzes your CSP policy and offers suggestions for
   strengthening it.
-- [Mozilla Observatory](https://observatory.mozilla.org/): Provides insights into various security headers and suggests
+- [Mozilla Observatory](https://observatory.mozilla.org/): Provides insights into security headers and suggests
   improvements.
-- [securityheaders.com](https://securityheaders.com/): Tests your site's HTTP headers and provides a rating based on
-  best practices.
+- [securityheaders.com](https://securityheaders.com/): Tests your site's HTTP headers based on best practices.
 - [webperf.se](http://webperf.se): Offers an [open-source suite](https://github.com/Webperf-se/webperf_core) for
   analysing performance, accessibility, and security.
 
