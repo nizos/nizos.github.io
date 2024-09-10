@@ -34,8 +34,7 @@ attack vectors.
 
 Supply chain attacks occur when third-party code that your site relies on is compromised. One notorious example is the
 [Polyfill.io attack](https://sansec.io/research/polyfill-supply-chain-attack), where malicious code affected over
-100,000 websites by selectively redirecting users to a sports betting site while avoiding detection by analytics and
-admin users:
+100,000 websites. The code was redirecting users to a sports betting site while avoiding detection:
 
 > The code has specific protection against reverse engineering, and only activates on specific mobile devices at
   specific hours. It also does not activate when it detects an admin user. It also delays execution when a web analytics
@@ -48,13 +47,13 @@ to potential code injection attacks, showing that even well-regarded Content Del
 
 The best defenses against supply chain attacks include [Subresource Integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity)
 (SRI) and [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) (CSP). These tools work best
-as part of a layered security approach.
+when used together as part of a layered security approach.
 
 ### Subresource Integrity (SRI)
 
-SRI ensures that fetched resources, such as JavaScript files, have not been tampered with by comparing their
-cryptographic hash to an expected value. If a file has been altered, the browser will block it from running malicious
-code.
+Subresource Integrity (SRI) ensures that fetched resources, such as JavaScript files, haven't been tampered with. It
+does so by comparing the resource's cryptographic hash to a predefined value. If there's a mismatch, the browser blocks
+the resource from loading, preventing potential malicious code from executing.
 
 For example:
 
@@ -62,38 +61,40 @@ For example:
 <script src="https://cdn.example.com/script.js" integrity="sha384-abc123..." crossorigin="anonymous"></script>
 ```
 
-In this example, the `integrity` attribute contains the cryptographic hash of the script. If the file's content is
-altered unexpectedly, the browser will reject it.
+In this example, the `integrity` attribute includes the hash of the file. This ensures the resource has not been altered
+and adds a layer of protection for external scripts that your site depends on.
 
 ### Content Security Policy (CSP)
 
-CSP is another vital defense mechanism that complements SRI. By defining which sources are allowed to load resources
-such as scripts, styles, and images, CSP reduces the risk of code injections.
+Content Security Policy (CSP) complements SRI by specifying which sources are permitted to load resources such as
+scripts, styles, and images. This reduces the risk of code injection by blocking unauthorized content from running on
+your site.
 
-Pairing CSP with SRI, as recommended by the [OWASP CSP Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html#defense-in-depth),
-offers a powerful safeguard:
+Using both CSP and SRI together enhances security, as CSP controls where resources can be loaded from while SRI verifies
+their integrity. According to the [OWASP CSP Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html#defense-in-depth):
 
 > Even on a fully static website, which does not accept any user input, a CSP can be used to enforce the use of
   Subresource Integrity (SRI). This can help prevent malicious code from being loaded on the website if one of the
   third-party sites hosting JavaScript files (such as analytics scripts) is compromised.
 
-For example, a basic policy that only allows scripts from the same domain and a trusted CDN can look like this:
+Here is an example of a CSP that restricts script loading to the same domain and a trusted CDN:
 
 ```text
 Content-Security-Policy: script-src 'self' https://cdn.example.com; style-src 'self';
 ```
 
-A particularly effective strategy for static sites is to use hash-based CSP, where only scripts and styles with matching
-cryptographic hashes are allowed to execute. This ensures that only authorized content is loaded, even if a trusted
-source is compromised.
+You can further strengthen your policy with hash-based CSP directives, allowing only scripts with matching cryptographic
+hashes to execute, regardless of their source:
 
 ```text
 Content-Security-Policy: script-src 'sha384-abc123...' 'sha384-def456...';
 ```
 
+This approach ensures that unauthorized scripts won't run even if the source is compromised.
+
 ### Best Practices for CSP Implementation
 
-To maximize CSP's effectiveness, follow these best practices:
+To fully leverage CSP, it's important to follow these best practices:
 
 - **Use a strict default policy**: Start with `default-src 'none'` and then explicitly allow trusted sources.
 - **Apply restrictions to all sources**: Use `style-src`, `media-src`, and other directives to tightly control which
@@ -104,19 +105,21 @@ To maximize CSP's effectiveness, follow these best practices:
 - **Test with reporting**: Before enforcing CSP, use `report-only` mode to monitor violations without disrupting
   functionality.
 
-These strategies help defend against exploits like Cross-Site Scripting (XSS), clickjacking, and content manipulation,
-offering robust protection for your site.
+When implemented correctly, CSP not only protects against code injection attacks like Cross-Site Scripting (XSS) but
+also strengthens your defense against other threats, such as clickjacking and unauthorized content changes.
 
 ### Common Threats and How CSP Helps
 
-When combined with SRI, a well-configured CSP protects against several common threats:
+When used alongside SRI, a well-configured CSP helps mitigate several prevalent security threats:
 
-- **Cross-Site Scripting (XSS)**: Malicious scripts injected into a site can steal data, hijack sessions, or carry out
-  unwanted actions. CSP limits the ability of unauthorized scripts to execute.
-- **Clickjacking**: Attackers trick users into clicking hidden elements, leading to unintended actions such as form
-  submissions or transactions. CSP can prevent the use of frames, which are often used for clickjacking.
-- **Site Defacement**: Attackers can alter the content of a website, damaging its credibility. CSP, combined with SRI,
-  ensures that only trusted content and scripts are loaded, reducing the likelihood of defacement.
+- **Cross-Site Scripting (XSS)**: XSS attacks allow malicious scripts to be injected into your site, potentially leading
+  to data theft, session hijacking, or unauthorized actions. By restricting which scripts can run, CSP blocks these
+  unauthorized scripts from running.
+- **Clickjacking**: This attack deceives users into interacting with hidden elements, often resulting in unintended
+  actions like form submissions or transactions. CSP can prevent clickjacking by blocking your site from being embedded
+  in iframes, a common method used in such attacks.
+- **Site Defacement**: Attackers may try to alter content on your website, damaging its credibility. A combination of
+  CSP and SRI ensures that only authorized content is loaded, significantly reducing the risk of defacement.
 
 ## Automating Security Practices
 
