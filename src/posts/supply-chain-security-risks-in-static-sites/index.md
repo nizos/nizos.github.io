@@ -141,7 +141,7 @@ respond quickly.
 
 The following tools can help you automate security practices and assess or improve your site's security posture:
 
-- [Google’s CSP Evaluator](https://csp-evaluator.withgoogle.com/): Analyzes your CSP policy and offers suggestions for
+- [Google’s CSP Evaluator](https://csp-evaluator.withgoogle.com/): Analyzes your CSP and offers suggestions for
   strengthening it.
 - [Mozilla Observatory](https://observatory.mozilla.org/): Provides insights into security headers and suggests
   improvements.
