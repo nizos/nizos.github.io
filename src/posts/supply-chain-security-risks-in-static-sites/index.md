@@ -146,12 +146,9 @@ The following tools can help you automate security practices and assess or impro
 - [Mozilla Observatory](https://observatory.mozilla.org/): Provides insights into security headers and suggests
   improvements.
 - [securityheaders.com](https://securityheaders.com/): Tests your site's HTTP headers based on best practices.
-- [webpack-subresource-integrity](https://www.npmjs.com/package/webpack-subresource-integrity): Automates embedding of
-  SRI hashes.
 - [Playwright](https://playwright.dev/): A versatile tool for cross-browser testing to ensure consistent security
   behavior.
-- [csp-docker](https://github.com/nizos/csp-docker): My easy-to-use environment for experimenting with security headers.
-- [webperf.se](http://webperf.se): Offers an [open-source suite](https://github.com/Webperf-se/webperf_core) for
+- [Webperf.se](http://webperf.se): Offers an [open-source suite](https://github.com/Webperf-se/webperf_core) for
   analyzing performance, accessibility, and security.
 
 For our [sustainable-websites](https://factor10.com/websites/), we use [webperf's premium service](https://webperf.se/erbjudande/)
