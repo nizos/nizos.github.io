@@ -113,8 +113,8 @@ also strengthens your defense against other threats, such as clickjacking and un
 When used alongside SRI, a well-configured CSP helps mitigate several prevalent security threats:
 
 - **Cross-Site Scripting (XSS)**: XSS attacks allow malicious scripts to be injected into your site, potentially leading
-  to data theft, session hijacking, or unauthorized actions. By restricting which scripts can run, CSP blocks these
-  unauthorized scripts from running.
+  to data theft, session hijacking, or unauthorized actions. CSP blocks unauthorized scripts by restricting which can
+  run.
 - **Clickjacking**: This attack deceives users into interacting with hidden elements, often resulting in unintended
   actions like form submissions or transactions. CSP can prevent clickjacking by blocking your site from being embedded
   in iframes, a common method used in such attacks.
