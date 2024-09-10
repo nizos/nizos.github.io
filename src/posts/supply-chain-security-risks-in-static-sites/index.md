@@ -1,10 +1,10 @@
 ---
 title: Supply Chain Security Risks in Static Sites
 description: >-
-  Static sites are ofter seen as more secure than dynamic sites due to their simplicity and lack of server-side
-  components. However, this perception can lead to overlooked security threats, especially those stemming from
-  third-party libraries and services that introduce vulnerabilities. This article explores how these threats emerge and
-  the defenses you can implement to safeguard your site.
+  Static sites are often perceived as more secure than their dynamic counterparts due to their simplicity and lack of
+  server-side components. However, this assumption can lead to overlooked threats, particularly those introduced by
+  third-party libraries and services. In this article, we'll explore how these vulnerabilities arise and how you can
+  defend your site against them.
 date: 2024-09-09
 author: Nizar
 permalink: /{{ title | slugify }}/index.html
@@ -15,44 +15,41 @@ tags: ['web', 'security']
 draft: true
 ---
 
-Static sites are ofter seen as more secure than dynamic sites due to their simplicity and lack of server-side
-components. However, this perception can lead to overlooked security threats, especially those stemming from third-party
-libraries and services that introduce vulnerabilities. This article explores how these threats emerge and the defenses
-you can implement to safeguard your site.
+Static sites are often perceived as more secure than their dynamic counterparts due to their simplicity and lack of
+server-side components. However, this assumption can lead to overlooked threats, particularly those introduced by
+third-party libraries and services. In this article, we'll explore how these vulnerabilities arise and how you can
+defend your site against them.
 
 ## What Are Static Sites?
 
 Static websites consist of pre-rendered HTML, CSS, and JavaScript files that are delivered directly to the user's
-browser. Their popularity stems from their speed, scalability, and cost-effectiveness. Without the need for dynamic
-servers or databases, static sites generally offer better performance and consume fewer resources, contributing to
-reduced environmental impact.
+browser. Their appeal lies in their speed, scalability, and cost-effectiveness. By avoiding server-side processing,
+static sites improve performance and reduce resource consumption.
 
-While static sites avoid many server-side vulnerabilities, they frequently depend on third-party JavaScript libraries or
-services for added functionality, such as form handling, analytics, or dynamic content integration via APIs. These
-dependencies, however, open the door to supply chain vulnerabilities, where compromised third-party code becomes an
-attack vector.
+However, many static sites rely on third-party JavaScript libraries or external services for added functionality, such
+as form handling or analytics. This introduces auply chain vulnerabilities, where compromised dependencies become attack
+vectors.
 
 ## The Threat of Supply Chain Attacks
 
-A supply chain attack occurs when malicious actors compromise third-party libraries or services, which your site depends
-on. A recent example is the [Polyfill.io attack](https://sansec.io/research/polyfill-supply-chain-attack), where
-malicious code was injected into a widely used compatibility tool, impacting over 100,000 websites. The attack was
-particularly sophisticated, targeting mobile devices and redirecting users to a sports betting site while avoiding
-detection by analytics tools and admin users:
+Supply chain attacks occur when third+party code that your site relies on is compromised. One notorious example is the
+[Polyfill.io attack](https://sansec.io/research/polyfill-supply-chain-attack), where malicious code affected over
+100,000 websites by selectively redirecting users to a sports betting site while avoiding detection by analytics and
+admin users:
 
 > The code has specific protection against reverse engineering, and only activates on specific mobile devices at
   specific hours. It also does not activate when it detects an admin user. It also delays execution when a web analytics
   service is found, presumably to not end up in the stats.
 
-In another case, Cloudflare's CDNJS service had a vulnerability that exposed up to [12% of websites](https://www.bleepingcomputer.com/news/security/critical-cloudflare-cdn-flaw-allowed-compromise-of-12-percent-of-all-sites/)
-to potential code injection attacks. Even major Content Delivery Networks (CDNs), considered essential for static sites,
-can be susceptible to supply chain threats.
+Similarly, Cloudflare's CDNJS service exposed up to [12% of websites](https://www.bleepingcomputer.com/news/security/critical-cloudflare-cdn-flaw-allowed-compromise-of-12-percent-of-all-sites/)
+to potential code injection attacks, illustrating that even well-regarded Content Delivery Networks (CDNs) can be
+vulnerable.
 
 ## Defending Against Supply Chain Attacks
 
-There are two key tools for defending against supply chain attacks: [Subresource Integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) (SRI)
-and [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) (CSP). While each serves a distinct
-purpose, they are most effective when used together for layered protection.
+The best defences against supply chain attacks are [Subresource Integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity)
+(SRI) and [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) (CSP). These tools work best
+as part of a layered security approach.
 
 ### Subresource Integrity (SRI)
 
@@ -82,20 +79,39 @@ offers a powerful safeguard:
   Subresource Integrity (SRI). This can help prevent malicious code from being loaded on the website if one of the
   third-party sites hosting JavaScript files (such as analytics scripts) is compromised.
 
-Here's an example of a CSP configuration that enforces hash-based integrity:
-
-```text
-Content-Security-Policy: default-src 'none'; script-src 'sha384-abc123...';
-```
-
-The `default-src 'none'` directive blocks all content from loading by default, ensuring that only explicitly defined
-sources are allowed. The `script-src 'sha384-abc123...'` directive allows only scripts matching the specific
-cryptographic hash, ensuring integrity regardless of where the script is hosted.
-
 ### Applying CSP Effectively
 
-To apply CSP effectively, it's important to implement the rules via HTTP headers. This ensures the policy is enforced
-before any content is rendered. If you don't have access to server configurations, CSP can also be [applied using a meta tag](https://content-security-policy.com/examples/meta/).
+To apply CSP effectively, it's important to implement the rules via HTTP headers as opposed to using [meta tags](https://content-security-policy.com/examples/meta/).
+This ensures the policy is enforced before any content is rendered. For example, a simple yet effective policy might
+look like this:
+
+```text
+Content-Security-Policy: default-src 'none'; script-src 'self' https://cdn.example.com; style-src 'self';
+```
+
+In this configuration, only scripts from the same origin (self) and a trusted third-party CDN (cdn.example.com) are
+allowed, while all other content is blocked by default (`default-src 'none'`). This greatly reduces the risk of running
+malicious scripts on your site.
+
+By combining CSP with SRI, you can enforce even stricter security measures. While CSP restricts the sources from which
+scripts can be loaded, SRI ensures that the integrity of the script content itself is maintained by checking its
+cryptographic has. Here is an example of how to enforce this using CSP:
+
+```text
+Content-Security-Policy: script-src 'self' 'sha384-abc123...';
+```
+
+This rule allows only scripts from the same origin (self) to be loaded, and also permits any script that matches the
+provided hash `sha384-abc123...` regardless of its source. If you want to enforce even tighter security, you can create
+a hash-only policy like this:
+
+```text
+Content-Security-Policy: script-src 'sha384-abc123...' 'sha384-def456...';
+```
+
+With this configuration, only scripts that match the specified cryptographic hashes can be loaded, ensuring that even
+if a trusted source is compromised, no unauthorized or altered scripts can be executed.
+
 
 Be wary of using directives like `unsafe-inline` or `unsafe-eval`, as they can weaken your policy and expose your site
 to attacks. For more guidance on configuring CSP, refer to the [CSP specification](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy).
