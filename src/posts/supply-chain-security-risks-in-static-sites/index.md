@@ -5,7 +5,7 @@ description: >-
   server-side components. However, this assumption can lead to overlooked threats, particularly those introduced by
   third-party libraries and services. In this article, we'll explore how these vulnerabilities arise and how you can
   defend your site against them.
-date: 2024-09-09
+date: 2024-09-10
 author: Nizar
 permalink: /{{ title | slugify }}/index.html
 cover: 'assets/shipping-containers.jpg'
