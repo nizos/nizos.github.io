@@ -76,10 +76,10 @@ defend your site against them.</p>
 browser. Their appeal lies in their speed, scalability, and cost-effectiveness. By avoiding server-side processing,
 static sites improve performance and reduce resource consumption.</p>
 <p>However, many static sites rely on third-party JavaScript libraries or external services for added functionality, such
-as form handling or analytics. This introduces auply chain vulnerabilities, where compromised dependencies become attack
-vectors.</p>
+as form handling or analytics. This introduces supply chain vulnerabilities, where compromised dependencies become
+attack vectors.</p>
 <h2>The Threat of Supply Chain Attacks</h2>
-<p>Supply chain attacks occur when third+party code that your site relies on is compromised. One notorious example is the
+<p>Supply chain attacks occur when third-party code that your site relies on is compromised. One notorious example is the
 <a href="https://sansec.io/research/polyfill-supply-chain-attack">Polyfill.io attack</a>, where malicious code affected over
 100,000 websites by selectively redirecting users to a sports betting site while avoiding detection by analytics and
 admin users:</p>
@@ -92,7 +92,7 @@ service is found, presumably to not end up in the stats.</p>
 to potential code injection attacks, illustrating that even well-regarded Content Delivery Networks (CDNs) can be
 vulnerable.</p>
 <h2>Defending Against Supply Chain Attacks</h2>
-<p>The best defences against supply chain attacks are <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity">Subresource Integrity</a>
+<p>The best defences against supply chain attacks include <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity">Subresource Integrity</a>
 (SRI) and <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">Content Security Policy</a> (CSP). These tools work best
 as part of a layered security approach.</p>
 <h3>Subresource Integrity (SRI)</h3>
@@ -101,8 +101,8 @@ cryptographic hash to an expected value. If a file has been altered, the browser
 running malicious code.</p>
 <p>For example:</p>
 <pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://cdn.example.com/script.js<span class="token punctuation">"</span></span> <span class="token attr-name">integrity</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>sha384-abc123...<span class="token punctuation">"</span></span> <span class="token attr-name">crossorigin</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>anonymous<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span></code></pre>
-<p>In this example, the <code>integrity</code> attribute contains the cryptographic hash of the script. If the file's content changes
-unexpectedly, the browser will reject it. Tools like <a href="https://www.npmjs.com/package/webpack-subresource-integrity">webpack-subresource-integrity</a>
+<p>In this example, the <code>integrity</code> attribute contains the cryptographic hash of the script. If the file's content is
+altered unexpectedly, the browser will reject it. Tools like <a href="https://www.npmjs.com/package/webpack-subresource-integrity">webpack-subresource-integrity</a>
 can automate the generation of these hashes, reducing the risk of human error.</p>
 <h3>Content Security Policy (CSP)</h3>
 <p>CSP is another vital defense mechanism that complements SRI. By defining which sources are allowed to load resources
@@ -114,31 +114,28 @@ offers a powerful safeguard:</p>
 Subresource Integrity (SRI). This can help prevent malicious code from being loaded on the website if one of the
 third-party sites hosting JavaScript files (such as analytics scripts) is compromised.</p>
 </blockquote>
-<h3>Applying CSP Effectively</h3>
-<p>To apply CSP effectively, it's important to implement the rules via HTTP headers as opposed to using <a href="https://content-security-policy.com/examples/meta/">meta tags</a>.
-This ensures the policy is enforced before any content is rendered. For example, a simple yet effective policy might
-look like this:</p>
+<p>For example, a simple yet effective policy might look like this:</p>
 <pre class="language-text"><code class="language-text">Content-Security-Policy: default-src 'none'; script-src 'self' https://cdn.example.com; style-src 'self';</code></pre>
-<p>In this configuration, only scripts from the same origin (self) and a trusted third-party CDN (cdn.example.com) are
-allowed, while all other content is blocked by default (<code>default-src 'none'</code>). This greatly reduces the risk of running
-malicious scripts on your site.</p>
-<p>By combining CSP with SRI, you can enforce even stricter security measures. While CSP restricts the sources from which
-scripts can be loaded, SRI ensures that the integrity of the script content itself is maintained by checking its
-cryptographic has. Here is an example of how to enforce this using CSP:</p>
+<p>In this configuration, only scripts from the same origin (<code>'self'</code>) and a trusted third-party CDN (<code>cdn.example.com</code>)
+are allowed, while all other content is blocked by default (<code>default-src 'none'</code>).</p>
+<h3>Applying Policies Effectively</h3>
+<p>To maximize CSP's protection, it's essential to apply the rules thoughtfully and in conjunction with SRI. While SRI
+ensures that fetched resources haven't been tampered with, CSP restricts where these resources can be loaded from. This
+combination creates a robust defense against supply chain attacks.</p>
+<p>For instance, to enforce script integrity with CSP, you can include an SRI hash directly in the CSP rule:</p>
 <pre class="language-text"><code class="language-text">Content-Security-Policy: script-src 'self' 'sha384-abc123...';</code></pre>
-<p>This rule allows only scripts from the same origin (self) to be loaded, and also permits any script that matches the
-provided hash <code>sha384-abc123...</code> regardless of its source. If you want to enforce even tighter security, you can create
-a hash-only policy like this:</p>
+<p>This restricts script loading to your domain and scripts that exactly match the hash regardless of their origin. If you
+want to enforce even tighter security, you can create a hash-only policy like this:</p>
 <pre class="language-text"><code class="language-text">Content-Security-Policy: script-src 'sha384-abc123...' 'sha384-def456...';</code></pre>
-<p>With this configuration, only scripts that match the specified cryptographic hashes can be loaded, ensuring that even
-if a trusted source is compromised, no unauthorized or altered scripts can be executed.</p>
-<p>Be wary of using directives like <code>unsafe-inline</code> or <code>unsafe-eval</code>, as they can weaken your policy and expose your site
-to attacks. For more guidance on configuring CSP, refer to the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy">CSP specification</a>.</p>
-<p>While CSP is a powerful tool, it can sometimes block legitimate functionality, especially when using third-party
-services like analytics or payment gateways. To avoid this, start by applying CSP in <code>report-only</code> mode. This lets you
-monitor violations without affecting functionality, giving you time to fine-tune your policies before full enforcement.</p>
-<p>For developers who want to experiment with security headers, my <a href="https://github.com/nizos/csp-docker">csp-docker</a>
-project offers an easy-to-use NGINX environment for doing just that.</p>
+<p>This approach ensures only authorized scripts are executed, even if a trusted source is compromised.</p>
+<p>Avoid risky directives like <code>unsafe-inline</code> or <code>unsafe-eval</code>, as they can weaken your policy and expose your site
+to attacks. If you're concerned about disrupting functionality, start by deploying CSP in <code>report-only</code> mode. This
+allows you to monitor violations without blocking content, helping you fine-tune your policy before enforcing it fully.</p>
+<p>Always apply CSP via HTTP headers, not <a href="https://content-security-policy.com/examples/meta/">meta tags</a> when possible, to
+ensure the policy is enforced before any content is rendered.</p>
+<p>If you would like to experiment with CSP rules, my <a href="https://github.com/nizos/csp-docker">csp-docker</a> project offers an
+easy-to-use NGINX environment for testing and refining security headers.</p>
+<p>For more guidance on configuring CSP, refer to the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy">CSP specification</a>.</p>
 <h3>Common Threats and How CSP Helps</h3>
 <p>Pairing SRI with a well-configured CSP can help defend against several common threats:</p>
 <ul>
@@ -174,8 +171,8 @@ for analyzing performance, accessibility, and security.</p>
 <h2>Conclusion</h2>
 <p>While static websites are simpler than dynamic ones, they are not immune to modern supply chain threats. The Polyfill.io
 incident serves as a reminder that even static sites can be compromised by third-party dependencies. Implementing
-security measures like Subresource Integrity (SRI) and Content Security Policy (CSP), paired with
-automation, significantly reduces exposure to these risks.</p>
+security measures like Subresource Integrity (SRI) and Content Security Policy (CSP)—paired with
+automation—significantly reduces exposure to these risks.</p>
 <p>However, no defense strategy is complete without regular testing and monitoring. Vigilance, combined with automation,
 ensures that your site remains resilient in the face of evolving threats without sacrificing performance or efficiency.</p>
 
