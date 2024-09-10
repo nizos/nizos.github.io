@@ -63,8 +63,7 @@ For example:
 ```
 
 In this example, the `integrity` attribute contains the cryptographic hash of the script. If the file's content is
-altered unexpectedly, the browser will reject it. Tools like [webpack-subresource-integrity](https://www.npmjs.com/package/webpack-subresource-integrity)
-can automate the generation of these hashes, reducing the risk of human error.
+altered unexpectedly, the browser will reject it.
 
 ### Content Security Policy (CSP)
 
@@ -135,16 +134,20 @@ By automating these steps and pairing them with monitoring tools, we ensure secu
 Alerts notify our team when deviations from the expected security posture occur, allowing us to maintain control and
 respond quickly.
 
-## Tools for Security Testing
+## Tools for Automating and Testing Security
 
-Testing your site's security is crucial for maintaining a strong defense against supply chain attacks. Several
-tools can help assess and improve your security posture:
+The following tools can help you automate security practices and assess or improve your site's security posture:
 
 - [Google’s CSP Evaluator](https://csp-evaluator.withgoogle.com/): Analyzes your CSP policy and offers suggestions for
   strengthening it.
 - [Mozilla Observatory](https://observatory.mozilla.org/): Provides insights into security headers and suggests
   improvements.
 - [securityheaders.com](https://securityheaders.com/): Tests your site's HTTP headers based on best practices.
+- [webpack-subresource-integrity](https://www.npmjs.com/package/webpack-subresource-integrity): Automates embedding of
+  SRI hashes.
+- [Playwright](https://playwright.dev/): A versatile tool for cross-browser testing to ensure consistent security
+  behavior.
+- [csp-docker](https://github.com/nizos/csp-docker): My easy-to-use environment for experimenting with security headers.
 - [webperf.se](http://webperf.se): Offers an [open-source suite](https://github.com/Webperf-se/webperf_core) for
   analyzing performance, accessibility, and security.
 

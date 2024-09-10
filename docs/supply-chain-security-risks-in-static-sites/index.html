@@ -101,8 +101,7 @@ code.</p>
 <p>For example:</p>
 <pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://cdn.example.com/script.js<span class="token punctuation">"</span></span> <span class="token attr-name">integrity</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>sha384-abc123...<span class="token punctuation">"</span></span> <span class="token attr-name">crossorigin</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>anonymous<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span></code></pre>
 <p>In this example, the <code>integrity</code> attribute contains the cryptographic hash of the script. If the file's content is
-altered unexpectedly, the browser will reject it. Tools like <a href="https://www.npmjs.com/package/webpack-subresource-integrity">webpack-subresource-integrity</a>
-can automate the generation of these hashes, reducing the risk of human error.</p>
+altered unexpectedly, the browser will reject it.</p>
 <h3>Content Security Policy (CSP)</h3>
 <p>CSP is another vital defense mechanism that complements SRI. By defining which sources are allowed to load resources
 such as scripts, styles, and images, CSP reduces the risk of code injections.</p>
@@ -157,15 +156,19 @@ If any verification fails, the deployment is discarded, maintaining the security
 <p>By automating these steps and pairing them with monitoring tools, we ensure security practices are consistently applied.
 Alerts notify our team when deviations from the expected security posture occur, allowing us to maintain control and
 respond quickly.</p>
-<h2>Tools for Security Testing</h2>
-<p>Testing your site's security is crucial for maintaining a strong defense against supply chain attacks. Several
-tools can help assess and improve your security posture:</p>
+<h2>Tools for Automating and Testing Security</h2>
+<p>The following tools can help you automate security practices and assess or improve your site's security posture:</p>
 <ul>
 <li><a href="https://csp-evaluator.withgoogle.com/">Google’s CSP Evaluator</a>: Analyzes your CSP policy and offers suggestions for
 strengthening it.</li>
 <li><a href="https://observatory.mozilla.org/">Mozilla Observatory</a>: Provides insights into security headers and suggests
 improvements.</li>
 <li><a href="https://securityheaders.com/">securityheaders.com</a>: Tests your site's HTTP headers based on best practices.</li>
+<li><a href="https://www.npmjs.com/package/webpack-subresource-integrity">webpack-subresource-integrity</a>: Automates embedding of
+SRI hashes.</li>
+<li><a href="https://playwright.dev/">Playwright</a>: A versatile tool for cross-browser testing to ensure consistent security
+behavior.</li>
+<li><a href="https://github.com/nizos/csp-docker">csp-docker</a>: My easy-to-use environment for experimenting with security headers.</li>
 <li><a href="http://webperf.se">webperf.se</a>: Offers an <a href="https://github.com/Webperf-se/webperf_core">open-source suite</a> for
 analyzing performance, accessibility, and security.</li>
 </ul>
