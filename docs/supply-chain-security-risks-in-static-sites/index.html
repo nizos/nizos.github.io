@@ -57,7 +57,7 @@
         <div class="post__details">
             <time>09 Sep 2024</time>
             <span> | </span>
-            <span>5 minutes</span>
+            <span>4 minutes</span>
         </div>
     </header>
 
@@ -114,30 +114,28 @@ offers a powerful safeguard:</p>
 Subresource Integrity (SRI). This can help prevent malicious code from being loaded on the website if one of the
 third-party sites hosting JavaScript files (such as analytics scripts) is compromised.</p>
 </blockquote>
-<p>For example, a simple yet effective policy might look like this:</p>
-<pre class="language-text"><code class="language-text">Content-Security-Policy: default-src 'none'; script-src 'self' https://cdn.example.com; style-src 'self';</code></pre>
-<p>In this configuration, only scripts from the same origin (<code>'self'</code>) and a trusted third-party CDN (<code>cdn.example.com</code>)
-are allowed, while all other content is blocked by default (<code>default-src 'none'</code>).</p>
-<h3>Applying Policies Effectively</h3>
-<p>To maximize CSP's protection, it's essential to apply the rules thoughtfully and in conjunction with SRI. While SRI
-ensures that fetched resources haven't been tampered with, CSP restricts where these resources can be loaded from. This
-combination creates a robust defense against supply chain attacks.</p>
-<p>For instance, to enforce script integrity with CSP, you can include an SRI hash directly in the CSP rule:</p>
-<pre class="language-text"><code class="language-text">Content-Security-Policy: script-src 'self' 'sha384-abc123...';</code></pre>
-<p>This restricts script loading to your domain and scripts that exactly match the hash regardless of their origin. If you
-want to enforce even tighter security, you can create a hash-only policy like this:</p>
+<p>For example, a basic policy that only allows scripts from the same domain and a trusted CDN can look like this:</p>
+<pre class="language-text"><code class="language-text">Content-Security-Policy: script-src 'self' https://cdn.example.com; style-src 'self';</code></pre>
+<p>A particularly effective strategy for static sites is to use hash-based CSP, where only scripts and styles with matching
+cryptographic hashes are allowed to execute. This ensures that only authorized content is loaded, even if a trusted
+source is compromised.</p>
 <pre class="language-text"><code class="language-text">Content-Security-Policy: script-src 'sha384-abc123...' 'sha384-def456...';</code></pre>
-<p>This approach ensures only authorized scripts are executed, even if a trusted source is compromised.</p>
-<p>Avoid risky directives like <code>unsafe-inline</code> or <code>unsafe-eval</code>, as they can weaken your policy and expose your site
-to attacks. If you're concerned about disrupting functionality, start by deploying CSP in <code>report-only</code> mode. This
-allows you to monitor violations without blocking content, helping you fine-tune your policy before enforcing it fully.</p>
-<p>Always apply CSP via HTTP headers, not <a href="https://content-security-policy.com/examples/meta/">meta tags</a> when possible, to
-ensure the policy is enforced before any content is rendered.</p>
-<p>If you would like to experiment with CSP rules, my <a href="https://github.com/nizos/csp-docker">csp-docker</a> project offers an
-easy-to-use NGINX environment for testing and refining security headers.</p>
-<p>For more guidance on configuring CSP, refer to the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy">CSP specification</a>.</p>
+<h3>Best Practices for CSP Implementation</h3>
+<p>To maximize CSP's effectiveness, follow these best practices:</p>
+<ul>
+<li><strong>Use a strict default policy</strong>: Start with <code>default-src 'none'</code> and then explicitly allow trusted sources.</li>
+<li><strong>Apply restrictions to all sources:</strong> Use <code>style-src</code>, <code>media-src</code> and other directives to tightly control which
+external resources are loaded.</li>
+<li><strong>Avoid unsafe directives:</strong> Directives like <code>unsafe-inline</code> and <code>unsafe-eval</code> can undermine your policy by allowing
+inline scripts and styles.</li>
+<li><strong>Prevent clickjacking:</strong> Use <code>frame-ancestors</code> to block other sites from embedding your content in iframes.</li>
+<li><strong>Test with reporting:</strong> Before enforcing CSP, use <code>report-only</code> to monitor violations before enforcing the policy,
+so functionality isn't disrupted.</li>
+</ul>
+<p>These strategies help defend against various exploits like Cross-Site Scripting (XSS), clickjacking, and content
+manipulation, offering robust protection for your site.</p>
 <h3>Common Threats and How CSP Helps</h3>
-<p>Pairing SRI with a well-configured CSP can help defend against several common threats:</p>
+<p>When combined with SRI, a well-configured CSP protect against several common threats:</p>
 <ul>
 <li><strong>Cross-Site Scripting (XSS):</strong> Malicious scripts injected into a site can steal data, hijack sessions, or carry out
 unwanted actions. CSP limits the ability of unauthorized scripts to execute.</li>
@@ -161,13 +159,20 @@ If any verification fails, the deployment is discarded, maintaining the security
 applied. Alerts notify our team when deviations from the expected security posture occur, allowing us to maintain
 control and respond quickly.</p>
 <h2>Tools for Security Testing</h2>
-<p>Several tools can help you test and improve your security posture. For example, <a href="https://csp-evaluator.withgoogle.com/">Google’s CSP Evaluator</a>
-analyzes your policy and offers suggestions for strengthening it.</p>
-<p>For more comprehensive testing, tools like <a href="https://observatory.mozilla.org/">Mozilla Observatory</a> and <a href="https://securityheaders.com/">securityheaders.com</a>
-offer insights into various security headers. <a href="http://webperf.se">webperf.se</a> also provides an <a href="https://github.com/Webperf-se/webperf_core">open-source suite</a>
-for analyzing performance, accessibility, and security.</p>
-<p>At factor10, we use <a href="https://webperf.se/erbjudande/">webperf's premium service</a> for daily tests, combined with
-<a href="https://webperf.se/articles/webhooks/">automated alerts</a> via Slack to notify us of any issues.</p>
+<p>Testing your site's security is crucial for maintaining a strong defense against supply chain attacks. Several
+tools can help assess and improve your security posture:</p>
+<ul>
+<li><a href="https://csp-evaluator.withgoogle.com/">Google’s CSP Evaluator</a>: Analyzes your CSN policy and offers suggestions for
+strengthening it.</li>
+<li><a href="https://observatory.mozilla.org/">Mozilla Observatory</a>: Provides insights into various security headers and suggests
+improvements.</li>
+<li><a href="https://securityheaders.com/">securityheaders.com</a>: Tests your site's HTTP headers and provides a rating based on
+best practices.</li>
+<li><a href="http://webperf.se">webperf.se</a>: Offers an <a href="https://github.com/Webperf-se/webperf_core">open-source suite</a> for
+analysing performance, accessibility, and security.</li>
+</ul>
+<p>At factor10, we use <a href="https://webperf.se/erbjudande/">webperf's premium service</a> for daily tests, alongside automated
+alerts via <a href="https://webperf.se/articles/webhooks/">webhooks</a> on Slack to notify us of any issues.</p>
 <h2>Conclusion</h2>
 <p>While static websites are simpler than dynamic ones, they are not immune to modern supply chain threats. The Polyfill.io
 incident serves as a reminder that even static sites can be compromised by third-party dependencies. Implementing

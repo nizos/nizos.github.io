@@ -79,51 +79,39 @@ offers a powerful safeguard:
   Subresource Integrity (SRI). This can help prevent malicious code from being loaded on the website if one of the
   third-party sites hosting JavaScript files (such as analytics scripts) is compromised.
 
-For example, a simple yet effective policy might look like this:
+For example, a basic policy that only allows scripts from the same domain and a trusted CDN can look like this:
 
 ```text
-Content-Security-Policy: default-src 'none'; script-src 'self' https://cdn.example.com; style-src 'self';
+Content-Security-Policy: script-src 'self' https://cdn.example.com; style-src 'self';
 ```
 
-In this configuration, only scripts from the same origin (`'self'`) and a trusted third-party CDN (`cdn.example.com`)
-are allowed, while all other content is blocked by default (`default-src 'none'`).
-
-### Applying Policies Effectively
-
-To maximize CSP's protection, it's essential to apply the rules thoughtfully and in conjunction with SRI. While SRI
-ensures that fetched resources haven't been tampered with, CSP restricts where these resources can be loaded from. This
-combination creates a robust defense against supply chain attacks.
-
-For instance, to enforce script integrity with CSP, you can include an SRI hash directly in the CSP rule:
-
-```text
-Content-Security-Policy: script-src 'self' 'sha384-abc123...';
-```
-
-This restricts script loading to your domain and scripts that exactly match the hash regardless of their origin. If you
-want to enforce even tighter security, you can create a hash-only policy like this:
+A particularly effective strategy for static sites is to use hash-based CSP, where only scripts and styles with matching
+cryptographic hashes are allowed to execute. This ensures that only authorized content is loaded, even if a trusted
+source is compromised.
 
 ```text
 Content-Security-Policy: script-src 'sha384-abc123...' 'sha384-def456...';
 ```
 
-This approach ensures only authorized scripts are executed, even if a trusted source is compromised.
+### Best Practices for CSP Implementation
 
-Avoid risky directives like `unsafe-inline` or `unsafe-eval`, as they can weaken your policy and expose your site
-to attacks. If you're concerned about disrupting functionality, start by deploying CSP in `report-only` mode. This
-allows you to monitor violations without blocking content, helping you fine-tune your policy before enforcing it fully.
+To maximize CSP's effectiveness, follow these best practices:
 
-Always apply CSP via HTTP headers, not [meta tags](https://content-security-policy.com/examples/meta/) when possible, to
-ensure the policy is enforced before any content is rendered.
+- **Use a strict default policy**: Start with `default-src 'none'` and then explicitly allow trusted sources.
+- **Apply restrictions to all sources:** Use `style-src`, `media-src` and other directives to tightly control which
+  external resources are loaded.
+- **Avoid unsafe directives:** Directives like `unsafe-inline` and `unsafe-eval` can undermine your policy by allowing
+  inline scripts and styles.
+- **Prevent clickjacking:** Use `frame-ancestors` to block other sites from embedding your content in iframes.
+- **Test with reporting:** Before enforcing CSP, use `report-only` to monitor violations before enforcing the policy,
+  so functionality isn't disrupted.
 
-If you would like to experiment with CSP rules, my [csp-docker](https://github.com/nizos/csp-docker) project offers an
-easy-to-use NGINX environment for testing and refining security headers.
-
-For more guidance on configuring CSP, refer to the [CSP specification](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy).
+These strategies help defend against various exploits like Cross-Site Scripting (XSS), clickjacking, and content
+manipulation, offering robust protection for your site.
 
 ### Common Threats and How CSP Helps
 
-Pairing SRI with a well-configured CSP can help defend against several common threats:
+When combined with SRI, a well-configured CSP protect against several common threats:
 
 - **Cross-Site Scripting (XSS):** Malicious scripts injected into a site can steal data, hijack sessions, or carry out
   unwanted actions. CSP limits the ability of unauthorized scripts to execute.
@@ -150,15 +138,20 @@ control and respond quickly.
 
 ## Tools for Security Testing
 
-Several tools can help you test and improve your security posture. For example, [Google’s CSP Evaluator](https://csp-evaluator.withgoogle.com/)
-analyzes your policy and offers suggestions for strengthening it.
+Testing your site's security is crucial for maintaining a strong defense against supply chain attacks. Several
+tools can help assess and improve your security posture:
 
-For more comprehensive testing, tools like [Mozilla Observatory](https://observatory.mozilla.org/) and [securityheaders.com](https://securityheaders.com/)
-offer insights into various security headers. [webperf.se](http://webperf.se) also provides an [open-source suite](https://github.com/Webperf-se/webperf_core)
-for analyzing performance, accessibility, and security.
+- [Google’s CSP Evaluator](https://csp-evaluator.withgoogle.com/): Analyzes your CSN policy and offers suggestions for
+  strengthening it.
+- [Mozilla Observatory](https://observatory.mozilla.org/): Provides insights into various security headers and suggests
+  improvements.
+- [securityheaders.com](https://securityheaders.com/): Tests your site's HTTP headers and provides a rating based on
+  best practices.
+- [webperf.se](http://webperf.se): Offers an [open-source suite](https://github.com/Webperf-se/webperf_core) for
+  analysing performance, accessibility, and security.
 
-At factor10, we use [webperf's premium service](https://webperf.se/erbjudande/) for daily tests, combined with
-[automated alerts](https://webperf.se/articles/webhooks/) via Slack to notify us of any issues.
+At factor10, we use [webperf's premium service](https://webperf.se/erbjudande/) for daily tests, alongside automated
+alerts via [webhooks](https://webperf.se/articles/webhooks/) on Slack to notify us of any issues.
 
 ## Conclusion
 
