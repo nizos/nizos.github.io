@@ -1,7 +1,7 @@
 ---
 title: Supply Chain Security Risks in Static Sites
 description: >-
-  Static sites are often perceived as more secure than their dynamic counterparts due to their simplicity and lack of
+  Static sites are perceived as more secure than their dynamic counterparts due to their simplicity and lack of
   server-side components. However, this assumption can lead to overlooked threats, particularly those introduced by
   third-party libraries and services. In this article, we'll explore how these vulnerabilities arise and how you can
   defend your site against them.
@@ -15,7 +15,7 @@ tags: ['web', 'security']
 draft: true
 ---
 
-Static sites are often perceived as more secure than their dynamic counterparts due to their simplicity and lack of
+Static sites are perceived as more secure than their dynamic counterparts due to their simplicity and lack of
 server-side components. However, this assumption can lead to overlooked threats, particularly those introduced by
 third-party libraries and services. In this article, we'll explore how these vulnerabilities arise and how you can
 defend your site against them.
@@ -42,20 +42,19 @@ admin users:
   service is found, presumably to not end up in the stats.
 
 Similarly, Cloudflare's CDNJS service exposed up to [12% of websites](https://www.bleepingcomputer.com/news/security/critical-cloudflare-cdn-flaw-allowed-compromise-of-12-percent-of-all-sites/)
-to potential code injection attacks, illustrating that even well-regarded Content Delivery Networks (CDNs) can be
-vulnerable.
+to potential code injection attacks, showing that even well-regarded Content Delivery Networks (CDNs) can be vulnerable.
 
 ## Defending Against Supply Chain Attacks
 
-The best defences against supply chain attacks include [Subresource Integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity)
+The best defenses against supply chain attacks include [Subresource Integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity)
 (SRI) and [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) (CSP). These tools work best
 as part of a layered security approach.
 
 ### Subresource Integrity (SRI)
 
 SRI ensures that fetched resources, such as JavaScript files, have not been tampered with by comparing their
-cryptographic hash to an expected value. If a file has been altered, the browser will block it, protecting the site from
-running malicious code.
+cryptographic hash to an expected value. If a file has been altered, the browser will block it from running malicious
+code.
 
 For example:
 
@@ -98,43 +97,43 @@ Content-Security-Policy: script-src 'sha384-abc123...' 'sha384-def456...';
 To maximize CSP's effectiveness, follow these best practices:
 
 - **Use a strict default policy**: Start with `default-src 'none'` and then explicitly allow trusted sources.
-- **Apply restrictions to all sources:** Use `style-src`, `media-src` and other directives to tightly control which
+- **Apply restrictions to all sources**: Use `style-src`, `media-src`, and other directives to tightly control which
   external resources are loaded.
-- **Avoid unsafe directives:** Directives like `unsafe-inline` and `unsafe-eval` can undermine your policy by allowing
+- **Avoid unsafe directives**: Directives like `unsafe-inline` and `unsafe-eval` can undermine your policy by allowing
   inline scripts and styles.
-- **Prevent clickjacking:** Use `frame-ancestors` to block other sites from embedding your content in iframes.
-- **Test with reporting:** Before enforcing CSP, use `report-only` to monitor violations before enforcing the policy,
-  so functionality isn't disrupted.
+- **Prevent clickjacking**: Use `frame-ancestors` to block other sites from embedding your content in iframes.
+- **Test with reporting**: Before enforcing CSP, use `report-only` mode to monitor violations without disrupting
+  functionality.
 
-These strategies help defend against various exploits like Cross-Site Scripting (XSS), clickjacking, and content
-manipulation, offering robust protection for your site.
+These strategies help defend against exploits like Cross-Site Scripting (XSS), clickjacking, and content manipulation,
+offering robust protection for your site.
 
 ### Common Threats and How CSP Helps
 
-When combined with SRI, a well-configured CSP protect against several common threats:
+When combined with SRI, a well-configured CSP protects against several common threats:
 
-- **Cross-Site Scripting (XSS):** Malicious scripts injected into a site can steal data, hijack sessions, or carry out
+- **Cross-Site Scripting (XSS)**: Malicious scripts injected into a site can steal data, hijack sessions, or carry out
   unwanted actions. CSP limits the ability of unauthorized scripts to execute.
-- **Clickjacking:** Attackers trick users into clicking hidden elements, leading to unintended actions such as form
+- **Clickjacking**: Attackers trick users into clicking hidden elements, leading to unintended actions such as form
   submissions or transactions. CSP can prevent the use of frames, which are often used for clickjacking.
-- **Site Defacement:** Attackers can alter the content of a website, damaging its credibility. CSP, combined with SRI,
+- **Site Defacement**: Attackers can alter the content of a website, damaging its credibility. CSP, combined with SRI,
   ensures that only trusted content and scripts are loaded, reducing the likelihood of defacement.
 
 ## Automating Security Practices
 
-Automating the implementation of SRI, script handling, and CSP configuration helps reduce human error while ensuring
-flexibility for quick interventions when needed. Here's how we do it at [factor10](https://www.factor10.com/websites/):
+At [factor10](https://www.factor10.com/), we automate several security practices to reduce human error and maintain
+flexibility for quick security intervention. Here's how we do it:
 
-1. **Automated Script Handling:** During our build process, a utility fetches the latest versions of third-party
+1. **Automated Script Handling**: During our build process, a utility fetches the latest versions of third-party
    scripts, ensuring we control when updates are introduced.
-2. **Automated SRI Generation:** Hashes for all fetched scripts are automatically calculated and embedded
+2. **Automated SRI Generation**: Hashes for all fetched scripts are automatically calculated and embedded
    into the HTML, ensuring integrity.
-3. **Automated Security Headers:** CSP rules are generated and applied to our NGINX configuration during deployment.
+3. **Automated Security Headers**: CSP rules are generated and applied to our NGINX configuration during deployment.
    If any verification fails, the deployment is discarded, maintaining the security of the live site.
 
-By automating these steps and pairing them with monitoring tools, we ensure our security practices are consistently
-applied. Alerts notify our team when deviations from the expected security posture occur, allowing us to maintain
-control and respond quickly.
+By automating these steps and pairing them with monitoring tools, we ensure security practices are consistently applied.
+Alerts notify our team when deviations from the expected security posture occur, allowing us to maintain control and
+respond quickly.
 
 ## Tools for Security Testing
 
@@ -147,10 +146,11 @@ tools can help assess and improve your security posture:
   improvements.
 - [securityheaders.com](https://securityheaders.com/): Tests your site's HTTP headers based on best practices.
 - [webperf.se](http://webperf.se): Offers an [open-source suite](https://github.com/Webperf-se/webperf_core) for
-  analysing performance, accessibility, and security.
+  analyzing performance, accessibility, and security.
 
-At factor10, we use [webperf's premium service](https://webperf.se/erbjudande/) for daily tests, alongside automated
-alerts via [webhooks](https://webperf.se/articles/webhooks/) on Slack to notify us of any issues.
+For our [sustainable-websites](https://factor10.com/websites/), we use [webperf's premium service](https://webperf.se/erbjudande/)
+for daily tests, alongside automated alerts via [webhooks](https://webperf.se/articles/webhooks/) on Slack to notify us
+of any issues.
 
 ## Conclusion
 
