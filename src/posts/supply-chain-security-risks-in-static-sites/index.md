@@ -5,14 +5,13 @@ description: >-
   server-side components. However, this perception can lead to overlooked threats, particularly those introduced by
   third-party libraries and services. In this article, we'll explore how these vulnerabilities arise and how you can
   defend your site against them.
-date: 2024-09-10
+date: 2024-09-11
 author: Nizar
 permalink: /{{ title | slugify }}/index.html
 cover: 'assets/shipping-containers.jpg'
 socialImage: '/assets/images/shipping-containers-social-image.jpg'
 caption: 'Original photo by <a href="https://unsplash.com/@ventiviews">Venti Views</a> on <a href="https://unsplash.com/photos/aerial-view-of-city-buildings-during-daytime-6p0JBES_65E">Unsplash</a>'
 tags: ['web', 'security']
-draft: true
 ---
 
 Static sites are perceived as more secure than their dynamic counterparts due to their simplicity and lack of
