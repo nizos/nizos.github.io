@@ -106,7 +106,7 @@ an extra layer of protection for external scripts your site relies on.</p>
 <p>Content Security Policy (CSP) allows you to define which sources are permitted to load resources such as scripts,
 styles, and images. This reduces the risk of code injection by blocking unauthorized content from running on your site.</p>
 <p>Here is an example of a CSP that restricts script loading to the same domain and a trusted CDN:</p>
-<pre class="language-text"><code class="language-text">Content-Security-Policy: script-src 'self' https://cdn.example.com; style-src 'self';</code></pre>
+<pre class="language-text"><code class="language-text">Content-Security-Policy: script-src 'self' https://cdn.example.com;</code></pre>
 <p>You can further strengthen your policy with hash-based CSP directives, allowing only scripts with matching cryptographic
 hashes to execute, regardless of their source:</p>
 <pre class="language-text"><code class="language-text">Content-Security-Policy: script-src 'sha384-abc123...' 'sha384-def456...';</code></pre>

@@ -71,7 +71,7 @@ styles, and images. This reduces the risk of code injection by blocking unauthor
 Here is an example of a CSP that restricts script loading to the same domain and a trusted CDN:
 
 ```text
-Content-Security-Policy: script-src 'self' https://cdn.example.com; style-src 'self';
+Content-Security-Policy: script-src 'self' https://cdn.example.com;
 ```
 
 You can further strengthen your policy with hash-based CSP directives, allowing only scripts with matching cryptographic
