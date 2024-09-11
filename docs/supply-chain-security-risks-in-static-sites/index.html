@@ -72,7 +72,7 @@ server-side components. However, this perception can lead to overlooked threats,
 third-party libraries and services. In this article, we'll explore how these vulnerabilities arise and how you can
 defend your site against them.</p>
 <h2>What Are Static Sites?</h2>
-<p>Static websites consist of pre-rendered HTML, CSS, and JavaScript files that are delivered directly to the user's
+<p>Static sites consist of pre-rendered HTML, CSS, and JavaScript files that are delivered directly to the user's
 browser. Their appeal lies in their speed, scalability, and cost-effectiveness. By avoiding server-side processing,
 static sites improve performance and reduce resource consumption.</p>
 <p>However, many static sites rely on third-party JavaScript libraries or external services for added functionality, such
@@ -90,7 +90,7 @@ service is found, presumably to not end up in the stats.</p>
 <p>In another incident, Cloudflare's CDNJS service exposed up to <a href="https://www.bleepingcomputer.com/news/security/critical-cloudflare-cdn-flaw-allowed-compromise-of-12-percent-of-all-sites/">12% of all websites</a>
 on the internet to potential code injection attacks, showing that even well-regarded Content Delivery Networks (CDNs) can be vulnerable.</p>
 <h2>Defending Against Supply Chain Attacks</h2>
-<p>The best defenses against supply chain attacks include <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity">Subresource Integrity</a>
+<p>Key defenses against supply chain attacks include <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity">Subresource Integrity</a>
 (SRI) and <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">Content Security Policy</a> (CSP). These tools work best
 when used together as part of a layered security approach.</p>
 <h3>Subresource Integrity (SRI)</h3>
@@ -99,12 +99,18 @@ does so by comparing the resource's cryptographic hash to a predefined value. If
 the resource from loading, preventing potential malicious code from executing.</p>
 <p>For example:</p>
 <pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://cdn.example.com/script.js<span class="token punctuation">"</span></span> <span class="token attr-name">integrity</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>sha384-abc123...<span class="token punctuation">"</span></span> <span class="token attr-name">crossorigin</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>anonymous<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span></code></pre>
-<p>In this example, the <code>integrity</code> attribute includes the hash of the file. This ensures the resource has not been altered
-and adds a layer of protection for external scripts that your site depends on.</p>
+<p>In this example, the <code>integrity</code> attribute includes the hash of the file. This ensures the resource is unaltered, adding
+an extra layer of protection for external scripts your site relies on.</p>
 <h3>Content Security Policy (CSP)</h3>
-<p>Content Security Policy (CSP) complements SRI by specifying which sources are permitted to load resources such as
-scripts, styles, and images. This reduces the risk of code injection by blocking unauthorized content from running on
-your site.</p>
+<p>Content Security Policy (CSP) allows you to define which sources are permitted to load resources such as scripts,
+styles, and images. This reduces the risk of code injection by blocking unauthorized content from running on your site.</p>
+<p>Here is an example of a CSP that restricts script loading to the same domain and a trusted CDN:</p>
+<pre class="language-text"><code class="language-text">Content-Security-Policy: script-src 'self' https://cdn.example.com; style-src 'self';</code></pre>
+<p>You can further strengthen your policy with hash-based CSP directives, allowing only scripts with matching cryptographic
+hashes to execute, regardless of their source:</p>
+<pre class="language-text"><code class="language-text">Content-Security-Policy: script-src 'sha384-abc123...' 'sha384-def456...';</code></pre>
+<p>This approach ensures that unauthorized scripts won't run even if the source is compromised.</p>
+<h3>Addressing Security Threats</h3>
 <p>Using both CSP and SRI together enhances security, as CSP controls where resources can be loaded from while SRI verifies
 their integrity. According to the <a href="https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html#defense-in-depth">OWASP CSP Cheat Sheet</a>:</p>
 <blockquote>
@@ -112,28 +118,7 @@ their integrity. According to the <a href="https://cheatsheetseries.owasp.org/ch
 Subresource Integrity (SRI). This can help prevent malicious code from being loaded on the website if one of the
 third-party sites hosting JavaScript files (such as analytics scripts) is compromised.</p>
 </blockquote>
-<p>Here is an example of a CSP that restricts script loading to the same domain and a trusted CDN:</p>
-<pre class="language-text"><code class="language-text">Content-Security-Policy: script-src 'self' https://cdn.example.com; style-src 'self';</code></pre>
-<p>You can further strengthen your policy with hash-based CSP directives, allowing only scripts with matching cryptographic
-hashes to execute, regardless of their source:</p>
-<pre class="language-text"><code class="language-text">Content-Security-Policy: script-src 'sha384-abc123...' 'sha384-def456...';</code></pre>
-<p>This approach ensures that unauthorized scripts won't run even if the source is compromised.</p>
-<h3>Best Practices for CSP Implementation</h3>
-<p>To fully leverage CSP, it's important to follow these best practices:</p>
-<ul>
-<li><strong>Use a strict default policy</strong>: Start with <code>default-src 'none'</code> and then explicitly allow trusted sources.</li>
-<li><strong>Apply restrictions to all sources</strong>: Use <code>style-src</code>, <code>media-src</code>, and other directives to tightly control which
-external resources are loaded.</li>
-<li><strong>Avoid unsafe directives</strong>: Directives like <code>unsafe-inline</code> and <code>unsafe-eval</code> can undermine your policy by allowing
-inline scripts and styles.</li>
-<li><strong>Prevent clickjacking</strong>: Use <code>frame-ancestors</code> to block other sites from embedding your content in iframes.</li>
-<li><strong>Test with reporting</strong>: Before enforcing CSP, use <code>report-only</code> mode to monitor violations without disrupting
-functionality.</li>
-</ul>
-<p>When implemented correctly, CSP not only protects against code injection attacks like Cross-Site Scripting (XSS) but
-also strengthens your defense against other threats, such as clickjacking and unauthorized content changes.</p>
-<h3>Common Threats and How CSP Helps</h3>
-<p>When used alongside SRI, a well-configured CSP helps mitigate several prevalent security threats:</p>
+<p>These tools help mitigate common security threats:</p>
 <ul>
 <li><strong>Cross-Site Scripting (XSS)</strong>: XSS attacks allow malicious scripts to be injected into your site, potentially leading
 to data theft, session hijacking, or unauthorized actions. CSP blocks unauthorized scripts by restricting which can
@@ -144,9 +129,25 @@ in iframes, a common method used in such attacks.</li>
 <li><strong>Site Defacement</strong>: Attackers may try to alter content on your website, damaging its credibility. A combination of
 CSP and SRI ensures that only authorized content is loaded, significantly reducing the risk of defacement.</li>
 </ul>
+<h3>Best Practices for CSP Implementation</h3>
+<p>Despite CSP's effectiveness, it remains underutilized. A <a href="https://www.rapid7.com/blog/post/2020/11/02/overview-of-content-security-policies-csp-on-the-web/">2020 survey</a>
+of the Alexa Top 1 Million websites found that only 7% had a valid CSP, and a <a href="https://www.bitsight.com/blog/content-security-policy-limits-dangerous-activity-so-why-isnt-everyone-doing-it">Bitsight study</a>
+revealed only 2% of 5 web applications were fully secure.</p>
+<p>To fully leverage CSP, follow these best practices:</p>
+<ul>
+<li><strong>Use a strict default policy</strong>: Start with <code>default-src 'none'</code> and then explicitly allow trusted sources.</li>
+<li><strong>Apply restrictions to all sources</strong>: Use <code>style-src</code>, <code>media-src</code>, and other directives to tightly control which
+external resources are loaded.</li>
+<li><strong>Avoid unsafe directives</strong>: Directives like <code>unsafe-inline</code> and <code>unsafe-eval</code> can undermine your policy by allowing
+inline scripts and styles.</li>
+<li><strong>Prevent clickjacking</strong>: Use <code>frame-ancestors</code> to block other sites from embedding your content in iframes.</li>
+<li><strong>Test with reporting</strong>: Before enforcing CSP, use <code>report-only</code> mode to monitor violations without disrupting
+functionality.</li>
+</ul>
 <h2>Automating Security Practices</h2>
-<p>At <a href="https://www.factor10.com/">factor10</a>, we automate several security practices to reduce human error and maintain
-flexibility for quick security intervention. Here's how we do it:</p>
+<p>Managing CSP manually can be error-prone, so automation tools are invaluable for maintaining consistent enforcement
+without burdening your workflow. At <a href="https://www.factor10.com/">factor10</a>, we automate several processes to reduce human
+error while ensuring flexibility for quick interventions:</p>
 <ol>
 <li><strong>Controlled Script Updates</strong>: During our build process, a utility fetches the latest versions of third-party
 scripts, but changes are only introduced after a manual diff-check, giving us full control over updates.</li>
@@ -155,9 +156,8 @@ into the HTML, ensuring integrity.</li>
 <li><strong>Automated Security Headers</strong>: CSP rules are generated and applied to our NGINX configuration during deployment.
 If any verification fails, the deployment is discarded, maintaining the security of the live site.</li>
 </ol>
-<p>By automating these steps and pairing them with monitoring tools, we ensure security practices are consistently applied.
-Alerts notify our team when deviations from the expected security posture occur, allowing us to maintain control and
-respond quickly.</p>
+<p>By automating these steps and pairing them with monitoring tools, we ensure consistent security practices. Alerts notify
+our team of any deviations, allowing us to maintain control and respond promptly.</p>
 <h2>Tools for Automating and Testing Security</h2>
 <p>The following tools can help you automate security practices and assess or improve your site's security posture:</p>
 <ul>
@@ -177,8 +177,8 @@ of any issues.</p>
 <h2>Conclusion</h2>
 <p>While static websites are simpler than dynamic ones, they are not immune to modern supply chain threats. The Polyfill.io
 incident serves as a reminder that even static sites can be compromised by third-party dependencies. Implementing
-security measures like Subresource Integrity (SRI) and Content Security Policy (CSP)—paired with
-automation—significantly reduces exposure to these risks.</p>
+security measures like Subresource Integrity (SRI) and Content Security Policy (CSP), combined with automation,
+significantly reduces your site's exposure to supply chain risks.</p>
 <p>However, no defense strategy is complete without regular testing and monitoring. Vigilance, combined with automation,
 ensures that your site remains resilient in the face of evolving threats without sacrificing performance or efficiency.</p>
 
