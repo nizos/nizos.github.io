@@ -107,7 +107,7 @@ These tools help mitigate common security threats:
 
 Despite CSP's effectiveness, it remains underutilized. A [2020 survey](https://www.rapid7.com/blog/post/2020/11/02/overview-of-content-security-policies-csp-on-the-web/)
 of the Alexa Top 1 Million websites found that only 7% had a valid CSP, and a [Bitsight study](https://www.bitsight.com/blog/content-security-policy-limits-dangerous-activity-so-why-isnt-everyone-doing-it)
-revealed only 2% of 5 web applications were fully secure.
+revealed only 2% of 5 million web applications were fully secure.
 
 To fully leverage CSP, follow these best practices:
 
