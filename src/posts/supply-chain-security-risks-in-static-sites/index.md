@@ -92,7 +92,7 @@ their integrity. According to the [OWASP CSP Cheat Sheet](https://cheatsheetseri
 Subresource Integrity (SRI). This can help prevent malicious code from being loaded on the website if one of the
 third-party sites hosting JavaScript files (such as analytics scripts) is compromised.
 
-These tools help mitigate common security threats:
+CSP and SRI help mitigate common security threats such as:
 
 - **Cross-Site Scripting (XSS)**: XSS attacks allow malicious scripts to be injected into your site, potentially leading
   to data theft, session hijacking, or unauthorized actions. CSP blocks unauthorized scripts by restricting which can
