@@ -99,6 +99,21 @@ module.exports = function(eleventyConfig) {
         return content.substr(0, content.lastIndexOf(' ', 200)) + '...';
     });
 
+    // Collections
+    eleventyConfig.addCollection("tagList", function(collectionApi) {
+        const tagSet = new Set()
+        collectionApi.getAll().forEach((item) => {
+            if (!item.data.draft && "tags" in item.data) {
+                let tags = item.data.tags
+                tags = tags.filter((tag) => !["all", "nav", "post", "posts"].includes(tag))
+                for (const tag of tags) {
+                    tagSet.add(tag)
+                }
+            }
+        })
+        return [...tagSet].sort()
+    })
+
     eleventyConfig.addCollection("posts", function(collection) {
         return collection.getFilteredByGlob("src/posts/**/*.md").filter(function(item) {
             // Exclude items with 'draft: true' in their front matter.
