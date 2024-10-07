@@ -271,7 +271,7 @@ p {
 }
 
 .nav__list a {
-    color: gray;
+    color: #737373;
     text-decoration: none;
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -451,7 +451,7 @@ p {
 .post-list__meta {
     font-size: 0.875rem;
     margin-top: 1rem;
-    color: gray;
+    color: #737373;
 }
 
 .post-list__meta * + * {
@@ -466,7 +466,7 @@ p {
 
 .post-list__tags a {
     text-decoration: none;
-    color: gray;
+    color: #737373;
 }
 
 .post-list__tags a:hover {
@@ -578,7 +578,7 @@ p {
 }
 
 .post-tags {
-    color: gray;
+    color: #737373;
     font-size: 0.875rem;
 }
 
