@@ -1,5 +1,5 @@
 ---
-layout: home.liquid
+layout: layouts/home.liquid
 title: Nizar's Blog
 ---
 
