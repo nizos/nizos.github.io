@@ -1,0 +1,15 @@
+---
+layout: layouts/base.liquid
+title: Tags
+permalink: /tags/index.html
+---
+
+<div class="tags-page">
+    <h1>Tags</h1>
+    <ul class="tag-list">
+        {% for tag in collections.tagList %}
+            <li><a href="/tags/{{ tag | slugify }}/">{{ tag }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+
