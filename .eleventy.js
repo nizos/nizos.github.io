@@ -99,6 +99,10 @@ module.exports = function(eleventyConfig) {
         return content.substr(0, content.lastIndexOf(' ', 200)) + '...';
     });
 
+    eleventyConfig.addFilter("filterByTag", function(posts, tag) {
+        return posts.filter(post => post.data.tags && post.data.tags.includes(tag))
+    })
+
     // Collections
     eleventyConfig.addCollection("tagList", function(collectionApi) {
         const tagSet = new Set()
