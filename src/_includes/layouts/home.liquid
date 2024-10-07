@@ -1,28 +1,13 @@
 ---
 layout: layouts/base.liquid
 ---
-<header class="hero">
+<div class="hero">
     <div class="hero-content">
-        <div class="intro">
-            {{ content }}
-        </div>
-
-        {% if site.socialLinks %}
-            <ul class="hero__social-links">
-                {% for item in site.socialLinks %}
-                    {% assign externalAttribute = '' %}
-                    {% if item.external %}
-                        {% assign externalAttribute = 'target="_blank" rel="noopener noreferrar"' %}
-                    {% endif %}
-                    <li>
-                        <a href="{{ item.url | url }}" {{ externalAttribute }}>{{ item.text }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+        <div class="intro">{{ content }}</div>
     </div>
-</header>
+</div>
 <section class="post-list__wrapper">
     <h2 class="post-list__heading">Recent Posts</h2>
+    {% assign recentPosts = collections.posts %}
     {% include 'components/posts-list' %}
 </section>
