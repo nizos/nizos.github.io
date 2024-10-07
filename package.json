@@ -1,28 +1,24 @@
 {
   "name": "blog",
   "version": "1.0.0",
-  "description": "11ty blog",
-  "main": "index.js",
+  "description": "Nizar's blog",
   "scripts": {
     "start": "eleventy --serve",
     "build": "eleventy",
     "dev": "env ELEVENTY_ENV=development eleventy --serve",
-    "clean": "rm -rf ./public"
+    "clean": "rm -rf ./_site"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nizos/blog.git"
   },
   "author": "nizos",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/nizos/blog/issues"
   },
   "homepage": "https://github.com/nizos/blog#readme",
   "devDependencies": {
-    "@11ty/eleventy": "^2.0.0"
-  },
-  "dependencies": {
+    "@11ty/eleventy": "^2.0.0",
     "@11ty/eleventy-img": "^3.0.0",
     "@11ty/eleventy-plugin-rss": "^1.2.0",
     "@11ty/eleventy-plugin-syntaxhighlight": "^4.2.0",
