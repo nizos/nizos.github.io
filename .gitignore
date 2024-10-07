@@ -1,6 +1,12 @@
-node_modules
-img
-public
+# IDEs
 .idea
+
+# OS
 .cache
 .DS_Store
+
+# Node
+/node_modules
+
+# Build
+/_site
