@@ -23,9 +23,11 @@
                 <h3 class="post-list__title">{{ post.data.title }}</h3>
 
                 <div class="post__cover">
-                    {% assign slug = post.data.title | slugify %}
-                    {% assign coverImage = "/posts/" | append: slug | append: "/" | append: post.data.cover %}
-                    {% image coverImage, "Cover image", "Cover image" %}
+                    {% if forloop.index <= 2 %}
+                        {% image post.data.cover, post.data.coverAlt, "eager" %}
+                    {% else %}
+                        {% image post.data.cover, post.data.coverAlt, "lazy" %}
+                    {% endif %}
                     <p class="post-list__cover-caption">{{ post.data.caption | strip_html }}</p>
                 </div>
 

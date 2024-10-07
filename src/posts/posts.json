@@ -1,4 +1,6 @@
 {
   "layout": "layouts/post.liquid",
+  "permalink": "/{{ title | slugify }}/index.html",
+  "author": "Nizar",
   "tags": ["posts"]
 }

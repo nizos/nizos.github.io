@@ -1,14 +1,15 @@
 ---
-title: 'Striving for Performance and Design Harmony in Web Development'
-description: In modern web development, a fine balance between performance and user-centric design is key. It doesn't just enhance visitor retention; it deepens their interaction with the content. My recent project provided me a deep dive into achieving this delicate balance. Here is a recount of my experience and the insights that I’ve gained.
+title: Striving for Performance and Design Harmony in Web Development
+description: >-
+  In modern web development, a fine balance between performance and user-centric design is key. It doesn't just enhance
+  visitor retention; it deepens their interaction with the content. My recent project provided me a deep dive into
+  achieving this delicate balance. Here is a recount of my experience and the insights that I’ve gained.
 date: 2023-09-20
-author: Nizar
-permalink: /{{ title | slugify }}/index.html
-cover: 'assets/design-cover.jpg'
-socialImage: '/assets/images/performance-design-harmony-social.jpg'
-caption: 'Photo by <a href="https://unsplash.com/@edhoradic">Edho Pratama</a> on <a href="https://unsplash.com/photos/T6fDN60bMWY">Unsplash</a>'
+cover: /uploads/smartphone-showing-design-definition.jpg
+coverAlt: Close-up of smartphone screen displaying the definition of 'design'
+caption: Photo by <a href="https://unsplash.com/@edhoradic">Edho Pratama</a> on <a href="https://unsplash.com/photos/T6fDN60bMWY">Unsplash</a>
+socialImage: /uploads/smartphone-showing-design-definition-social-image.jpg
 tags: [web, static-sites]
-draft: false
 ---
 
 In modern web development, a fine balance between performance and user-centric design is key. It doesn't just enhance visitor retention; it deepens their interaction with the content. My recent project provided me a deep dive into achieving this delicate balance. Here is a recount of my experience and the insights that I've gained.
@@ -17,7 +18,7 @@ In modern web development, a fine balance between performance and user-centric d
 
 The project involved transforming a site initially built using 11ty and Forestry CMS. The goal was clear: transitioning to Cloudcannon and securing top-notch performance metrics across the board.
 
-{% image "./assets/webperf.png", "Website score on webperf" %}
+![Website score on webperf](/uploads/webperf-report-for-factor10.gif)
 *The website's final scores for accessibility, speed, standards, privacy, and security. Securing it the top position of all websites in Sweden measured by [webperf.se](https://webperf.se/toplist/).*
 
 ## Crafting the Developer Experience
@@ -202,7 +203,7 @@ We can make this process smoother and hands-free by utilizing a Python script du
 
 This allows us to safeguard our site's security while also eliminating manual intervention that can be tedious and error-prone.
 
-{% image "./assets/factor10-security-summary.png", "Headers security summary showing an A+ rating" %}
+![Headers security summary showing an A+ rating](/uploads/factor10-headers-security-report-summary.gif)
 *Summary of the headers security analysis from [securityheaders.com](https://securityheaders.com/)*
 
 ## Putting it all together

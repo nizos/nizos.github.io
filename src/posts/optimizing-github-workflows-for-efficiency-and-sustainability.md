@@ -1,12 +1,15 @@
 ---
-title: 'Optimizing GitHub Workflows for Efficiency and Sustainability'
-description: "Integrating automation into development workflows has become crucial in recent years. In this post, I'll share a few strategies I've found useful for making these workflows both more efficient and sustainable. We'll look into strategies such as canceling redundant jobs, setting appropriate workflow timeouts, optimizing caching techniques, and managing workflow triggers more effectively."
+title: Optimizing GitHub Workflows for Efficiency and Sustainability
+description: >-
+  Integrating automation into development workflows has become crucial in recent years. In this post, I'll share a few
+  strategies I've found useful for making these workflows both more efficient and sustainable. We'll look into
+  strategies such as canceling redundant jobs, setting appropriate workflow timeouts, optimizing caching techniques,
+  and managing workflow triggers more effectively.
 date: 2024-06-12
-author: Nizar
-permalink: /{{ title | slugify }}/index.html
-cover: 'assets/wind-turbine.jpg'
-socialImage: '/assets/images/optimizing-github-workflows-for-efficiency-and-sustainability-social-image.jpg'
-caption: 'Original photo by <a href="https://unsplash.com/@bfigas">Bruno Figueiredo</a> on <a href="https://unsplash.com/photos/white-windmill-during-day-KAXSflHqAl0">Unsplash</a>'
+cover: /uploads/wind-turbine.jpg
+coverAlt: Close-up of a modern wind turbine against a clear sky
+caption: Original photo by <a href="https://unsplash.com/@bfigas">Bruno Figueiredo</a> on <a href="https://unsplash.com/photos/white-windmill-during-day-KAXSflHqAl0">Unsplash</a>
+socialImage: /uploads/wind-turbine-social-image.jpg
 tags: [ci, automation, sustainability]
 ---
 
@@ -194,7 +197,7 @@ action allow us to get estimates and help us make informed decisions.
 For instance, to determine whether caching npm dependencies would reduce resource consumption, I ran 5 workflow runs
 with caching and 5 without. The result showed that caching npm dependencies reduced overall energy consumption and time.
 
-{% image "./assets/energy-comparison.png", "Energy comparison of using caching vs not using caching" %}
+![Energy comparison of using caching vs not using caching](/uploads/workflow-energy-comparison-chart.gif)
 *Energy comparison of using caching vs not using caching*
 
 The following example demonstrates how to integrate this measurement tool into a workflow. Call `start-measurement`
@@ -220,7 +223,7 @@ before running the work to be measured, and `get-measurement` and `display-resul
 
 Upon completion, the workflow produces a summary that looks like this:
 
-{% image "./assets/estimation-summary.png", "Workflow summary showing measurement estimates" %}
+![Workflow summary showing measurement estimates](/uploads/workflow-energy-estimation-summary.gif)
 *Workflow summary showing measurement estimates*
 
 The action sends metrics data to metrics.green-coding.io by default, including energy values, duration of measurements,

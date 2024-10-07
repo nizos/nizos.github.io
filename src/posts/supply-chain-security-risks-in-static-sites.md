@@ -6,11 +6,10 @@ description: >-
   third-party libraries and services. In this article, we'll explore how these vulnerabilities arise and how you can
   defend your site against them.
 date: 2024-09-11
-author: Nizar
-permalink: /{{ title | slugify }}/index.html
-cover: 'assets/shipping-containers.jpg'
-socialImage: '/assets/images/shipping-containers-social-image.jpg'
-caption: 'Original photo by <a href="https://unsplash.com/@ventiviews">Venti Views</a> on <a href="https://unsplash.com/photos/aerial-view-of-city-buildings-during-daytime-6p0JBES_65E">Unsplash</a>'
+cover: /uploads/shipping-containers.jpg
+coverAlt: Overhead view of shipping containers in a busy port terminal
+caption: Original photo by <a href="https://unsplash.com/@ventiviews">Venti Views</a> on <a href="https://unsplash.com/photos/aerial-view-of-city-buildings-during-daytime-6p0JBES_65E">Unsplash</a>
+socialImage: /uploads/shipping-containers-social-image.jpg
 tags: ['web', 'security']
 ---
 

@@ -1,12 +1,14 @@
 ---
 title: 'Look Smarter With Git: Rewriting Your History'
-description: 'As developers, we are encouraged to commit code changes early and frequently. A benefit of which is being able to revert to previous states when needed. This luxury, however, can come at the expense of a rather messy Git history; one that communicates how the intended changes were reached rather than what they are.'
+description: >-
+  As developers, we are encouraged to commit code changes early and frequently. A benefit of which is being able to
+  revert to previous states when needed. This luxury, however, can come at the expense of a rather messy Git history;
+  one that communicates how the intended changes were reached rather than what they are.
 date: 2022-08-08
-author: Nizar
-permalink: /{{ title | slugify }}/index.html
-cover: 'assets/code.jpg'
-socialImage: '/assets/images/look-smarter-with-git-socialImage.jpg'
-caption: 'Photo by <a href="https://unsplash.com/@sapegin">Artem Sapegin</a> on <a href="https://unsplash.com/photos/b18TRXc8UPQ">Unsplash</a>'
+cover: /uploads/laptop-with-code-on-screen.jpg
+coverAlt: Laptop displaying code editor with code snippets on the screen
+caption: Photo by <a href="https://unsplash.com/@sapegin">Artem Sapegin</a> on <a href="https://unsplash.com/photos/b18TRXc8UPQ">Unsplash</a>
+socialImage: /uploads/laptop-with-code-on-screen-social-image.jpg
 tags: [git, vcs]
 ---
 This blog post is co-authored by [Raniz](https://raniz.blog/2022-08-08_look-smarter-with-git/).
@@ -43,20 +45,20 @@ Git Rebase is used to move one or more commits from one place in the Git history
 
 For example: Let's say that we have a project with a main branch and a feature branch, both of which have two commits added to them after the branching point as illustrated in the figure below.
 
-{% image "./assets/git-branch.svg", "Git branching" %}
+![Git branching](/uploads/git-branch.svg)
 
 ## Regular Rebase
 A regular rebase is often used instead of a merge. To illustrate how it works and how the two differ, we look at how a merge works.
 
 When two branches are merged, a new commit is created. This new commit is the intersection point of two separate histories. If there are any conflicts between the two histories, they are resolved in the merge commit and added to the history.
 
-{% image "./assets/git-merge.svg", "Git merge" %}
+![Git merge](/uploads/git-merge.svg)
 
 Rebasing achieves the same goal but does so in a different way. When a branch is rebased, its start in history is moved from one spot in history to another, most often in front of the last commit on the branch we would have merged with. That is, we place one branch after the other in history instead of intersecting two branches.
 
 Conflicts are resolved during rebasing and commits containing conflicting changes are modified to no longer be in conflict, effectively removing the conflicts from history.
 
-{% image "./assets/git-rebase.svg", "Git rebase" %}
+![Git rebase](/uploads/git-rebase.svg)
 
 As such, a rebase creates a linear history, one that is easier to follow. This is also visible when viewing the history using a graphical tool; the history looks like a straight line rather than a set of intertwining parallel tracks.
 

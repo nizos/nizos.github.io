@@ -2,25 +2,59 @@ const Image = require('@11ty/eleventy-img');
 const timeToRead = require('eleventy-plugin-time-to-read');
 const pluginRss = require('@11ty/eleventy-plugin-rss');
 const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
+const markdownIt = require('markdown-it')
 const { DateTime } = require('luxon');
-const path = require("node:path");
 
-async function imageShortcode(src, alt, sizes = "100vw") {
-    let imageSrc = `${path.dirname(this.page.inputPath)}/${src}`;
+const WIDTHS = [300, 600, 750, 900, 1200]
+const FORMATS = ["avif", "jpeg"]
+const SIZES = '(min-width: 750px) 750px, 80vw'
+const OUTPUT_DIR = './_site/img/'
+const URL_PATH = '/img/'
+
+async function imageShortcode(src, alt, loading = "lazy") {
+    let imageSrc = `src${src}`;
     let metadata = await Image(imageSrc, {
-        widths: [300, 600, 750, 900, 1200, 1400],
-        formats: ["avif", "jpeg"],
-        outputDir: path.dirname(this.page.outputPath),
-        urlPath: this.page.url,
+        widths: WIDTHS,
+        formats: FORMATS,
+        outputDir: OUTPUT_DIR,
+        urlPath: URL_PATH,
     });
 
     let imageAttributes = {
         alt,
-        sizes,
+        sizes: SIZES,
+        loading,
+        decoding: "async",
+    };
+
+    return Image.generateHTML(metadata, imageAttributes);
+}
+
+function customImageGenerator(src, alt) {
+    // Do not process animated gifs and scalable vectors
+    if (src.endsWith('.gif') || src.endsWith('.svg')) {
+        return `<img src="${src}" alt="${alt}" loading="lazy" decoding="async">`
+    }
+
+    // Generate responsive image for other formats
+    const imagePath = `src${src}`;
+    const options = {
+        widths: WIDTHS,
+        formats: FORMATS,
+        outputDir: OUTPUT_DIR,
+        urlPath: URL_PATH,
+    }
+
+    Image(imagePath, options)
+
+    const imageAttributes = {
+        alt,
+        sizes: SIZES,
         loading: "lazy",
         decoding: "async",
     };
 
+    const metadata = Image.statsSync(imagePath, options)
     return Image.generateHTML(metadata, imageAttributes);
 }
 
@@ -32,6 +66,21 @@ module.exports = function(eleventyConfig) {
 
     // Shortcodes
     eleventyConfig.addAsyncShortcode("image", imageShortcode);
+
+    // Markdown
+    const markdownLibrary = markdownIt({
+        html: true,
+        linkify: true
+    })
+
+    markdownLibrary.renderer.rules.image = (tokens, idx) => {
+        const token = tokens[idx]
+        const src = token.attrGet('src')
+        const alt = token.content
+        return customImageGenerator(src, alt)
+    }
+
+    eleventyConfig.setLibrary('md', markdownLibrary)
 
     // Filters
     eleventyConfig.addFilter('readableDate', (dateObj) => {
@@ -58,6 +107,7 @@ module.exports = function(eleventyConfig) {
     });
 
     eleventyConfig.addPassthroughCopy("src/assets/images");
+    eleventyConfig.addPassthroughCopy("src/uploads");
     eleventyConfig.addPassthroughCopy("src/assets/css");
     eleventyConfig.addPassthroughCopy({"src/assets/static": "."});
     eleventyConfig.addPassthroughCopy("src/CNAME");

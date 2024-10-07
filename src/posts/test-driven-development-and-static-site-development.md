@@ -1,12 +1,15 @@
 ---
-title: 'Test-Driven Development and Static Site Development'
-description: As a software engineer, I always find ways to streamline my workflow while maintaining a high-quality output. Recently, I’ve been working on several static projects using Eleventy, and I found a way to incorporate Test-Driven Development (TDD) into my process. This blog post is about my journey and how it resulted in a more efficient, robust, and enjoyable development experience.
+title: Test-Driven Development and Static Site Development
+description: >-
+  As a software engineer, I always find ways to streamline my workflow while maintaining a high-quality output.
+  Recently, I’ve been working on several static projects using Eleventy, and I found a way to incorporate Test-Driven
+  Development (TDD) into my process. This blog post is about my journey and how it resulted in a more efficient, robust,
+  and enjoyable development experience.
 date: 2023-06-30
-author: Nizar
-permalink: /{{ title | slugify }}/index.html
-cover: 'assets/design-smartphone.jpg'
-socialImage: '/assets/images/tdd-static-sites-social.jpg'
-caption: 'Photo by <a href="https://unsplash.com/@edhoradic">Edho Pratama</a> on <a href="https://unsplash.com/photos/T6fDN60bMWY">Unsplash</a>'
+cover: /uploads/smartphone-showing-design-definition.jpg
+coverAlt: Close-up of smartphone screen displaying the definition of 'design'
+caption: Photo by <a href="https://unsplash.com/@edhoradic">Edho Pratama</a> on <a href="https://unsplash.com/photos/T6fDN60bMWY">Unsplash</a>
+socialImage: /uploads/smartphone-showing-design-definition-social-image.jpg
 tags: [tdd, static-sites]
 draft: true
 ---

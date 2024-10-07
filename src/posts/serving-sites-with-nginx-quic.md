@@ -1,12 +1,12 @@
 ---
-title: 'Serving Sites with NGINX QUIC'
-description: 'A quick look at QUIC and how to use NGINX’s newly released pre-built packages to enable it for your site.'
+title: Serving Sites with NGINX QUIC
+description: >-
+  A quick look at QUIC and how to use NGINX’s newly released pre-built packages to enable it for your site.
 date: 2023-02-28
-author: Nizar
-permalink: /{{ title | slugify }}/index.html
-cover: 'assets/cable.jpg'
-socialImage: '/assets/images/serving-sites-nginx-quic-socialImage.jpg'
-caption: 'Photo by <a href="https://unsplash.com/@markusspiske">Markus Spiske</a> on <a href="https://unsplash.com/photos/MDHLwA3Awb8">Unsplash</a>'
+cover: /uploads/internet-and-usb-cables.jpg
+coverAlt: Close-up of USB and Ethernet cable on a white surface
+caption: Photo by <a href="https://unsplash.com/@markusspiske">Markus Spiske</a> on <a href="https://unsplash.com/photos/MDHLwA3Awb8">Unsplash</a>
+socialImage: /uploads/internet-and-usb-cables-social-image.jpg
 tags: [http, nginx, quic]
 ---
 
@@ -18,7 +18,7 @@ The prebuilt binary packages eliminate the need to compile from source and autom
 
 QUIC is a general-purpose transport layer network protocol that provides built-in security and improved performance compared to TCP + TLS. Its built-in security features, such as encryption and authentication, allow for the exchange of setup keys and protocols to take place in the initial handshake. Thus reducing the connection setup overhead and latency as shown by the diagram below.
 
-{% image "./assets/QUIC.png", "QUIC diagram", "QUIC diagram" %}
+![QUIC diagram](/uploads/quic-handshake-comparison.gif)
 
 For a more detailed breakdown of QUIC and how it works, checkout Cloudflare's blog article [The Road to QUIC](https://blog.cloudflare.com/the-road-to-quic/).
 
@@ -314,13 +314,13 @@ sudo systemctl reload nginx
 
 The website should now be live with QUIC+HTTP/3 enabled.
 
-{% image "./assets/live.png", "View of website in browser", "View of website in browser" %}
+![View of website in browser](/uploads/configuring-quic-browser-result.gif)
 
 ### Verify
 
 Head over to [https://www.http3check.net/](https://www.http3check.net/) to verify that QUIC and HTTP/3 are supported on your site.
 
-{% image "./assets/verification.png", "QUIC verification", "QUIC verification" %}
+![QUIC verification](/uploads/quic-support-verification.gif)
 
 ## Concluding Remarks
 
