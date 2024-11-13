@@ -25,7 +25,7 @@ allowing developers to model stateful objects that manage their own state. They 
 scenarios where we want to maintain state across function executions.
 
 The problem is that Durable Entities, at the time of writing, are not available for Java, and by
-extension, for Kotlin either. The thing is, and to put it mildly, Erik likes Kotlin. Some nights I
+extension, for Kotlin either. The thing is, and to put it mildly, Erik loves Kotlin. Some nights I
 wondered if he made a promise to never use any other language.
 
 By now, the challenge has presented itself. To keep Erik happy, I would need to find a way to
@@ -110,7 +110,7 @@ fun counter(@DurableOrchestrationTrigger(name = "ctx") ctx: TaskOrchestrationCon
 }
 ```
 
-With our We will use an HTTP function to create instances of it.
+We will use an HTTP function to create instances of it.
 
 ```kotlin
 @FunctionName("Create")
@@ -160,8 +160,7 @@ fun HttpRequestMessage<Optional<String>>.success(message: String): HttpResponseM
     createResponseBuilder(HttpStatus.OK).body(message).build()
 ```
 
-With those extension functions, we can wwrite Here is how our function looks like with the updated
-request handing:
+Here is how our function looks like with the updated request handing:
 
 ```kotlin
 @FunctionName("Create")
@@ -753,7 +752,7 @@ We sometimes want to trigger an operation on an entity and receive a result back
 time. Here, we will develop our code so that we can do exactly that.
 
 The first thing that we need to do is that we need to be able to pass the requester's id along with
-a name of an event that we should listen to for the respose event.
+a name of an event that we should listen to for the response event.
 
 We will update our data classes which now look like this:
 
@@ -826,26 +825,6 @@ fun DurableTaskClient.signalEntity(input: SignalEntityInput) {
     val operationJSON = objectMapper.writeValueAsString(input.operation)
     val eventName = input.eventName ?: "EntityOperation"
     this.raiseEvent(input.entityId, eventName, operationJSON)
-}
-```
-
-```kotlin
-fun TaskOrchestrationContext.signalEntity(input: SignalEntityInput) {
-    this.callActivity("SignalEntity", input)
-}
-
-fun DurableTaskClient.signalEntity(input: SignalEntityInput) {
-    val operationJSON = objectMapper.writeValueAsString(input.operation)
-    val eventName = input.eventName ?: "EntityOperation"
-    this.raiseEvent(input.entityId, eventName, operationJSON)
-}
-
-@FunctionName("SignalEntity")
-fun signalEntityActivity(
-    @DurableActivityTrigger(name = "input") input: SignalEntityInput,
-    @DurableClientInput(name = "durableContext") durableContext: DurableClientContext,
-) {
-    durableContext.client.signalEntity(input)
 }
 ```
 
