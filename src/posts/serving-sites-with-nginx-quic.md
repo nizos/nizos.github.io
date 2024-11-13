@@ -1,30 +1,43 @@
 ---
 title: Serving Sites with NGINX QUIC
 description: >-
-  A quick look at QUIC and how to use NGINX’s newly released pre-built packages to enable it for your site.
+  A quick look at QUIC and how to use NGINX’s newly released pre-built packages to enable it for
+  your site.
 date: 2023-02-28
 cover: /uploads/internet-and-usb-cables.jpg
 coverAlt: Close-up of USB and Ethernet cable on a white surface
-caption: Photo by <a href="https://unsplash.com/@markusspiske">Markus Spiske</a> on <a href="https://unsplash.com/photos/MDHLwA3Awb8">Unsplash</a>
+caption:
+  Photo by <a href="https://unsplash.com/@markusspiske">Markus Spiske</a> on <a
+  href="https://unsplash.com/photos/MDHLwA3Awb8">Unsplash</a>
 socialImage: /uploads/internet-and-usb-cables-social-image.jpg
 tags: [http, nginx, quic]
 ---
 
-NGINX has [recently released](https://www.nginx.com/blog/binary-packages-for-preview-nginx-quic-http3-implementation/) prebuilt [binary packages](https://quic.nginx.org/packages.html) for the preview NGINX QUIC+HTTP/3 implementation for Red Hat Enterprise Linux 9 and Ubuntu 22.04.
+NGINX has
+[recently released](https://www.nginx.com/blog/binary-packages-for-preview-nginx-quic-http3-implementation/)
+prebuilt [binary packages](https://quic.nginx.org/packages.html) for the preview NGINX QUIC+HTTP/3
+implementation for Red Hat Enterprise Linux 9 and Ubuntu 22.04.
 
-The prebuilt binary packages eliminate the need to compile from source and automatically install a [quicktls](https://github.com/quictls) library package as a dependency as OpenSSL does not yet support QUIC.
+The prebuilt binary packages eliminate the need to compile from source and automatically install a
+[quicktls](https://github.com/quictls) library package as a dependency as OpenSSL does not yet
+support QUIC.
 
 ## QUIC
 
-QUIC is a general-purpose transport layer network protocol that provides built-in security and improved performance compared to TCP + TLS. Its built-in security features, such as encryption and authentication, allow for the exchange of setup keys and protocols to take place in the initial handshake. Thus reducing the connection setup overhead and latency as shown by the diagram below.
+QUIC is a general-purpose transport layer network protocol that provides built-in security and
+improved performance compared to TCP + TLS. Its built-in security features, such as encryption and
+authentication, allow for the exchange of setup keys and protocols to take place in the initial
+handshake. Thus reducing the connection setup overhead and latency as shown by the diagram below.
 
 ![QUIC diagram](/uploads/quic-handshake-comparison.gif)
 
-For a more detailed breakdown of QUIC and how it works, checkout Cloudflare's blog article [The Road to QUIC](https://blog.cloudflare.com/the-road-to-quic/).
+For a more detailed breakdown of QUIC and how it works, checkout Cloudflare's blog article
+[The Road to QUIC](https://blog.cloudflare.com/the-road-to-quic/).
 
 ## Using NGINX QUIC
 
-What follows is a step-by-step guide on how to serve a website using NGINX QUIC. For this setup, we will use a newly created Ubuntu 22.04 server.
+What follows is a step-by-step guide on how to serve a website using NGINX QUIC. For this setup, we
+will use a newly created Ubuntu 22.04 server.
 
 ### Update the system
 
@@ -62,7 +75,9 @@ sudo apt install nginx-quic
 
 ### Firewall
 
-Enable the firewall if it is not already enabled and make sure to allow UDP traffic through port 443. UDP uses a connectionless communication model, it is a fire and forget protocol. It is what makes the reduction of overhead possible.
+Enable the firewall if it is not already enabled and make sure to allow UDP traffic through
+port 443. UDP uses a connectionless communication model, it is a fire and forget protocol. It is
+what makes the reduction of overhead possible.
 
 ```shell
 # Adjust firewall
@@ -79,7 +94,10 @@ sudo ufw enable
 
 ### Certbot
 
-Install certbot, or your favorite tool to issue and renew certificates. A lit of alternative clients can be found [here](https://letsencrypt.org/docs/client-options/). We will use snap to since it is the method recommended by Certbot. You can find alternative installation methods [here](https://eff-certbot.readthedocs.io/en/stable/install.html).
+Install certbot, or your favorite tool to issue and renew certificates. A lit of alternative clients
+can be found [here](https://letsencrypt.org/docs/client-options/). We will use snap to since it is
+the method recommended by Certbot. You can find alternative installation methods
+[here](https://eff-certbot.readthedocs.io/en/stable/install.html).
 
 ```shell
 # Make sure snapd core is up to date
@@ -97,7 +115,10 @@ sudo ln -s /snap/bin/certbot /usr/bin/certbot
 
 ### Site directory
 
-We will now create a directory to store our site and its data. This is where the server will look for the site's contents when serving out visitors. You can choose a different location that the one I chose, just make sure to make the same adjustment in the other places that this path appears in as you follow along.
+We will now create a directory to store our site and its data. This is where the server will look
+for the site's contents when serving out visitors. You can choose a different location that the one
+I chose, just make sure to make the same adjustment in the other places that this path appears in as
+you follow along.
 
 ```shell
 sudo mkdir -p /var/www/WEBSITE/html/
@@ -107,7 +128,8 @@ sudo chmod -R 755 /var/www/WEBSITE
 
 ### Webpage
 
-With our directory created, we will now create a simple html page for the purpose of demonstrating the functionality. This can be replaced with your actual site contents when we are done.
+With our directory created, we will now create a simple html page for the purpose of demonstrating
+the functionality. This can be replaced with your actual site contents when we are done.
 
 ```shell
 # Create a sample index.html
@@ -118,12 +140,12 @@ Paste in the following snippet and save.
 
 ```html
 <html>
-    <head>
-        <title>Welcome to WEBSITE!</title>
-    </head>
-    <body>
-        <h1>Success! The WEBSITE server block is working!</h1>
-    </body>
+  <head>
+    <title>Welcome to WEBSITE!</title>
+  </head>
+  <body>
+    <h1>Success! The WEBSITE server block is working!</h1>
+  </body>
 </html>
 ```
 
@@ -168,26 +190,34 @@ http {
     include /etc/nginx/conf.d/*.conf;
 }
 ```
+
 What follows is a brief explanation of what the different directives and values do.
+
 - `user` defines the user used by the worker processes.
-- `worker-processes` the number of worker processes. Setting it to the number of CPU cores is a good start, `auto` automatically detects it for us.
+- `worker-processes` the number of worker processes. Setting it to the number of CPU cores is a good
+  start, `auto` automatically detects it for us.
 - `error_log` defines a log file to store logs and the level of logging.
 - `pid` defines a file that will store the process ID of the main process.
 - `events` configuration of connection processing.
-    - `worker_connections` sets the maximum number of simultaneous connections that can be opened by a worker process.
+  - `worker_connections` sets the maximum number of simultaneous connections that can be opened by a
+    worker process.
 - the top-level `http` block.
-    - `include /etc/nginx/mime.types` tells browsers how to handle different file formats.
-    - `default_type application/octet-stream;` tells browsers to treat files not identified in `/etc/nginx/mime.types` as downloadable binaries.
-    - `log_format` specifies the log format.
-    - `access_log` sets the path and format for logging.
-    - `send_file` ensures that nginx operations will not block disk I/O.
-    - `keepalive_timeout` the duration to keep worker_connections open for each client.
-    - `gzip` compress data to browsers to enhance performance.
-    - `include /etc/nginx/conf.d/*.conf;` include all configuration files in provided directory.
+  - `include /etc/nginx/mime.types` tells browsers how to handle different file formats.
+  - `default_type application/octet-stream;` tells browsers to treat files not identified in
+    `/etc/nginx/mime.types` as downloadable binaries.
+  - `log_format` specifies the log format.
+  - `access_log` sets the path and format for logging.
+  - `send_file` ensures that nginx operations will not block disk I/O.
+  - `keepalive_timeout` the duration to keep worker_connections open for each client.
+  - `gzip` compress data to browsers to enhance performance.
+  - `include /etc/nginx/conf.d/*.conf;` include all configuration files in provided directory.
 
 ### Create the website configuration
 
-We will now create a configuration file for the website in the /etc/nginx/conf.d/ directory inline with the new conventions which you can read more about [here](https://www.oreilly.com/library/view/nginx-cookbook/9781492049098/ch01.html). All .conf files placed in this directory are included in the top-level http block.
+We will now create a configuration file for the website in the /etc/nginx/conf.d/ directory inline
+with the new conventions which you can read more about
+[here](https://www.oreilly.com/library/view/nginx-cookbook/9781492049098/ch01.html). All .conf files
+placed in this directory are included in the top-level http block.
 
 ```shell
 sudo nano /etc/nginx/conf.d/WEBSITE.conf
@@ -203,7 +233,9 @@ server {
     root /var/www/WEBSITE/html;
 }
 ```
+
 What follows is a brief explanation of what the different directives and values do.
+
 - `server` defines a new server block for nginx to listen to.
 - `listen 80` the port nginx will listen on.
 - `server_name` the hostnames of the requests which should be directed to this server.
@@ -225,17 +257,20 @@ sudo systemctl status nginx
 sudo nginx -t
 ```
 
-Makes sure that no errors were encountered. The last command should display helpful information to help you troubleshoot any failed validations.
+Makes sure that no errors were encountered. The last command should display helpful information to
+help you troubleshoot any failed validations.
 
 ### Generate certificates
 
-With NGINX up and running, it is time to generate our certificates. We do this with the help of certbot. When prompted, fill in your email address and agree to the terms.
+With NGINX up and running, it is time to generate our certificates. We do this with the help of
+certbot. When prompted, fill in your email address and agree to the terms.
 
 ```shell
 sudo certbot --nginx -d WEBSITE -d www.WEBSITE
 ```
 
-Those certificates are valid for 90 days. Certbot adds a systemd timer that checks our certs for us twice a day and renews any certs that will expire within 30 days.
+Those certificates are valid for 90 days. Certbot adds a systemd timer that checks our certs for us
+twice a day and renews any certs that will expire within 30 days.
 
 We can verify the status of the timer by running the following command.
 
@@ -249,11 +284,13 @@ We can also test the renewal process by running the following command.
 sudo certbot renew --dry-run
 ```
 
-Let's Encrypt will also send you a warning email to the email account you provided when creating the certificates if the renewal process fails.
+Let's Encrypt will also send you a warning email to the email account you provided when creating the
+certificates if the renewal process fails.
 
 ### Enable QUIC
 
-Certbot should now have generated the certificates for us and updated our site's configuration file accordingly. We need to make some final adjustments to enable QUIC.
+Certbot should now have generated the certificates for us and updated our site's configuration file
+accordingly. We need to make some final adjustments to enable QUIC.
 
 ```shell
 sudo nano /etc/nginx/conf.d/WEBSITE.conf
@@ -271,10 +308,10 @@ server {
 
     # Server name
     server_name WEBSITE www.WEBSITE;
-    
+
     # Site root
     root /var/www/WEBSITE/html;
-    
+
     # Certificates
     ssl_certificate /etc/letsencrypt/live/WEBSITE/fullchain.pem; # managed by Certbot
     ssl_certificate_key /etc/letsencrypt/live/WEBSITE/privkey.pem; # managed by Certbot
@@ -296,7 +333,11 @@ server {
 }
 ```
 
-Here, we added `listen [::]` so that nginx listens to IPv6 connections. You can remove this directive if you have not enabled IPv6 for your domain. We have also configured `HTTP/2` to be the starting http version for new connections instead of `HTTP/1.1` for better performance. Connections will switch to QUIC after it is discovered. The second server block is used to redirect unencrypted traffic to encrypted traffic.
+Here, we added `listen [::]` so that nginx listens to IPv6 connections. You can remove this
+directive if you have not enabled IPv6 for your domain. We have also configured `HTTP/2` to be the
+starting http version for new connections instead of `HTTP/1.1` for better performance. Connections
+will switch to QUIC after it is discovered. The second server block is used to redirect unencrypted
+traffic to encrypted traffic.
 
 ### Apply changes
 
@@ -318,13 +359,18 @@ The website should now be live with QUIC+HTTP/3 enabled.
 
 ### Verify
 
-Head over to [https://www.http3check.net/](https://www.http3check.net/) to verify that QUIC and HTTP/3 are supported on your site.
+Head over to [https://www.http3check.net/](https://www.http3check.net/) to verify that QUIC and
+HTTP/3 are supported on your site.
 
 ![QUIC verification](/uploads/quic-support-verification.gif)
 
 ## Concluding Remarks
 
-With this _quic_ demonstration completed, there are some things to consider before using it. Given that internet service has gotten more reliable over the years, the likelihood of issues caused by dropped packages has become increasingly unlikely. At the same time, the amount of bandwidth saved makes it an attractive tradeoff especially on the server side.
-This is also a preview release. That said, there are several production deployments according to [NGINX](https://quic.nginx.org/).
+With this _quic_ demonstration completed, there are some things to consider before using it. Given
+that internet service has gotten more reliable over the years, the likelihood of issues caused by
+dropped packages has become increasingly unlikely. At the same time, the amount of bandwidth saved
+makes it an attractive tradeoff especially on the server side. This is also a preview release. That
+said, there are several production deployments according to [NGINX](https://quic.nginx.org/).
 
-I will also cover topics such as optimising NGINX for performance and strengthening security through the use of headers in future posts.
+I will also cover topics such as optimising NGINX for performance and strengthening security through
+the use of headers in future posts.
