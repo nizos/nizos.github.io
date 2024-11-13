@@ -563,7 +563,7 @@ For this example, we will create a monitor and have our entity signal it when th
 certain amounts.
 
 For the monitor, we will create a very simple instance that will simply listen for an "Update" event
-upon which it will simply output a log message informing us which counter reached our set milestone:
+upon which it will simply output a log message informing us off the progress:
 
 ```kotlin
 @FunctionName("Monitor")
