@@ -559,12 +559,11 @@ We sometimes want to communicate with an entity from functions where a client is
 Here, we will develop our code so that we can send our signals from orchestration instances or other
 entities.
 
-For this example, we will create a monitor and have our entity signal it when the counter exceeds a
-given value.
+For this example, we will create a monitor and have our entity signal it when the counter reaches
+certain amounts.
 
-For the monitor, we will create a very simple instance that will simply listen for a "Completed"
-event upon which it will simply output a log message informing us which counter reached our set
-milestone:
+For the monitor, we will create a very simple instance that will simply listen for an "Update" event
+upon which it will simply output a log message informing us which counter reached our set milestone:
 
 ```kotlin
 @FunctionName("Monitor")
