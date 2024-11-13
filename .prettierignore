@@ -1,0 +1,6 @@
+_site/
+node_modules/
+src/_data/
+src/_includes/
+src/assets/static/
+src/uploads/
