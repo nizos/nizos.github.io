@@ -654,8 +654,8 @@ fun signalEntityActivity(
 ```
 
 With this, we can update our Counter entity to ensure that it can receive a monitorEntityId, which
-is the instance that it will signal once the counter reaches a value of 5 or higher. We will also
-add the necessary logic to send this signal when expected:
+is the instance that it will signal once the counter reaches a multiple of 10. We will also add the
+necessary logic to send this signal when expected:
 
 ```kotlin
 @FunctionName("Counter")
