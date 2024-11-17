@@ -22,7 +22,7 @@ career, an opportunity I'm endlessly grateful for. Over the past year, I've work
 on [Automind](https://fortune.com/2024/04/02/mark-zuckerberg-ai-jobs-meta-brain-drain-erik-meijer/),
 tackling some truly exciting challenges.
 
-This experience introduced to Durable Functions, an abstraction that simplifies building stateful
+This experience introduced me to Durable Functions, an abstraction that simplifies building stateful
 workflows in serverless environments. Among its many features, Durable Entities stands out by
 enabling developers to model stateful objects that manage their own state.
 
