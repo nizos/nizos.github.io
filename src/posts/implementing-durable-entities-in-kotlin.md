@@ -88,7 +88,7 @@ demonstrates how to define an entity and handle operations like "add", "reset", 
 @FunctionName("Counter")
 fun counter(@DurableOrchestrationTrigger(name = "ctx") ctx: TaskOrchestrationContext) {
     asEntity(ctx, initialState = 0) {
-        when (operationName) {
+        when (operationName.lowercase()) {
             "add" -> setState(getState<Int>() + getInput<Int>())
             "reset" -> setState(0)
             "get" -> returnResult(getState<Int>())
