@@ -6,15 +6,14 @@ description: >-
   Though not natively supported in Kotlin, this series provides a step-by-step guide to replicating
   their functionality using orchestration instances. The series covers topics such as managing
   state, signaling entities, and cross-entity communication.
-date: 2024-11-20
+date: 2024-11-19
 cover: /uploads/chess.jpg
 coverAlt: Black and white chess pieces on a blurred background.
 caption:
   Photo by <a href="https://unsplash.com/@hellenicsun">Fotis Nakos</a> on <a
   href="https://unsplash.com/photos/a-chess-board-with-a-chess-piece-MMgrFmTRpSU">Unsplash</a>
 socialImage: /uploads/chess-social.jpg
-tags: [automation, workflows, kotlin]
-draft: true
+tags: [automation, workflows, durable-entities]
 ---
 
 I've been fortunate to work with some of the [greatest minds](https://factor10.com/) early in my
@@ -37,7 +36,7 @@ to persist state across executions, conserve resources when idle, and seamlessly
 when needed. This makes them particularly valuable in scenarios like:
 
 - Event-driven architectures.
-- External approvals.
+- Interaction-based workflows.
 - Distributed workflows.
 
 In essence, Durable Entities behave like long-lived, lightweight actors. They preserve their state
