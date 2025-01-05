@@ -101,12 +101,13 @@ fun counter(@DurableOrchestrationTrigger(name = "ctx") ctx: TaskOrchestrationCon
 
 This series will cover the following topics step-by-step:
 
-1. Managing State with Custom Status
-2. Accessing Entities
-3. One-Way Communication: Signaling Entities
-4. One-Way Communication: Signaling Entities with Input
-5. One-Way Communication: Cross-Communication
-6. Two-Way Communication: Calling Entities
+1. [Persisting State](/implementing-durable-entities-in-kotlin-persisting-state/)
+2. Creating Entities
+3. Signaling Entities
+4. Signaling Entities with Input
+5. Cross-Communication
+6. Calling Entities
+7. Final Enhancements and Abstractions
 
 Whether you're already familiar with Durable Functions or exploring stateful serverless workflows
 for the first time, this series will offer something for everyone. Stay tuned!
