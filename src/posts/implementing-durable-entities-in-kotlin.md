@@ -102,7 +102,7 @@ fun counter(@DurableOrchestrationTrigger(name = "ctx") ctx: TaskOrchestrationCon
 This series will cover the following topics step-by-step:
 
 1. [Persisting State](/implementing-durable-entities-in-kotlin-persisting-state/)
-2. Creating Entities
+2. [Creating Entities](/implementing-durable-entities-in-kotlin-creating-entities/)
 3. Signaling Entities
 4. Signaling Entities with Input
 5. Cross-Communication
