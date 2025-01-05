@@ -1,11 +1,10 @@
 ---
 title: Implementing Durable Entities in Kotlin - Persisting State
 description: >-
-  Durable Entities allow stateful objects to persist across executions, but they aren’t natively
-  supported in Kotlin. This post explores how to simulate persistent state using custom status
-  metadata in Durable Orchestrations. We’ll walk through creating, storing, and retrieving entity
-  state with a simple Counter example, laying the foundation for more advanced functionality in
-  later posts.
+  Durable Entities require a structured way to reference specific instances. This post introduces
+  Entity IDs, which uniquely identify entity instances, and refines entity creation with a
+  lightweight abstraction. By aligning with how Durable Entities are structured in other languages,
+  we make instance creation more intuitive while keeping the implementation clean and flexible.
 date: 2025-01-01
 cover: /uploads/chess.jpg
 coverAlt: Black and white chess pieces on a blurred background.
