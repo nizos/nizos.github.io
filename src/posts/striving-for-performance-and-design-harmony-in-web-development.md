@@ -13,6 +13,7 @@ caption:
   href="https://unsplash.com/photos/T6fDN60bMWY">Unsplash</a>
 socialImage: /uploads/smartphone-showing-design-definition-social-image.jpg
 tags: [web, static-sites]
+featured: true
 ---
 
 In modern web development, a fine balance between performance and user-centric design is key. It

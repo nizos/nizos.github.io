@@ -11,6 +11,7 @@ caption:
   href="https://unsplash.com/photos/MDHLwA3Awb8">Unsplash</a>
 socialImage: /uploads/internet-and-usb-cables-social-image.jpg
 tags: [http, nginx, quic]
+featured: true
 ---
 
 NGINX has

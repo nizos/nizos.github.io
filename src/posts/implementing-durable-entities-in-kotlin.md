@@ -14,6 +14,7 @@ caption:
   href="https://unsplash.com/photos/a-chess-board-with-a-chess-piece-MMgrFmTRpSU">Unsplash</a>
 socialImage: /uploads/chess-social.jpg
 tags: [automation, workflows, durable-entities]
+featured: true
 ---
 
 I've been fortunate to work with some of the [greatest minds](https://factor10.com/) early in my

@@ -11,6 +11,7 @@ coverAlt: Side view of a robotic arm on a tracked mobile platform
 caption: Side view of the assembled robot built for this project
 socialImage: /uploads/jetarm-robot-side-view-social-image.jpg
 tags: [ai, cv, robotics, ml]
+featured: true
 ---
 
 Two years ago, I got to dive into a project at the intersection of machine learning and hardware -

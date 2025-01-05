@@ -1,5 +1,5 @@
 <ul class="post-list">
-    {% assign posts = posts | default: collections.posts %}
+    {% assign posts = posts %}
     {%- for post in posts reversed -%}
         <li class="post-list__item">
             <div>

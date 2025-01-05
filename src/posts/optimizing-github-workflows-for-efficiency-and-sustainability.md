@@ -13,6 +13,7 @@ caption:
   href="https://unsplash.com/photos/white-windmill-during-day-KAXSflHqAl0">Unsplash</a>
 socialImage: /uploads/wind-turbine-social-image.jpg
 tags: [ci, automation, sustainability]
+featured: true
 ---
 
 Integrating automation into development workflows has become crucial in recent years. In this post,

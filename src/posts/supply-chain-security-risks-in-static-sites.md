@@ -13,6 +13,7 @@ caption:
   href="https://unsplash.com/photos/aerial-view-of-city-buildings-during-daytime-6p0JBES_65E">Unsplash</a>
 socialImage: /uploads/shipping-containers-social-image.jpg
 tags: ['web', 'security']
+featured: true
 ---
 
 Static sites are perceived as more secure than their dynamic counterparts due to their simplicity

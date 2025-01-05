@@ -13,6 +13,7 @@ caption:
   href="https://unsplash.com/photos/Wpnoqo2plFA">Unsplash</a>
 socialImage: /uploads/numbers-on-a-screen-social-image.jpg
 tags: [gzip, br, nginx, web]
+featured: true
 ---
 
 Google engineers, Arvind Jain and Jason Glasgow, stated that more than 99 human years are wasted

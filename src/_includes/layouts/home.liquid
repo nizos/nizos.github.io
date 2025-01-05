@@ -7,7 +7,7 @@ layout: layouts/base.liquid
     </div>
 </div>
 <section class="post-list__wrapper">
-    <h2 class="post-list__heading">Recent Posts</h2>
-    {% assign recentPosts = collections.posts %}
-    {% include 'components/posts-list' %}
+    <h2 class="post-list__heading">Featured Posts</h2>
+    {% assign featuredPosts = collections.posts | where: "data.featured", true %}
+    {% include 'components/posts-list', posts: featuredPosts %}
 </section>
