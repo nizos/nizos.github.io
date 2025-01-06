@@ -178,48 +178,26 @@ languages.
 
 With everything in place, we can now verify that our counter responds to events.
 
-### Step 1: Create a Counter Instance
-
 ```shell
 ❯ curl -s https://durable-app.azurewebsites.net/api/Create
 Created Counter with ID: b13e7165-6ee4-4429-9295-a5f998d9881d
-```
 
-### Step 2: Retrieve Initial State
-
-```shell
 ❯ curl -s https://durable-app.azurewebsites.net/api/Get\?\
 entityId\=b13e7165-6ee4-4429-9295-a5f998d9881d
 Counter value: 0
-```
 
-### Step 3: Increment the Counter
-
-```shell
 ❯ curl -s https://durable-app.azurewebsites.net/api/Increment\?\
 entityId\=b13e7165-6ee4-4429-9295-a5f998d9881d
 Counter Incremented.
-```
 
-### Step 4: Check the Updated State
-
-```shell
 ❯ curl -s https://durable-app.azurewebsites.net/api/Get\?\
 entityId\=b13e7165-6ee4-4429-9295-a5f998d9881d
 Counter value: 1
-```
 
-### Step 5: Reset the Counter
-
-```shell
 ❯ curl -s https://durable-app.azurewebsites.net/api/Reset\?\
 entityId\=b13e7165-6ee4-4429-9295-a5f998d9881d
 Counter Reset.
-```
 
-### Step 6: Confirm the Reset
-
-```shell
 ❯ curl -s https://durable-app.azurewebsites.net/api/Get\?\
 entityId\=b13e7165-6ee4-4429-9295-a5f998d9881d
 Counter value: 0
