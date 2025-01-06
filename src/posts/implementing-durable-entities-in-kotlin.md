@@ -104,7 +104,7 @@ This series will cover the following topics step-by-step:
 1. [Persisting State](/implementing-durable-entities-in-kotlin-persisting-state/)
 2. [Creating Entities](/implementing-durable-entities-in-kotlin-creating-entities/)
 3. [Signaling Entities](/implementing-durable-entities-in-kotlin-signaling-entities/)
-4. Signaling Entities with Input
+4. [Signaling Entities with Input](/implementing-durable-entities-in-kotlin-signaling-entities-with-input/)
 5. Cross-Communication
 6. Calling Entities
 7. Final Enhancements and Abstractions
