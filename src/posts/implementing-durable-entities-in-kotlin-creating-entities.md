@@ -173,7 +173,7 @@ With Entity IDs in place, we now have a structured way to create and reference D
 next step is to make these entities interactive by introducing event-driven updates.
 
 In the next post, we will explore signaling, a mechanism that allows sending operations to entities
-without awaiting for a response.
+without awaiting a response.
 
 ## Read Further
 

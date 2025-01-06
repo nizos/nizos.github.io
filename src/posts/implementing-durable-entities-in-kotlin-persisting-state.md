@@ -184,15 +184,10 @@ evident when we introduce event-driven updates in later posts.
 
 ## What's Next?
 
-Now that we have a working Counter entity that persists state, the next step is to make it
-interactive.
-
-In the upcoming posts, we will introduce:
-
-- Entity IDs to uniquely identify instances.
-- Event-driven updates that allow modifying state dynamically.
-
-These enhancements will bring us closer to fully emulating Durable Entities in Kotlin.
+Now that our Counter entity can persists state, the next step is refine its structure. Before making
+it interactive, we need a better way to reference and manage instances. In the next post, we
+introduce Entity IDs, which provide a structured way to uniquely identify entities while also
+abstracting orchestration scheduling.
 
 ## Read Further
 

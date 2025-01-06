@@ -230,13 +230,11 @@ updates its state dynamically.
 
 ## What's Next?
 
-Now that we can send one-way messages to update an entity, the next step is to explore more advanced
-operations.
+Now that we can send one-way messages to update an entity, the next step is to make these signals
+more powerful.
 
-In the next posts, we will:
-
-- Extend signaling to support input parameters.
-- Implement support for cross-communication between entities.
+In the next post, we will extend signaling to support input parameters, allowing entities to process
+structured commands rather than just operation names.
 
 ## Read Further
 
