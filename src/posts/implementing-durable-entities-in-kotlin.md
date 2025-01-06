@@ -105,7 +105,7 @@ This series will cover the following topics step-by-step:
 2. [Creating Entities](/implementing-durable-entities-in-kotlin-creating-entities/)
 3. [Signaling Entities](/implementing-durable-entities-in-kotlin-signaling-entities/)
 4. [Signaling Entities with Input](/implementing-durable-entities-in-kotlin-signaling-entities-with-input/)
-5. Cross-Communication
+5. [Cross-Communication](/implementing-durable-entities-in-kotlin-cross-communication/)
 6. Calling Entities
 7. Final Enhancements and Abstractions
 
