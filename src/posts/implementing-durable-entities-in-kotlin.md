@@ -107,7 +107,7 @@ This series will cover the following topics step-by-step:
 4. [Signaling Entities with Input](/implementing-durable-entities-in-kotlin-signaling-entities-with-input/)
 5. [Cross-Communication](/implementing-durable-entities-in-kotlin-cross-communication/)
 6. [Calling Entities](/implementing-durable-entities-in-kotlin-calling-entities/)
-7. Final Enhancements and Abstractions
+7. [Final Enhancements](/implementing-durable-entities-in-kotlin-final-enhancements/)
 
 Whether you're already familiar with Durable Functions or exploring stateful serverless workflows
 for the first time, this series will offer something for everyone. Stay tuned!

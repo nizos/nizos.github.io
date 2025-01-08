@@ -345,5 +345,4 @@ This post is part of the
 [Implementing Durable Entities in Kotlin](/implementing-durable-entities-in-kotlin) series.
 
 - **Previous**: [Cross-Communication](/implementing-durable-entities-in-kotlin-cross-communication).
-- **Next**:
-  [Final Enhancements and Abstractions](/implementing-durable-entities-in-kotlin-final-enhancements-and-abstractions).
+- **Next**: [Final Enhancements](/implementing-durable-entities-in-kotlin-final-enhancements/).
