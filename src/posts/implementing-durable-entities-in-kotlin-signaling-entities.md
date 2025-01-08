@@ -85,7 +85,7 @@ instance.
 
 ### Increment Operation
 
-This function sens an event to increase the counter value.
+This function sends an event to increase the counter value.
 
 ```kotlin
 @FunctionName("Increment")
