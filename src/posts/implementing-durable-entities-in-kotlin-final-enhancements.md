@@ -217,7 +217,7 @@ rehydration and entity state retrieval via activities, ensuring consistency and 
 Finally, a DSL-like syntax makes entity definitions more intuitive and streamlined.
 
 This concludes our series, having covered all fundamental functionalities. The implementation
-provides a solid foundation and can be further optimized for performance and scalability.
+provides a solid foundation and can be further optimized for performance.
 
 ## Read More
 

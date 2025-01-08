@@ -337,7 +337,7 @@ Caller ID: 7005eee2-b644-4f71-9ec7-b7d18b09bc55
 
 With this we have developed the functionalities that we need to use Durable Entities in Kotlin. In
 the next and final post in the series, we will refine our implementation by introducing abstractions
-to simplify interactions and align our approach with the native Durable ENtities experience.
+to simplify interactions and align our approach with the native Durable Entities experience.
 
 ## Read Further
 
