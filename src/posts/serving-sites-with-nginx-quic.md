@@ -340,6 +340,24 @@ starting http version for new connections instead of `HTTP/1.1` for better perfo
 will switch to QUIC after it is discovered. The second server block is used to redirect unencrypted
 traffic to encrypted traffic.
 
+_Update_: The configuration has changed. Use `quic` and `ssl` separately in `listen` directives and
+enable `http2` globally with `http2 on;`. Additionally, new
+[QUIC-related settings](https://nginx.org/en/docs/quic.html) have been added:
+
+```txt
+    # Using the same port number for QUIC and TCP
+    listen 443 quic reuseport;
+    listen 443 ssl;
+    listen [::]:443 quic;
+    listen [::]:443 ssl;
+    http2 on;
+
+    # QUIC
+    quic_retry on;
+    ssl_early_data on;
+    quic_gso on;
+```
+
 ### Apply changes
 
 It is time to apply the new changes after checking that everything is fine.
