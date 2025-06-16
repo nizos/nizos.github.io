@@ -163,10 +163,9 @@ Things to try:
 - For advanced users: experiment with the
   [git worktree pattern](https://github.com/anthropics/claude-code/issues/1052).
 
-If you try agentic TDD, I recommend the agent from taking shortcuts. Otherwise, it would sometimes
-start implementing as soon as any test failed, regardless of the reason, or pack too many assertions
-into a single test. Being explicit helps the agent produce maintainable code and meaningful test
-feedback.
+If you try agentic TDD, be sure to give the agent clear, explicit instructions to prevent shortcuts.
+Otherwise, it might begin implementing as soon as any test fails, regardless of the reason, or pack
+too many assertions into a single test. I found the following instructions helpful to include:
 
 - Always start with a test that fails for the correct reason.
 - Write only one test at a time.
