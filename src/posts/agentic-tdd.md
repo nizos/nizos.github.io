@@ -75,12 +75,23 @@ refining test helpers, nudging it towards architectural simplifications, and occ
 back on track. Still, the early results were genuinely encouraging, both for the client and the
 team.
 
+What stood out wasn't just the speed from idea to prototype, but how the agent made discovery and
+iteration less tedious. Tracing logic across dozens of files, validating assumptions, and testing
+multiple hypotheses all became much faster. While the agent's code wasn't always production-ready,
+having something concrete to refine often surfaced improvements and insights that only became
+apparent once I could interact with a real implementation.
+
 ## Productivity Gains & Their Costs
 
 This productivity boost raised some interesting tradeoffs. I could spend the saved time on
 quality—optimizing performance, refining tooling, or enhancing user experience—while keeping up the
 same pace. Or, I could use the boost to simply get more done, faster. Right now, I'm balancing both
 increased speed and quality.
+
+It's not that the agent produces better code than I could have, or solves problems I couldn't. The
+real value is how quickly I can move through possibilities, validate approaches, and focus my
+attention where it matters. Sometimes it suggests alternatives I hadn't considered, but the biggest
+gain is simply more time and space to refine and improve ideas.
 
 But as more work got done in less time, bottlenecks shifted elsewhere. Code reviews, in particular,
 became a new pinch point. Personally, I'm not a big fan of traditional pull request workflows; the
@@ -124,9 +135,13 @@ There are still times I want to just make changes myself, and I'm figuring out w
 those interruptions. Of course, some limitations are tough to work around. For example, when Claude
 Code tries to rename things across files with `grep` or `regex` and stumbles on syntax variations.
 
-Even so, Claude Code hasn't just helped—it changed how I think about building software. I'm still
-learning to collaborate with it, and I'm curious to see where this journey goes next. But I'm
-already sure of one thing: I don't want to go back.
+Even so, Claude Code hasn't just made me fast—it's changed how I think about building software. The
+real shift is realizing that good results and confidence in my work don't depend on typing every
+line myself. I still review and shape the code, but I can now focus my effort where it matters the
+most: iterating more quickly, exploring new options, and making higher-impact decisions.
+
+I'm still learning to collaborate with it, and I'm curious to see where this journey goes next. But
+I already know one thing: I don't want to go back.
 
 ## Practical Tips
 
@@ -148,7 +163,10 @@ Things to try:
 - For advanced users: experiment with the
   [git worktree pattern](https://github.com/anthropics/claude-code/issues/1052).
 
-Here's a guideline example to encourage autonomous TDD:
+If you try agentic TDD, I recommend the agent from taking shortcuts. Otherwise, it would sometimes
+start implementing as soon as any test failed, regardless of the reason, or pack too many assertions
+into a single test. Being explicit helps the agent produce maintainable code and meaningful test
+feedback.
 
 - Always start with a test that fails for the correct reason.
 - Write only one test at a time.
