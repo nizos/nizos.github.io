@@ -4,7 +4,7 @@ description: >-
   Since I started programming, I've insisted on always writing my own code. It wasn't out of
   necessity; it was a personal choice. Even as LLMs (Large Language Models) became part of my
   workflow, I stayed firm about handling production code myself. Last week, that changed.
-date: 2025-06-16
+date: 2025-06-17
 cover: /uploads/hand-tools.jpg
 coverAlt: Two crossed wrenches on a white surface, symbolizing development tools and craftsmanship
 caption:
@@ -12,7 +12,7 @@ caption:
   href="https://www.pexels.com/photo/stainless-steel-close-wrench-on-spanner-210881/">Pexels</a>
 socialImage: /uploads/hand-tools.jpg
 tags: [ai, llm, development, agents]
-featured: false
+featured: true
 ---
 
 Since I started programming, I've insisted on always writing my own code. It wasn't out of
