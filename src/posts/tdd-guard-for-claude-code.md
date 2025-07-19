@@ -45,7 +45,7 @@ framework via a reporter. This data persists in files to facilitate cross-proces
 consistent context availability.
 
 If no violations are detected, the hook takes no action. However, detected violations prompt
-structure feedback clearly stating the issues, along with corrective guidance.
+structured feedback clearly stating the issues, along with corrective guidance.
 
 <video controls width="100%" class="blog-video">
   <source src="/uploads/videos/tdd-guard-demo.mp4" type="video/mp4">
@@ -136,7 +136,7 @@ interpretations of quality standards, design principles, and complexity among de
 Moreover, automated linting rules primarily encouraged superficial changes, such as smaller function
 sizes, rather than coherent functionality. Recognizing this limitation, I concluded TDD Guard should
 enforce basic linting rules during refactoring cycles, leaving deeper, meaningful design
-consideration to the developers themselves. After all, engaging actively in system design and
+considerations to the developers themselves. After all, engaging actively in system design and
 architecture remains one of programming’s most enjoyable aspects.
 
 ## Wrapping up
