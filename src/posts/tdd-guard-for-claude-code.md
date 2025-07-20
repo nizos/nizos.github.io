@@ -142,7 +142,8 @@ architecture remains one of programming’s most enjoyable aspects.
 ## Wrapping up
 
 The TDD Guard project began two weeks ago during a relaxed, collaborative yearly event, a BBQ at
-Jimmy’s place with colleagues from factor10. The initial prototype, a simple “cat detector” blocking
+[Jimmy](https://jimmynilsson.com/)’s place with colleagues from
+[factor10](https://www.factor10.com/). The initial prototype, a simple “cat detector” blocking
 modifications containing “mew”, served as a quick validation of core concepts.
 
 I intentionally retained these early explorations in the project’s history as a testament to
