@@ -13,7 +13,7 @@ caption:
   href="https://www.pexels.com/photo/gray-scale-photo-of-gears-159298/">Pexels</a>
 socialImage: /uploads/industrial-machine.jpg
 tags: [ai, llm, development, agents, tdd]
-featured: false
+featured: true
 ---
 
 Claude Code fit well into my workflow, but sticking to Test-Driven Development (TDD) principles
@@ -40,9 +40,10 @@ triggering validation checks for common TDD violations:
 The validator integrates hook event data, the agent’s current todo list, and the latest test run
 output. It then invokes a separate Claude Code session to verify adherence to TDD principles.
 
-Context data aggregation occurs whenever the agent updates its todo list or invokes the test
-framework via a reporter. This data persists in files to facilitate cross-process communication and
-consistent context availability.
+Since Claude Code hooks run as separate processes, TDD Guard persists context data to files between
+each phase. This approach allows different hooks, like TDD validation before a change and lint
+checks after, to access shared state without relying on complex inter-process communication. It
+keeps the system reliable and easy to reason about.
 
 If no violations are detected, the hook takes no action. However, detected violations prompt
 structured feedback clearly stating the issues, along with corrective guidance.
@@ -74,20 +75,24 @@ factories covering various scenarios:
   diverse refactoring cases
 
 This strategy enabled easy adjustments to data structures and facilitated quick support for new
-languages like python without extensive test rewrites. These tests also accommodated Claude Code’s
+languages like Python without extensive test rewrites. These tests also accommodated Claude Code’s
 distinct modification tools: Write, Edit, and MultiEdit.
 
 ## Context Engineering
 
-Claude Code’s file modification tools each have unique characteristics. Write creates new files with
-a single `content` field, whereas Edit modifies existing files with `old_string` and `new_string`
-pairs. MultiEdit bundles multiple Edit operations together.
+Each of Claude Code's file operation tools behaves differently. Write generates complete file
+contents, while Edit and MultiEdit apply targeted modifications to existing code. These differences
+made static prompts feel inefficient and misaligned across many cases.
 
-A significant challenge was accurately identifying genuinely new tests, particularly when
-`new_string` contained multiple tests with only one truly new addition. Handling cases without
-previous test outputs, todo lists, or existing content required further explicit instructions. I
-addressed this through dynamic instructions assembly, modularizing instruction sets into smaller
-documents, ensuring clear, relevant context for each validation scenario.
+One-size-fits-all prompts often led to confusing or conflicting behavior, especially when only some
+context was relevant to the operation. For example, Edit or MultiEdit might attempt to introduce
+three tests, two of which already existed and were simply refactored. In such cases, the prompt
+needed to include guidance for identifying genuinely new tests. But the same guidance would be
+irrelevant for a Write operation, which always starts from a clean state.
+
+To address this, I built a dynamic system that assembles only the relevant instruction modules based
+on the operation type and situation. This ensures the model receives clear, concise context tailored
+to the task at hand.
 
 ## Multi-Model Support
 
@@ -105,9 +110,9 @@ interpretations of TDD principles, notably during refactoring. Explicit rule enf
 test inconsistencies but led to mechanical adherence by the agent, which did not translate into
 improved software quality.
 
-An experiment with Claude Code implemented a shopping cart without explicit quality instructions
-highlighted this issue. While TDD Guard effectively blocked violations, the resultant code
-demonstrated issues such as tight coupling, duplication, and poor overall design.
+In one experiment, I had Claude Code implement a shopping cart without explicit quality
+instructions. While TDD Guard effectively blocked violations, the resultant code demonstrated issues
+such as tight coupling, duplication, and poor overall design.
 
 Inspired by my mentor, Per at factor10, who recently shared
 [reflections on this topic](https://programmaticallyspeaking.com/a-tdd-mindset.html), I began
@@ -122,11 +127,13 @@ rather than simplifying the solution, a common problem with local rather than gl
 Providing comprehensive context to the model proved both impractical and prohibitively expensive.
 
 Instead, I integrated lightweight linting tools such as Sonar to identify complexities and code
-standard violations, prompting refactoring tasks. Unfortunately, post-action hooks were weakly
-enforced, frequently resulting in deferred or ignored refactoring tasks. To strengthen enforcement,
-I stored identified issues, mandating resolution in subsequent pre-action validation phases.
-Deliberately withholding specific issue details initially encouraged the agent to attempt meaningful
-refactorings independently. Persistent issues were later explicitly communicated as feedback.
+standard violations, prompting refactoring tasks.
+
+Unfortunately, post-action hooks were weakly enforced, frequently resulting in deferred or ignored
+refactoring tasks. To strengthen enforcement, I stored identified issues, mandating resolution in
+subsequent pre-action validation phases. Deliberately withholding specific issue details initially
+encouraged the agent to attempt meaningful refactorings independently. Persistent issues were later
+explicitly communicated as feedback.
 
 ## Balancing Art and Science
 
@@ -153,6 +160,9 @@ safety nurture random curiosity and creativity into tangible innovations.
 Applying TDD principles and dogfooding throughout the development enabled rapid iterations and
 valuable community contributions, including Python support. The community’s warm reception,
 enthusiastic feedback, and collaborative spirit have been profoundly motivating.
+
+I'm especially grateful to my mentor [Martin](https://recurse.se/), whose encouragement and belief
+in the idea helped bring it to life.
 
 Feel free to explore [TDD Guard](https://github.com/nizos/tdd-guard), and please reach out with
 feedback or contributions. Your insights are invaluable and greatly appreciated.
