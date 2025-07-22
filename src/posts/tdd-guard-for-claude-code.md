@@ -45,8 +45,9 @@ each phase. This approach allows different hooks, like TDD validation before a c
 checks after, to access shared state without relying on complex inter-process communication. It
 keeps the system reliable and easy to reason about.
 
-If no violations are detected, the hook takes no action. However, detected violations prompt
-structured feedback clearly stating the issues, along with corrective guidance.
+If no violations are detected, the hook proceeds without interference. But when a violation is
+found, it blocks the action and returns feedback clearly stating the issues, along with corrective
+guidance.
 
 <video controls width="100%" class="blog-video">
   <source src="/uploads/videos/tdd-guard-demo.mp4" type="video/mp4">
