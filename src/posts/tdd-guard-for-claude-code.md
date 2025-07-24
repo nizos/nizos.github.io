@@ -60,8 +60,10 @@ With the prototype integrated directly into my workflow, the improvements were i
 Eliminating manual reminders was a refreshing change. But the agent's behavior initially felt too
 compliant. I began to suspect this wasn't due to the validation logic itself, but rather because the
 agent had absorbed all the TDD-related terminology present throughout the project—things like test
-names, helper functions, and prompt documents. In other words, it seemed to follow TDD principles
-simply because the surrounding steered it that way, not because enforcement was actually working.
+names, helper functions, and prompt documents.
+
+It seemed to follow TDD principles simply because the surrounding steered it that way, not because
+enforcement was actually working.
 
 To properly assess the enforcement, I needed to see how the system behaved outside a TDD-saturated
 environment. Testing it in an unrelated project confirmed my suspicion. Some clear violations
@@ -101,15 +103,15 @@ to the task at hand.
 ## Multi-Model Support
 
 As test complexity increased, slow feedback loops began to limit how quickly I could iterate. To
-speed things up, I added a new model client to the validation layer that sends prompts directly to
-Anthropic's API instead of relying on Claude Code CLI. This made integration tests faster and also
-more practical in CI workflows. It also gave me the flexibility to experiment with different models
-to balance cost, speed, and performance.
+speed things up, I added a new validation client that runs prompts directly against Anthropic's API,
+bypassing the Claude Code CLI. This made integration tests faster and more practical in CI
+workflows. It also gave me the flexibility to experiment with different models to balance cost,
+speed, and performance.
 
-This setup revealed some unexpected quirks. Certain models responded with verbose explanations or
-embedded code samples before finalizing an answer, which caused false positives in the validation
-logic. The parsing mechanism at the time wasn't built to handle that structure, but being able to
-test across models helped uncover and resolve the issue.
+This setup also exposed a few practical challenges. Some models included verbose explanations or
+inline code before finalizing an answer, which tripped up the parser and caused false positives. TDD
+was a big help here too. I could reliably reproduce the bug before making any fixes, which made it
+easy to confirm that the parser now handles that behavior correctly.
 
 ## Rules vs. Mindset
 
