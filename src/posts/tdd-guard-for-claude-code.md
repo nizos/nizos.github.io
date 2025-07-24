@@ -62,8 +62,8 @@ compliant. I began to suspect this wasn't due to the validation logic itself, bu
 agent had absorbed all the TDD-related terminology present throughout the project—things like test
 names, helper functions, and prompt documents.
 
-It seemed to follow TDD principles simply because the surrounding steered it that way, not because
-enforcement was actually working.
+It seemed to follow TDD principles simply because the surrounding context steered it that way, not
+because enforcement was actually working.
 
 To properly assess the enforcement, I needed to see how the system behaved outside a TDD-saturated
 environment. Testing it in an unrelated project confirmed my suspicion. Some clear violations
