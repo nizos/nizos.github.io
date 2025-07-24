@@ -56,14 +56,17 @@ guidance.
 
 ## Dogfooding the Development
 
-With the prototype integrated directly into my workflow, improvements were immediately apparent.
-Eliminating manual reminders was a refreshing change. Yet, this initial success seemed suspiciously
-smooth, suggesting the agent might be influenced by contextual TDD terminology rather than
-validation logic.
+With the prototype integrated directly into my workflow, the improvements were immediate.
+Eliminating manual reminders was a refreshing change. But the agent's behavior initially felt too
+compliant. I began to suspect this wasn't due to the validation logic itself, but rather because the
+agent had absorbed all the TDD-related terminology present throughout the project—things like test
+names, helper functions, and prompt documents. In other words, it seemed to follow TDD principles
+simply because the surrounding steered it that way, not because enforcement was actually working.
 
-Testing TDD Guard in an unrelated project confirmed this suspicion. Some clear violations slipped
-through, while valid actions were mistakenly blocked, sometimes prompting humorous attempts by the
-agent to circumvent restrictions using terminal commands.
+To properly assess the enforcement, I needed to see how the system behaved outside a TDD-saturated
+environment. Testing it in an unrelated project confirmed my suspicion. Some clear violations
+slipped through, while valid actions were mistakenly blocked, sometimes prompting humorous attempts
+by the agent to circumvent restrictions using terminal commands.
 
 ## Integration Testing
 
@@ -97,12 +100,16 @@ to the task at hand.
 
 ## Multi-Model Support
 
-As test complexity increased, performance optimization became crucial. Slow integration tests
-impeded rapid iterations required to refine validation instructions effectively. To address this, I
-integrated Anthropic’s API into TDD Guard, enabling separate configurations for production and
-integration environments. This significantly accelerated feedback loops and also exposed unexpected
-parsing issues, as some models frequently elaborated or provided code examples before finalizing
-responses.
+As test complexity increased, slow feedback loops began to limit how quickly I could iterate. To
+speed things up, I added a new model client to the validation layer that sends prompts directly to
+Anthropic's API instead of relying on Claude Code CLI. This made integration tests faster and also
+more practical in CI workflows. It also gave me the flexibility to experiment with different models
+to balance cost, speed, and performance.
+
+This setup revealed some unexpected quirks. Certain models responded with verbose explanations or
+embedded code samples before finalizing an answer, which caused false positives in the validation
+logic. The parsing mechanism at the time wasn't built to handle that structure, but being able to
+test across models helped uncover and resolve the issue.
 
 ## Rules vs. Mindset
 
