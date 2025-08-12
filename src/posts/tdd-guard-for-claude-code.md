@@ -116,13 +116,17 @@ easy to confirm that the parser now handles that behavior correctly.
 ## Rules vs. Mindset
 
 Despite improvements, scenario tests still exhibited inconsistencies due to subjective model
-interpretations of TDD principles, notably during refactoring. Explicit rule enforcement resolved
-test inconsistencies but led to mechanical adherence by the agent, which did not translate into
+interpretations of TDD principles, notably during refactoring. While explicit rule enforcement
+resolved test inconsistencies, it only achieved mechanical adherence that did not translate into
 improved software quality.
 
-In one experiment, I had Claude Code implement a shopping cart without explicit quality
-instructions. While TDD Guard effectively blocked violations, the resultant code demonstrated issues
-such as tight coupling, duplication, and poor overall design.
+I discovered that without explicit guidance, agents naturally skip the refactoring phase of the
+red-green-refactor cycle or at best make only superficial changes. To understand this better, I had
+Claude Code implement a shopping cart using only TDD Guard's blocking mechanism, without any
+instructions about software quality or testing practices. The results were telling: while the guard
+successfully enforced test-first development, the resultant code still suffered from tight coupling,
+duplication, and poor overall design. This drove home that TDD's value comes from the mindset and
+discipline it instills, not from mechanical rule-following.
 
 Inspired by my mentor, Per at factor10, who recently shared
 [reflections on this topic](https://programmaticallyspeaking.com/a-tdd-mindset.html), I began
@@ -147,14 +151,17 @@ explicitly communicated as feedback.
 
 ## Balancing Art and Science
 
-Defining “meaningful refactoring” remains inherently subjective and context-dependent, with varying
+Defining "meaningful refactoring" remains inherently subjective and context-dependent, with varying
 interpretations of quality standards, design principles, and complexity among developers and teams.
+Finding practical tools to flag unnecessary complexity proved trickier than expected. Most are
+either correlated with line count or require extensive setup that makes them impractical.
 
 Moreover, automated linting rules primarily encouraged superficial changes, such as smaller function
 sizes, rather than coherent functionality. Recognizing this limitation, I concluded TDD Guard should
-enforce basic linting rules during refactoring cycles, leaving deeper, meaningful design
-considerations to the developers themselves. After all, engaging actively in system design and
-architecture remains one of programming’s most enjoyable aspects.
+enforce basic linting rules during refactoring cycles while leaving deeper, meaningful design
+considerations to the developers themselves. While the hook improves results, the system-thinking
+and design awareness that human developers bring cannot be matched. After all, engaging actively in
+system design and architecture remains one of programming's most enjoyable aspects.
 
 ## Wrapping up
 
