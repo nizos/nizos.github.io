@@ -4,3 +4,4 @@ src/_data/
 src/_includes/
 src/assets/static/
 src/uploads/
+.prettierrc
