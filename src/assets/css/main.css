@@ -290,6 +290,10 @@ p {
   font-size: 0.8rem;
 }
 
+.footer__subscribe {
+  font-size: 0.9rem;
+}
+
 .footer ul {
   list-style: none;
   display: flex;
