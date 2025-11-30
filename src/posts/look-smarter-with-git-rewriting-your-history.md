@@ -13,7 +13,7 @@ caption:
   href="https://unsplash.com/photos/b18TRXc8UPQ">Unsplash</a>
 socialImage: /uploads/laptop-with-code-on-screen-social-image.jpg
 tags: [git, vcs]
-featured: true
+featured: false
 ---
 
 This blog post is co-authored by [Raniz](https://raniz.blog/2022-08-08_look-smarter-with-git/).
