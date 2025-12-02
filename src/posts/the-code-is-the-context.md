@@ -72,3 +72,7 @@ These aren't new. Agents make them visible in a new way.
 This isn't a call to refactor your entire codebase. It's an invitation to notice what the agents
 reveal, then act on it where it matters. The changes that help agents discover faster also make code
 easier to review, reason about, and maintain.
+
+Thanks to my colleagues at [factor10](https://factor10.com/) for the conversations that shaped these
+ideas, especially [Jimmy Nilsson](https://jimmynilsson.com/), whose insight that "friction is
+information" became central to this piece.
