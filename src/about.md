@@ -14,8 +14,8 @@ My work:
 - Built
   [several of Sweden's top-ranked websites](/striving-for-performance-and-design-harmony-in-web-development/)
   in performance, security, and accessibility
-- Created [TDD Guard](https://github.com/nizos/tdd-guard), an open-source tool for agentic coding
-  (1.8k GitHub stars, 100k installs)
+- Created [TDD Guard](https://github.com/nizos/tdd-guard) (2k GitHub stars, 180k installs) and its
+  successor [Probity](https://github.com/nizos/probity), open-source tools for agentic coding
 - Given talks on agentic coding, including
   ["5 Pro Tips for Coding with Agents"](https://www.youtube.com/watch?v=WWspNDD7nnQ)
 
