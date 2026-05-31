@@ -1,0 +1,18 @@
+---
+permalink: /llms.txt
+eleventyExcludeFromCollections: true
+---
+# {{ site.name }}
+
+> Personal technical blog by {{ site.authorFullName }} on software development, AI and LLM workflows, web performance, and security.
+
+Each post links to its Markdown source. A single-file bundle of every post is available at {{ site.url }}/llms-full.txt. There is also an Atom feed at {{ site.url }}/feed.xml and a sitemap at {{ site.url }}/sitemap.xml.
+
+## Posts
+{% for post in collections.posts | reverse %}
+- [{{ post.data.title }}]({{ site.url }}/{{ post.data.title | slugify }}.md){% if post.data.description %}: {{ post.data.description | strip_newlines }}{% endif %}
+{%- endfor %}
+
+## Pages
+
+- [About {{ site.authorFullName }}]({{ site.url }}/about/): Who Nizar is, his work, and how to get in touch.

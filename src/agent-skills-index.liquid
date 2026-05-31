@@ -1,0 +1,16 @@
+---
+permalink: /.well-known/agent-skills/index.json
+eleventyExcludeFromCollections: true
+---
+{
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+  "skills": [
+    {
+      "name": "nizar-blog",
+      "type": "skill-md",
+      "description": "Read and cite posts from Nizar Selander's blog at nizar.se.",
+      "url": "/.well-known/agent-skills/nizar-blog/SKILL.md",
+      "digest": "{{ "src/.well-known/agent-skills/nizar-blog/SKILL.md" | sha256File }}"
+    }
+  ]
+}

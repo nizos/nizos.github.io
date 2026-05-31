@@ -23,6 +23,23 @@ CNAME).
 - SRI for script integrity
 - Plausible Analytics (self-hosted script)
 
+### Agent Readiness
+
+Machine-readable endpoints for LLMs/agents (see specification.website/spec/agent-readiness):
+
+- `/llms.txt` (`src/llms.liquid`) - Curated index of posts linking to their `.md` source
+- `/llms-full.txt` (`src/llms-full.liquid`) - Full Markdown of every post in one file
+- `/{slug}.md` (`src/posts-markdown.liquid`) - Per-post Markdown source; `rawMarkdown` filter
+  strips frontmatter and Liquid `{% raw %}` tags
+- `/sitemap.xml` (`src/sitemap.njk`, `sitemap` collection) - Canonical HTML pages
+- `/robots.txt` (`src/assets/static/`) - Allows all crawlers; points to sitemap
+- JSON-LD in `base.liquid` - BlogPosting (posts), ProfilePage (`/about/`), WebSite (else)
+- Discovery `<link>` elements in `base.liquid` (`describedby`, `sitemap`, markdown `alternate`)
+- `/.well-known/agent-skills/` - Skills index (`src/agent-skills-index.liquid`, digest via
+  `sha256File`) and `SKILL.md` (passthrough-copied from `src/.well-known/`)
+
+When changing `SKILL.md`, the `index.json` digest is recomputed automatically at build.
+
 ## Project Structure
 
 - `.eleventy.js` - Main config (image processing, collections, filters, plugins)

@@ -12,6 +12,13 @@
         <link rel="manifest" href="/site.webmanifest">
         <link rel="alternate" type="application/atom+xml" title="{{ site.name }}" href="/feed.xml">
 
+        {%- comment %} Machine-readable resource discovery for agents and LLMs {% endcomment %}
+        <link rel="describedby" href="/llms.txt" type="text/markdown" title="Site index for LLMs">
+        <link rel="sitemap" href="/sitemap.xml" type="application/xml">
+        {%- if tags contains "posts" %}
+        <link rel="alternate" type="text/markdown" href="/{{ title | slugify }}.md" title="{{ title | escape }} — Markdown source">
+        {%- endif %}
+
         {% assign desc = description %}
         {% if desc == blank %}
             {% assign desc = site.description %}
@@ -41,6 +48,59 @@
         <meta property="og:site_name" content="{{ site.name }}">
         <meta property="og:type" content="website">
         <script defer data-domain="nizar.se" src="/plausible.js" data-api="https://plausible.io/api/event" integrity="sha256-cfn9om7TXkbmZ82INL7n0QEnTDk6c9VVZAfrMmWQFaM=" crossorigin="anonymous"></script>
+
+        {%- comment %} Structured data (JSON-LD) — typed facts for search engines and agents {% endcomment %}
+        {%- capture authorLd %}{"@type":"Person","name":{{ site.authorFullName | jsonString }},"url":"{{ site.url }}/about/","jobTitle":"Software architect and consultant","sameAs":["https://github.com/nizos"]}{% endcapture %}
+        {%- if tags contains "posts" %}
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "headline": {{ title | jsonString }},
+          {%- if desc %}
+          "description": {{ desc | jsonString }},
+          {%- endif %}
+          "datePublished": "{{ page.date | isoDate }}",
+          "url": "{{ site.url }}{{ page.url }}",
+          "mainEntityOfPage": { "@type": "WebPage", "@id": "{{ site.url }}{{ page.url }}" },
+          {%- if socialImage %}
+          "image": "{{ socialImage | prepend: site.url }}",
+          {%- endif %}
+          {%- assign keywords = tags | postTags | join: ", " %}
+          {%- if keywords != "" %}
+          "keywords": {{ keywords | jsonString }},
+          {%- endif %}
+          "inLanguage": "en",
+          "author": {{ authorLd }},
+          "publisher": {{ authorLd }},
+          "isPartOf": { "@type": "Blog", "@id": "{{ site.url }}/#blog", "name": {{ site.name | jsonString }} }
+        }
+        </script>
+        {%- elsif page.url == "/about/" %}
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfilePage",
+          "url": "{{ site.url }}/about/",
+          "name": {{ title | jsonString }},
+          "inLanguage": "en",
+          "mainEntity": {{ authorLd }}
+        }
+        </script>
+        {%- else %}
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": {{ site.name | jsonString }},
+          "url": "{{ site.url }}",
+          "description": {{ site.description | jsonString }},
+          "inLanguage": "en",
+          "author": {{ authorLd }},
+          "publisher": {{ authorLd }}
+        }
+        </script>
+        {%- endif %}
     </head>
     <body>
         <div class="layout-wrapper">

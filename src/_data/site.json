@@ -3,5 +3,8 @@
   "title": "Nizar's Blog - Thoughts and ideas",
   "description": "I share my thoughts and ideas on new technologies I encounter, new findings and everything and anything that I find helpful or interesting",
   "author": "Nizar",
+  "authorFullName": "Nizar Selander",
+  "url": "https://nizar.se",
+  "repo": "https://github.com/nizos/blog",
   "defaultSocialImage": "/assets/images/socialImage.jpg"
 }

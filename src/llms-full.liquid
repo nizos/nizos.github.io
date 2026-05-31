@@ -1,0 +1,21 @@
+---
+permalink: /llms-full.txt
+eleventyExcludeFromCollections: true
+---
+# {{ site.name }} — Full Text
+
+> Personal technical blog by {{ site.authorFullName }} on software development, AI and LLM workflows, web performance, and security. This file concatenates the full Markdown of every published post, newest first.
+
+Source: {{ site.url }} · Feed: {{ site.url }}/feed.xml · Index: {{ site.url }}/llms.txt
+{% for post in collections.posts | reverse %}
+---
+
+# {{ post.data.title }}
+
+URL: {{ site.url }}{{ post.url }}
+Date: {{ post.date | isoDate }}
+{% if post.data.description %}
+{{ post.data.description | strip_newlines }}
+{% endif %}
+{{ post.inputPath | rawMarkdown }}
+{% endfor %}

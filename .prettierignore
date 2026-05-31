@@ -5,3 +5,11 @@ src/_includes/
 src/assets/static/
 src/uploads/
 .prettierrc
+
+# Agent/LLM resource generators — whitespace is significant in their output
+src/llms.liquid
+src/llms-full.liquid
+src/sitemap.njk
+src/posts-markdown.liquid
+src/agent-skills-index.liquid
+src/.well-known/

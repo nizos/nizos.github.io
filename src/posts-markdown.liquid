@@ -1,0 +1,21 @@
+---
+pagination:
+  data: collections.posts
+  size: 1
+  alias: post
+permalink: "/{{ post.data.title | slugify }}.md"
+eleventyExcludeFromCollections: true
+---
+---
+title: {{ post.data.title | jsonString }}
+url: {{ site.url }}{{ post.url }}
+date: {{ post.date | isoDate }}
+author: {{ site.authorFullName }}
+tags: {{ post.data.tags | postTags | jsonString }}
+source: {{ site.repo }}/blob/main/{{ post.inputPath | replace: "./", "" }}
+license: Reproduction by AI agents for retrieval and citation is welcome; attribute to {{ site.authorFullName }} ({{ site.url }}{{ post.url }}).
+---
+
+# {{ post.data.title }}
+
+{{ post.inputPath | rawMarkdown }}

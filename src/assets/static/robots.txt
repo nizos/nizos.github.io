@@ -1,0 +1,6 @@
+# robots.txt for nizar.se
+# All crawlers and agents are welcome, including search, retrieval, and AI.
+User-agent: *
+Allow: /
+
+Sitemap: https://nizar.se/sitemap.xml
