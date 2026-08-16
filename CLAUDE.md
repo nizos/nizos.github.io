@@ -4,7 +4,7 @@ Personal technical blog by Nizar covering software development, AI/LLM workflows
 security, and emerging technologies. Target audience: developers and technical professionals
 interested in practical engineering insights and automation.
 
-Built with Eleventy (11ty v2.0) and Liquid templating. Deployed to GitHub Pages at nizar.se (via
+Built with Eleventy (11ty v3) and Liquid templating. Deployed to GitHub Pages at nizar.se (via
 CNAME).
 
 ## Overview
