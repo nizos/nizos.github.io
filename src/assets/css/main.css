@@ -1,6 +1,7 @@
-/* nizar.se — refined stylesheet
+/* nizar.se — refined stylesheet, light + dark
    Column: 700px sitewide · Type: Source Sans 3 w/ system fallback
-   Scale: 13/13.5 meta · 15 excerpt · 17 body · 22/23 headings · 32/36 titles */
+   Scale: 13/13.5 meta · 15 excerpt · 17 body · 22/23 headings · 32/36 titles
+   Theme: CSS variables; dark via [data-theme='dark'] or OS preference */
 
 /* Source Sans 3, self-hosted latin subset (SIL OFL 1.1) */
 @font-face {
@@ -20,15 +21,86 @@
 }
 
 :root {
+  color-scheme: light;
   --ink: #1b1c20;
   --body: #2a2d34;
+  --intro: #3f434d;
   --secondary: #565c68;
   --faint: #8a8f9c;
   --hairline: #ecedf1;
   --accent: #3a5fc4;
   --accent-hover: #2c49a0;
+  --underline: rgba(58, 95, 196, 0.4);
   --bg: #fcfcfd;
+  --img-dim: none;
+  --img-ring: transparent;
+  --mark-bg: #e8edfa;
+  --code-bg: #f8f9fa;
+  --code-border: #dadce0;
+  --code-text: #202124;
+  --code-inline-bg: #e5e5e5;
+  --code-sel: #e5e5e6;
+  --tok-blue: #174ea6;
+  --tok-green: #1e8e3e;
+  --tok-num: #1967d2;
+  --tok-pink: #d01884;
   --column: 43.75rem; /* 700px */
+}
+
+/* Explicit dark (toggle) */
+[data-theme='dark'] {
+  color-scheme: dark;
+  --ink: #e8e9ec;
+  --body: #c9ccd3;
+  --intro: #b6bac2;
+  --secondary: #9aa0ab;
+  --faint: #7d8391;
+  --hairline: #26282e;
+  --accent: #7d9bf0;
+  --accent-hover: #a3b8f5;
+  --underline: rgba(125, 155, 240, 0.45);
+  --bg: #141519;
+  --img-dim: brightness(0.87) contrast(1.02);
+  --img-ring: rgba(255, 255, 255, 0.07);
+  --mark-bg: #2a3550;
+  --code-bg: #1b1d23;
+  --code-border: #2c2f37;
+  --code-text: #d4d7de;
+  --code-inline-bg: #262932;
+  --code-sel: #33363f;
+  --tok-blue: #8ab4f8;
+  --tok-green: #81c995;
+  --tok-num: #a8c7fa;
+  --tok-pink: #f28bc1;
+}
+
+/* OS dark, unless the visitor explicitly chose light */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --ink: #e8e9ec;
+    --body: #c9ccd3;
+    --intro: #b6bac2;
+    --secondary: #9aa0ab;
+    --faint: #7d8391;
+    --hairline: #26282e;
+    --accent: #7d9bf0;
+    --accent-hover: #a3b8f5;
+    --underline: rgba(125, 155, 240, 0.45);
+    --bg: #141519;
+    --img-dim: brightness(0.87) contrast(1.02);
+    --img-ring: rgba(255, 255, 255, 0.07);
+    --mark-bg: #2a3550;
+    --code-bg: #1b1d23;
+    --code-border: #2c2f37;
+    --code-text: #d4d7de;
+    --code-inline-bg: #262932;
+    --code-sel: #33363f;
+    --tok-blue: #8ab4f8;
+    --tok-green: #81c995;
+    --tok-num: #a8c7fa;
+    --tok-pink: #f28bc1;
+  }
 }
 
 html {
@@ -86,7 +158,7 @@ a {
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
-  text-decoration-color: rgba(58, 95, 196, 0.4);
+  text-decoration-color: var(--underline);
 }
 
 a:hover {
@@ -281,6 +353,7 @@ p {
 
 .nav__list li {
   display: flex;
+  align-items: baseline;
   gap: 1.625rem;
   margin: 0;
   padding: 0;
@@ -293,6 +366,43 @@ p {
 
 .nav__list a:hover {
   color: var(--ink);
+}
+
+/* Theme toggle: shows the theme you'd switch TO */
+.theme-toggle {
+  font: inherit;
+  font-size: 0.875rem;
+  color: var(--faint);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  color: var(--ink);
+}
+
+.theme-toggle__light {
+  display: none;
+}
+
+[data-theme='dark'] .theme-toggle__dark {
+  display: none;
+}
+
+[data-theme='dark'] .theme-toggle__light {
+  display: inline;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .theme-toggle__dark {
+    display: none;
+  }
+
+  :root:not([data-theme='light']) .theme-toggle__light {
+    display: inline;
+  }
 }
 
 /* ---------- Footer ---------- */
@@ -360,7 +470,7 @@ p {
 .hero p {
   margin-top: 1.25rem;
   font-size: 1.0625rem;
-  color: #3f434d;
+  color: var(--intro);
   max-width: 60ch;
 }
 
@@ -462,6 +572,8 @@ p {
   object-fit: cover;
   border-radius: 4px;
   margin: 0;
+  filter: var(--img-dim);
+  border: 1px solid var(--img-ring);
 }
 
 .all-posts-link {
@@ -498,6 +610,8 @@ p {
   object-fit: cover;
   border-radius: 6px;
   margin-top: 0;
+  filter: var(--img-dim);
+  border: 1px solid var(--img-ring);
 }
 
 .post__cover-caption,
@@ -693,10 +807,10 @@ p {
   }
 }
 
-/* ---------- Code blocks (unchanged from previous stylesheet) ---------- */
+/* ---------- Code blocks ---------- */
 
 mark {
-  background: #e8edfa;
+  background: var(--mark-bg);
   color: var(--ink);
   padding: 1px 6px;
   margin: 0 2px;
@@ -706,7 +820,7 @@ mark {
 pre {
   white-space: pre-wrap;
   tab-size: 2;
-  border: 1px solid #dadce0;
+  border: 1px solid var(--code-border);
   padding: 1rem;
   margin-top: 1rem;
   border-radius: 3px;
@@ -719,9 +833,9 @@ pre {
 
 code,
 kbd {
-  color: #060606;
+  color: var(--ink);
   font-feature-settings: normal;
-  background: #e5e5e5;
+  background: var(--code-inline-bg);
   padding: 1px 6px;
   margin: 0 2px;
 }
@@ -730,8 +844,8 @@ pre,
 code {
   font-size: 0.85rem;
   font-family: 'Roboto Mono', 'Source Code Pro', 'Liberation Mono', 'Lucida Console', monospace;
-  background: #fafafaff;
-  color: #383a42ff;
+  background: var(--code-bg);
+  color: var(--code-text);
 }
 
 pre code {
@@ -743,14 +857,14 @@ pre code {
 code,
 pre,
 pre[class*='language-'] {
-  background: #f8f9fa;
-  border: 1px solid #dadce0;
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
   border-radius: 3px;
 }
 
 pre,
 pre[class*='language-'] {
-  color: #202124;
+  color: var(--code-text);
   overflow: auto;
   padding: 0.5em;
 }
@@ -768,24 +882,24 @@ pre > code {
 }
 
 .token.comment {
-  color: #174ea6;
+  color: var(--tok-blue);
 }
 
 .token.atrule,
 .token.attr-value,
 .token.punctuation,
 .token.string {
-  color: #174ea6;
+  color: var(--tok-blue);
 }
 
 .token.property,
 .token.tag {
-  color: #1e8e3e;
+  color: var(--tok-green);
 }
 
 .token.boolean,
 .token.number {
-  color: #1967d2;
+  color: var(--tok-num);
 }
 
 .language-css .token.string,
@@ -797,7 +911,7 @@ pre > code {
 .token.regex,
 .token.selector,
 .token.url {
-  color: #d01884;
+  color: var(--tok-pink);
 }
 
 code[class*='language-'],
@@ -820,7 +934,7 @@ pre[class*='language-']::-moz-selection,
 pre[class*='language-'] ::-moz-selection,
 code[class*='language-']::-moz-selection,
 code[class*='language-'] ::-moz-selection {
-  background: #e5e5e6ff;
+  background: var(--code-sel);
   color: inherit;
 }
 
@@ -828,7 +942,7 @@ pre[class*='language-']::selection,
 pre[class*='language-'] ::selection,
 code[class*='language-']::selection,
 code[class*='language-'] ::selection {
-  background: #e5e5e6ff;
+  background: var(--code-sel);
   color: inherit;
 }
 
@@ -847,5 +961,5 @@ pre[class*='language-'] {
 
 :not(pre) > code[class*='language-'],
 pre[class*='language-'] {
-  background: #f8f9fa;
+  background: var(--code-bg);
 }

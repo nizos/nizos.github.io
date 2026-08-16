@@ -2,10 +2,11 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-cfn9om7TXkbmZ82INL7n0QEnTDk6c9VVZAfrMmWQFaM='; style-src 'self'; img-src 'self'; media-src 'self'; font-src 'self'; connect-src 'self' https://plausible.io/api/event; manifest-src 'self';">
+        <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-cfn9om7TXkbmZ82INL7n0QEnTDk6c9VVZAfrMmWQFaM=' 'sha256-pnyGORt/T1OV9S496pkhqGd9H50MoACkNl5JA8W/d7A='; style-src 'self'; img-src 'self'; media-src 'self'; font-src 'self'; connect-src 'self' https://plausible.io/api/event; manifest-src 'self';">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="preload" href="/assets/fonts/source-sans-3-400.woff2" as="font" type="font/woff2" crossorigin>
         <link rel="preload" href="/assets/fonts/source-sans-3-600.woff2" as="font" type="font/woff2" crossorigin>
+        <script>(function(){var d=document.documentElement;try{var s=localStorage.getItem('theme');if(s)d.setAttribute('data-theme',s)}catch(e){}addEventListener('DOMContentLoaded',function(){var b=document.querySelector('.theme-toggle');if(!b)return;b.addEventListener('click',function(){var dark=(d.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'))==='dark';var n=dark?'light':'dark';d.setAttribute('data-theme',n);try{localStorage.setItem('theme',n)}catch(e){}})})})();</script>
         {%- assign cssVersion = 'src/assets/css/main.css' | sha256File | slice: 7, 8 %}
         <link href="/assets/css/main.css?v={{ cssVersion }}" rel="stylesheet" />
 
