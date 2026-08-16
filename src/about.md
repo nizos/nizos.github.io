@@ -1,10 +1,13 @@
 ---
 layout: layouts/about.liquid
 title: About
+description: >-
+  I'm Nizar Selander, a software architect and consultant at factor10. I work with
+  Test-Driven Development, agentic coding, and automation.
 ---
 
-I'm a software architect and consultant at [factor10](https://www.factor10.com), focused on building
-quality, maintainable solutions with teams who care about their craft.
+I'm Nizar Selander, a software architect and consultant at [factor10](https://www.factor10.com),
+focused on building quality, maintainable solutions with teams who care about their craft.
 
 I'm passionate about Test-Driven Development, agentic coding, and automation, particularly where AI
 innovation meets practical software engineering.
