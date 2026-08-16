@@ -110,23 +110,22 @@ The pace of innovation around LLMs continues to astonish me. I’m particularly 
 several emerging tools and practices:
 
 - Multi-Document Context \
-   Allows models to pull in relevant information from multiple sources, helping them reason more
+  Allows models to pull in relevant information from multiple sources, helping them reason more
   effectively across large or fragmented codebases and documents. Instead of giving all the context
   upfront, you define reusable instructions or rules, and the model knows where to look and what to
   apply. ([awesome-mdc](https://github.com/benallfree/awesome-mdc/blob/main/what-is-mdc.md))
 - Task Management System \
-   These help break complex projects into smaller, manageable tasks and orchestrate their execution
+  These help break complex projects into smaller, manageable tasks and orchestrate their execution
   effectively. ([Claude Task Master](https://github.com/eyaltoledano/claude-task-master),
   [Boomerang Tasks](https://docs.roocode.com/features/boomerang-tasks))
 - Model Context Protocol \
-   A protocol that lets models seamlessly integrate with various tools and data sources,
-  dramatically expanding their capabilities.
-  ([MCP Introduction](https://modelcontextprotocol.io/introduction))
+  A protocol that lets models seamlessly integrate with various tools and data sources, dramatically
+  expanding their capabilities. ([MCP Introduction](https://modelcontextprotocol.io/introduction))
 - Browser Automation for AI \
-   Makes websites directly accessible to AI agents, greatly expanding how models can interact with
+  Makes websites directly accessible to AI agents, greatly expanding how models can interact with
   web applications. ([Browser Use](https://docs.browser-use.com/introduction))
 - AI Integration with GitHub Actions \
-   Integrating AI models directly into development workflows, enriching and automating parts of the
+  Integrating AI models directly into development workflows, enriching and automating parts of the
   CI/CD process.
   ([GitHub Actions](https://docs.github.com/en/github-models/integrating-ai-models-into-your-development-workflow#using-ai-models-with-github-actions))
 

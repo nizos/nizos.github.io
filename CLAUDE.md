@@ -29,8 +29,8 @@ Machine-readable endpoints for LLMs/agents (see specification.website/spec/agent
 
 - `/llms.txt` (`src/llms.liquid`) - Curated index of posts linking to their `.md` source
 - `/llms-full.txt` (`src/llms-full.liquid`) - Full Markdown of every post in one file
-- `/{slug}.md` (`src/posts-markdown.liquid`) - Per-post Markdown source; `rawMarkdown` filter
-  strips frontmatter and Liquid `{% raw %}` tags
+- `/{slug}.md` (`src/posts-markdown.liquid`) - Per-post Markdown source; `rawMarkdown` filter strips
+  frontmatter and Liquid `{% raw %}` tags
 - `/sitemap.xml` (`src/sitemap.njk`, `sitemap` collection) - Canonical HTML pages
 - `/robots.txt` (`src/assets/static/`) - Allows all crawlers; points to sitemap
 - JSON-LD in `base.liquid` - BlogPosting (posts), ProfilePage (`/about/`), WebSite (else)
