@@ -1,66 +1,44 @@
-const Image = require('@11ty/eleventy-img')
-const timeToRead = require('eleventy-plugin-time-to-read')
-const pluginRss = require('@11ty/eleventy-plugin-rss')
-const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight')
-const markdownIt = require('markdown-it')
-const { DateTime } = require('luxon')
-const fs = require('fs')
-const crypto = require('crypto')
+import path from 'node:path'
+import Image from '@11ty/eleventy-img'
+import timeToRead from 'eleventy-plugin-time-to-read'
+import pluginRss from '@11ty/eleventy-plugin-rss'
+import syntaxHighlight from '@11ty/eleventy-plugin-syntaxhighlight'
+import markdownIt from 'markdown-it'
+import { DateTime } from 'luxon'
+import fs from 'node:fs'
+import crypto from 'node:crypto'
 
+const INPUT_DIR = 'src'
 const WIDTHS = [300, 600, 750, 900, 1200]
 const FORMATS = ['avif', 'jpeg']
 const SIZES = '(min-width: 750px) 750px, 80vw'
 const OUTPUT_DIR = './_site/img/'
 const URL_PATH = '/img/'
 
-async function imageShortcode(src, alt, loading = 'lazy') {
-  let imageSrc = `src${src}`
-  let metadata = await Image(imageSrc, {
-    widths: WIDTHS,
-    formats: FORMATS,
-    outputDir: OUTPUT_DIR,
-    urlPath: URL_PATH,
-  })
+const IMAGE_OPTIONS = {
+  widths: WIDTHS,
+  formats: FORMATS,
+  outputDir: OUTPUT_DIR,
+  urlPath: URL_PATH,
+}
 
-  let imageAttributes = {
+// Animated gifs and scalable vectors are served as authored.
+function isPassthroughImage(src) {
+  return src.endsWith('.gif') || src.endsWith('.svg')
+}
+
+async function imageShortcode(src, alt, loading = 'lazy') {
+  const metadata = await Image(path.join(INPUT_DIR, src), IMAGE_OPTIONS)
+
+  return Image.generateHTML(metadata, {
     alt,
     sizes: SIZES,
     loading,
     decoding: 'async',
-  }
-
-  return Image.generateHTML(metadata, imageAttributes)
+  })
 }
 
-function customImageGenerator(src, alt) {
-  // Do not process animated gifs and scalable vectors
-  if (src.endsWith('.gif') || src.endsWith('.svg')) {
-    return `<img src="${src}" alt="${alt}" loading="lazy" decoding="async">`
-  }
-
-  // Generate responsive image for other formats
-  const imagePath = `src${src}`
-  const options = {
-    widths: WIDTHS,
-    formats: FORMATS,
-    outputDir: OUTPUT_DIR,
-    urlPath: URL_PATH,
-  }
-
-  Image(imagePath, options)
-
-  const imageAttributes = {
-    alt,
-    sizes: SIZES,
-    loading: 'lazy',
-    decoding: 'async',
-  }
-
-  const metadata = Image.statsSync(imagePath, options)
-  return Image.generateHTML(metadata, imageAttributes)
-}
-
-module.exports = function (eleventyConfig) {
+export default function (eleventyConfig) {
   // Plugins
   eleventyConfig.addPlugin(timeToRead, {
     speed: '250 words per minute',
@@ -80,11 +58,53 @@ module.exports = function (eleventyConfig) {
     linkify: true,
   })
 
+  // Rendering a Markdown image is synchronous, but eleventy-img is async and its
+  // synchronous statsSync() API was removed in v7. So every Markdown image is
+  // resolved before the build starts and the renderer reads from this cache.
+  const markdownImages = new Map()
+
+  eleventyConfig.on('eleventy.before', async () => {
+    const sources = new Set()
+
+    const files = fs
+      .readdirSync(INPUT_DIR, { recursive: true })
+      .filter((file) => file.endsWith('.md'))
+
+    for (const file of files) {
+      const tokens = markdownLibrary.parse(fs.readFileSync(path.join(INPUT_DIR, file), 'utf8'), {})
+      for (const token of tokens) {
+        for (const child of token.children ?? []) {
+          const src = child.type === 'image' && child.attrGet('src')
+          if (src && !isPassthroughImage(src)) {
+            sources.add(src)
+          }
+        }
+      }
+    }
+
+    await Promise.all(
+      [...sources].map(async (src) => {
+        markdownImages.set(src, await Image(path.join(INPUT_DIR, src), IMAGE_OPTIONS))
+      })
+    )
+  })
+
   markdownLibrary.renderer.rules.image = (tokens, idx) => {
     const token = tokens[idx]
     const src = token.attrGet('src')
     const alt = token.content
-    return customImageGenerator(src, alt)
+
+    const metadata = markdownImages.get(src)
+    if (!metadata) {
+      return `<img src="${src}" alt="${alt}" loading="lazy" decoding="async">`
+    }
+
+    return Image.generateHTML(metadata, {
+      alt,
+      sizes: SIZES,
+      loading: 'lazy',
+      decoding: 'async',
+    })
   }
 
   eleventyConfig.setLibrary('md', markdownLibrary)

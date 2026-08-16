@@ -42,7 +42,7 @@ When changing `SKILL.md`, the `index.json` digest is recomputed automatically at
 
 ## Project Structure
 
-- `.eleventy.js` - Main config (image processing, collections, filters, plugins)
+- `eleventy.config.js` - Main config, ESM (image processing, collections, filters, plugins)
 - `src/posts/` - Blog content (Markdown with frontmatter)
 - `src/_includes/` - Liquid templates
 - `src/_data/site.json` - Global site metadata
