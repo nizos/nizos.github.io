@@ -417,6 +417,7 @@ p {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  align-items: baseline;
   gap: 1rem;
   max-width: var(--column);
   margin-left: auto;
