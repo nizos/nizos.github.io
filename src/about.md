@@ -27,3 +27,6 @@ My work:
 
 When I'm not programming, you'll find me watching Formula 1, catching up on movies, or
 binge-watching TV series.
+
+Feel free to connect on [LinkedIn](https://www.linkedin.com/in/nizars) or
+[GitHub](https://github.com/nizos).

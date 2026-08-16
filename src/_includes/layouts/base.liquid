@@ -55,7 +55,7 @@
         <script defer data-domain="nizar.se" src="/plausible.js" data-api="https://plausible.io/api/event" integrity="sha256-cfn9om7TXkbmZ82INL7n0QEnTDk6c9VVZAfrMmWQFaM=" crossorigin="anonymous"></script>
 
         {%- comment %} Structured data (JSON-LD) — typed facts for search engines and agents {% endcomment %}
-        {%- capture authorLd %}{"@type":"Person","name":{{ site.authorFullName | jsonString }},"url":"{{ site.url }}/about/","jobTitle":"Software architect and consultant","sameAs":["https://github.com/nizos"]}{% endcapture %}
+        {%- capture authorLd %}{"@type":"Person","name":{{ site.authorFullName | jsonString }},"url":"{{ site.url }}/about/","jobTitle":"Software architect and consultant","sameAs":["https://github.com/nizos","https://www.linkedin.com/in/nizars"]}{% endcapture %}
         {%- if tags contains "posts" %}
         <script type="application/ld+json">
         {
