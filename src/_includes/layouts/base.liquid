@@ -24,9 +24,8 @@
             {% assign desc = site.description %}
         {% endif %}
         {% if desc %}
-            <meta name="description" content="{{ desc | escape  }}">
+            <meta name="description" content="{{ desc | escape }}">
             <meta property="og:description" content="{{ desc | escape }}">
-            <meta name="description" content="{{ desc | escape }}"/>
         {% endif %}
 
         {% if socialImage == blank %}
@@ -82,7 +81,7 @@
           "@context": "https://schema.org",
           "@type": "ProfilePage",
           "url": "{{ site.url }}/about/",
-          "name": {{ title | jsonString }},
+          "name": {{ site.authorFullName | jsonString }},
           "inLanguage": "en",
           "mainEntity": {{ authorLd }}
         }
