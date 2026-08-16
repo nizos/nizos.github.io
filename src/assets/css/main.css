@@ -427,13 +427,13 @@ p {
   color: var(--secondary);
 }
 
-.footer__subscribe a {
+.footer__feed a {
   color: var(--secondary);
   font-weight: 600;
   text-decoration: none;
 }
 
-.footer__subscribe a:hover {
+.footer__feed a:hover {
   color: var(--ink);
 }
 
