@@ -2,11 +2,20 @@
    Column: 700px sitewide · Type: Source Sans 3 w/ system fallback
    Scale: 13/13.5 meta · 15 excerpt · 17 body · 22/23 headings · 32/36 titles */
 
-/* Self-hosted font (see README; safe to keep even without the file) */
+/* Source Sans 3, self-hosted latin subset (SIL OFL 1.1) */
 @font-face {
   font-family: 'Source Sans 3';
-  src: url('/assets/fonts/SourceSans3VF.woff2') format('woff2-variations');
-  font-weight: 400 700;
+  src: url('/assets/fonts/source-sans-3-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Source Sans 3';
+  src: url('/assets/fonts/source-sans-3-600.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
   font-display: swap;
 }
 

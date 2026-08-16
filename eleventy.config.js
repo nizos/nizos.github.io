@@ -190,6 +190,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy('src/assets/images')
   eleventyConfig.addPassthroughCopy('src/uploads')
   eleventyConfig.addPassthroughCopy('src/assets/css')
+  eleventyConfig.addPassthroughCopy('src/assets/fonts')
   eleventyConfig.addPassthroughCopy({ 'src/assets/static': '.' })
   eleventyConfig.addPassthroughCopy('src/CNAME')
 
