@@ -23,10 +23,22 @@
         {% if desc == blank %}
             {% assign desc = site.description %}
         {% endif %}
+
         {% if desc %}
             <meta name="description" content="{{ desc | escape }}">
             <meta property="og:description" content="{{ desc | escape }}">
         {% endif %}
+
+        {%- comment %} The home page's title is the site name, so it stands alone rather than being suffixed with itself. {% endcomment %}
+        {% assign pageTitle = title %}
+        {% assign fullTitle = title | append: ' | ' | append: site.name %}
+        {% if title == site.name %}
+            {% assign pageTitle = site.title %}
+            {% assign fullTitle = site.title %}
+        {% endif %}
+
+        <meta property="og:title" content="{{ pageTitle | escape }}">
+        <meta name="author" content="{{ site.authorFullName | escape }}">
 
         {% if socialImage == blank %}
             {% assign socialImage = site.defaultSocialImage %}
@@ -36,13 +48,7 @@
             <meta name="twitter:image" content="{{ socialImage | escape }}"/>
         {% endif %}
 
-        <title>
-            {% if title == site.name %}
-                {{ site.title | escape }}
-            {% else %}
-                {{ title | escape }} | {{ site.name | escape}}
-            {% endif %}
-        </title>
+        <title>{{ fullTitle | escape }}</title>
 
         <meta property="og:site_name" content="{{ site.name }}">
         <meta property="og:type" content="website">
