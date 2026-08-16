@@ -173,7 +173,7 @@ security posture:
   based on best practices.
 - [Playwright](https://playwright.dev/): A versatile tool for cross-browser testing to ensure
   consistent security behavior.
-- [Webperf.se](http://webperf.se): Offers an
+- [Webperf.se](https://webperf.se): Offers an
   [open-source suite](https://github.com/Webperf-se/webperf_core) for analyzing performance,
   accessibility, and security.
 
