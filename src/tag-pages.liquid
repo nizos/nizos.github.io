@@ -10,7 +10,6 @@ eleventyComputed:
   title: "Posts tagged #{{ tag }}"
   tag: "{{ tag }}"
 ---
-<h1>Nizar's Blog</h1>
-<h2>{{ title }}</h2>
+<h1>{{ title }}</h1>
 {% assign posts = collections.posts | filterByTag: tag %}
-{% include "components/posts-list.liquid" %}
+{% include "components/posts-list.liquid", titleTag: "h2" %}

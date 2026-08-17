@@ -18,7 +18,7 @@ featured: false
 
 This blog post is co-authored by [Raniz](https://raniz.blog/2022-08-08_look-smarter-with-git/).
 
-# Intro
+## Intro
 
 As developers, we are encouraged to commit code changes early and frequently. A benefit of which is
 being able to revert to previous states when needed. This luxury, however, can come at the expense
@@ -38,7 +38,7 @@ Luckily, Git provides us with the tools to do both. In this post, we present som
 tools that we use to reorganize intermediate changes into coherent commits and in turn make the
 improvements we want to a project's history.
 
-# Git Reset
+## Git Reset
 
 Git Reset is often used while working with our staging area; this area is where we add the changes
 that we commit when using `git commit`.
@@ -46,19 +46,19 @@ that we commit when using `git commit`.
 Git reset can be used to rewind history in two ways, by discarding our changes and by keeping them
 intact.
 
-## Hard Reset
+### Hard Reset
 
 A hard reset is used to rewind history and discard changes. That is, if we no longer wish to keep
 changes made in a previous commit, we can run `git reset --hard HEAD~1` and have Git rewind our
 branch to the preceding commit.
 
-## Soft Reset
+### Soft Reset
 
 A soft reset works the same way as a hard reset except that it keeps our changes. That is, changes
 made in commits that we rewind will be kept in the staging area. This allows us to selectively pick
 the changes that we want into one or more new commits.
 
-# Git Add Patch
+## Git Add Patch
 
 The Git Add command can be used to not only add entire files to our staging area, but to also
 selectively pick lines from one or more changed files.
@@ -70,7 +70,7 @@ If no file path is provided, Git will work with every file in the repository tha
 That is, Git will iterate through all the changes and will, for each change, ask whether to add it
 to the staging area or not.
 
-# Git Rebase
+## Git Rebase
 
 Git Rebase is used to move one or more commits from one place in the Git history to another.
 
@@ -79,7 +79,7 @@ have two commits added to them after the branching point as illustrated in the f
 
 ![Git branching](/uploads/git-branch.svg)
 
-## Regular Rebase
+### Regular Rebase
 
 A regular rebase is often used instead of a merge. To illustrate how it works and how the two
 differ, we look at how a merge works.
@@ -104,7 +104,7 @@ As such, a rebase creates a linear history, one that is easier to follow. This i
 viewing the history using a graphical tool; the history looks like a straight line rather than a set
 of intertwining parallel tracks.
 
-## Interactive Rebase
+### Interactive Rebase
 
 An interactive rebase allows us to take full control of the history. This is accomplished by
 invoking the `git rebase -i <startpoint>` command. `startpoint` here is a reference to a commit,
@@ -123,7 +123,7 @@ Together, and with the tools and techniques described above, we are able to to r
 split, and edit commits to clean up the history. We can do this once our code is at a point where we
 think it is ready for for others to see.
 
-# When Not To Mess With History
+## When Not To Mess With History
 
 It is important to know that you should never rebase a public branch. That is, you should not
 rewrite the branch history if someone else shares it. The main branch is an example of such a

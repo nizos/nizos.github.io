@@ -1,3 +1,6 @@
+{%- comment %} titleTag lets the caller keep headings in order: h3 under a section
+heading, h2 when the list sits directly under the page h1. {% endcomment %}
+{%- assign titleTag = titleTag | default: 'h3' %}
 <ul class="post-list">
     {% assign posts = posts %}
     {%- for post in posts reversed -%}
@@ -11,7 +14,7 @@
             <div class="post-list__row">
                 <div class="post-list__body">
                     <a href="{{ post.url }}" class="post-list__link">
-                        <h3 class="post-list__title">{{ post.data.title }}</h3>
+                        <{{ titleTag }} class="post-list__title">{{ post.data.title }}</{{ titleTag }}>
                     </a>
 
                     <p class="post-list__excerpt">{{ post.templateContent | strip_html | excerpt }}</p>
