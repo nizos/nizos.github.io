@@ -48,8 +48,8 @@
             {% assign socialImage = site.defaultSocialImage %}
         {% endif %}
         {% if socialImage %}
-            <meta property="og:image" content="{{ socialImage | escape }}"/>
-            <meta name="twitter:image" content="{{ socialImage | escape }}"/>
+            <meta property="og:image" content="{{ socialImage | prepend: site.url | escape }}"/>
+            <meta name="twitter:image" content="{{ socialImage | prepend: site.url | escape }}"/>
         {% endif %}
 
         <title>{{ fullTitle | escape }}</title>
