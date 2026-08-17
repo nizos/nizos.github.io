@@ -50,7 +50,10 @@
             {% assign socialImage = site.defaultSocialImage %}
         {% endif %}
         {% if socialImage %}
+            {%- comment %} cover and socialImage are crops of the same photo, so coverAlt describes both {% endcomment %}
+            {% assign socialImageAlt = coverAlt | default: site.defaultSocialImageAlt %}
             <meta property="og:image" content="{{ socialImage | prepend: site.url | escape }}"/>
+            <meta property="og:image:alt" content="{{ socialImageAlt | escape }}"/>
             <meta name="twitter:image" content="{{ socialImage | prepend: site.url | escape }}"/>
         {% endif %}
 

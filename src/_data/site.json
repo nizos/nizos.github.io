@@ -6,5 +6,6 @@
   "authorFullName": "Nizar Selander",
   "url": "https://nizar.se",
   "repo": "https://github.com/nizos/blog",
-  "defaultSocialImage": "/uploads/default-social-image.jpg"
+  "defaultSocialImage": "/uploads/default-social-image.jpg",
+  "defaultSocialImageAlt": "Side view of a robotic arm on a tracked mobile platform"
 }
