@@ -16,6 +16,8 @@
         <link rel="manifest" href="/site.webmanifest">
         <link rel="alternate" type="application/atom+xml" title="{{ site.name }}" href="/feed.xml">
 
+        <link rel="canonical" href="{{ site.url }}{{ page.url }}">
+
         {%- comment %} Machine-readable resource discovery for agents and LLMs {% endcomment %}
         <link rel="describedby" href="/llms.txt" type="text/markdown" title="Site index for LLMs">
         <link rel="sitemap" href="/sitemap.xml" type="application/xml">
