@@ -2,13 +2,13 @@
 layout: layouts/about.liquid
 title: About
 description: >-
-  I'm Nizar Selander, a software architect and consultant in Sweden, working across ERP, banking,
+  I'm Nizar Selander, a software engineer and consultant in Sweden, working across ERP, banking,
   pharma, and ESG. I write about TDD and agentic coding.
 ---
 
-I'm Nizar Selander, a software architect and consultant based in Sweden, working at
-[factor10](https://www.factor10.com) across ERP, banking, pharma, and ESG. I focus on building
-quality, maintainable solutions with teams who care about their craft.
+I'm Nizar Selander, a software engineer and consultant based in Sweden, working across ERP, banking,
+pharma, and ESG. I focus on building quality, maintainable solutions with teams who care about their
+craft.
 
 I'm passionate about Test-Driven Development, agentic coding, and automation, particularly where AI
 innovation meets practical software engineering.

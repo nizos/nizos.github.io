@@ -32,5 +32,5 @@ markup, navigation, or styling.
 
 ## About the author
 
-Nizar Selander is a software architect and consultant. Background and links are at
+Nizar Selander is a software engineer and consultant. Background and links are at
 `https://nizar.se/about/`.
